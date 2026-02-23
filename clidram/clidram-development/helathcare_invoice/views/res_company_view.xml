@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_company_healthcare_invoice" model="ir.ui.view">
+        <field name="name">res.company.healthcare.invoice</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='favicon']" position="after">
+                <field name="invoice_header" widget="image"/>
+                <field name="invoice_footer" widget="image"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

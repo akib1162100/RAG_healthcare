@@ -1,0 +1,1 @@
+from . import mail_channel,mail_message,inherit_res_config

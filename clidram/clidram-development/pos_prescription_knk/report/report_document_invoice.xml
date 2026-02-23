@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="pos_pres_report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <div id="pos_pre_options" class="row mt-4 mb-4">
+                <div class="col-auto col-2 mw-100 mb-2" t-if="o.age and o.move_type == 'out_invoice'" name="age">
+                    <strong>Age:</strong>
+                    <p class="m-0" t-field="o.age" t-if="o.age"/>
+                </div>
+                <div class="col-auto col-2 mw-100 mb-2" t-if="o.gender and o.move_type == 'out_invoice'" name="gender">
+                    <strong>Gender:</strong>
+                    <p class="m-0" t-esc="o.gender.title()" />
+                </div>
+                <div class="col-auto col-2 mw-100 mb-2" t-if="o.accession_no and o.move_type == 'out_invoice'" name="accession_no">
+                    <strong>Accession No:</strong>
+                    <p class="m-0" t-field="o.accession_no" />
+                </div>
+                <div class="col-auto col-2 mw-100 mb-2" t-if="o.referral_partner_id and o.move_type == 'out_invoice'">
+                    <strong>Reference Doctor:</strong>
+                    <p class="m-0" t-field="o.referral_partner_id.name" />
+                </div>
+                <div class="col-auto col-2 mw-100 mb-2" t-if="o.move_type == 'out_invoice'">
+                    <strong>Print Time:</strong>
+                    <p t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                </div>
+            </div>
+            <div class="row mt-4 mb-4" t-if="o.patient_type_id and o.move_type == 'out_invoice'">
+                <strong t-if="o.patient_type_id">Caterory:</strong>
+                <p class="m-0" t-field="o.patient_type_id.name"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

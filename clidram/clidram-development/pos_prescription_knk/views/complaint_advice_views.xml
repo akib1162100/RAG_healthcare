@@ -1,0 +1,1013 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_prescription_complaint_view_form" model="ir.ui.view">
+        <field name="name">Complaint.list.view.form</field>
+        <field name="model">complaint.list</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="period_ids" widget="many2many_tags"/>
+                            <field name="company_id" />
+							
+							<field name="trigger_context_ids"
+								   widget="many2many_tags"
+								   options="{'no_create': False}"
+								  />
+							<field name="temporal_pattern_ids"
+								   widget="many2many_tags"
+								   options="{'no_create': False}"
+								   />
+                            <field name="allergy_reaction_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': False}"/>
+                            <field name="red_flag_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': False}"/>
+
+							<field name="clinical_overview"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Images">
+                            <field name="complain_image_line_ids">
+                                <tree editable="bottom">
+                                    <field name="name" />
+                                    <field name="image" widget="image" options="{'zoom': true, 'size': [100, 100]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_complaint_image_select_wizard_form" model="ir.ui.view">
+        <field name="name">complaint.image.select.wizard.form</field>
+        <field name="model">complaint.image.select.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="complaint_id" readonly="1" force_save="1"/>
+                </group>
+                <field name="image_line_ids">
+                    <tree create="0" delete="0" editable="bottom">
+                        <field name="is_selected"/>
+                        <field name="image_id" readonly="1" force_save="1"/>
+                        <field name="image" widget="image" readonly="1" force_save="1" options="{'zoom': true, 'size': [50, 50]}"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-success"
+                            confirm="Are you sure want to confirm?"/>
+                    <button string="Cancel" class="btn-danger" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="pos_prescription_complaint_view_tree" model="ir.ui.view">
+        <field name="name">Complaint.list.view.tree</field>
+        <field name="model">complaint.list</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_complaint" model="ir.actions.act_window">
+        <field name="name">Complaint</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">complaint.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--vital Units-->
+    <record id="pos_prescription_vital_uom_view_form" model="ir.ui.view">
+        <field name="name">vital.uom.view.form</field>
+        <field name="model">vital.uom</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_vital_uom_view_tree" model="ir.ui.view">
+        <field name="name">vital.uom.view.tree</field>
+        <field name="model">vital.uom</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_vital_uom" model="ir.actions.act_window">
+        <field name="name">Units</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vital.uom</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Periods Records -->
+    <record id="pos_prescription_periods_view_form" model="ir.ui.view">
+        <field name="name">Periods.records.view.form</field>
+        <field name="model">period.record</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_periods_view_tree" model="ir.ui.view">
+        <field name="name">Periods.records.view.tree</field>
+        <field name="model">period.record</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_periods" model="ir.actions.act_window">
+        <field name="name">Periods Records</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">period.record</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- History Records -->
+    <record id="pos_prescription_history_view_form" model="ir.ui.view">
+        <field name="name">History.records.view.form</field>
+        <field name="model">history.list</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="period_ids" widget="many2many_tags"/>
+                            <field name="history_category_id" options="{'no_create': true, 'no_create_edit': true}" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_history_view_tree" model="ir.ui.view">
+        <field name="name">History.records.view.tree</field>
+        <field name="model">history.list</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_history" model="ir.actions.act_window">
+        <field name="name">History Records</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">history.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Sign List       -->
+    <record id="pos_prescription_sign_view_form" model="ir.ui.view">
+        <field name="name">Sign.records.view.form</field>
+        <field name="model">sign.list</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="intensity_ids" widget="many2many_tags"/>
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_sign_view_tree" model="ir.ui.view">
+        <field name="name">Sign.records.view.tree</field>
+        <field name="model">sign.list</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_sign" model="ir.actions.act_window">
+        <field name="name">Symptoms</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sign.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Locations List          -->
+    <record id="pos_prescription_location_view_form" model="ir.ui.view">
+        <field name="name">location.records.view.form</field>
+        <field name="model">location.location</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_location_view_tree" model="ir.ui.view">
+        <field name="name">location.records.view.tree</field>
+        <field name="model">location.location</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_location" model="ir.actions.act_window">
+        <field name="name">Location List</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">location.location</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Intensity Views -->
+    <record id="pos_prescription_intensity_view_form" model="ir.ui.view">
+        <field name="name">Intensity.records.view.form</field>
+        <field name="model">intensity.intensity</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_intensity_view_tree" model="ir.ui.view">
+        <field name="name">Intensity.records.view.tree</field>
+        <field name="model">intensity.intensity</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_intensity" model="ir.actions.act_window">
+        <field name="name">Intensity</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">intensity.intensity</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Diagnosis Views -->
+    <record id="pos_prescription_diagnosis_view_form" model="ir.ui.view">
+        <field name="name">diagnosis.records.view.form</field>
+        <field name="model">diagnosis.diagnosis.list</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                             <field name="icd10_code_id"/>
+                            <field name="snomed_ct_code" readonly="1"/>
+                            <field name="secondary_ids" widget="many2many_tags"/>
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_diagnosis_view_tree" model="ir.ui.view">
+        <field name="name">diagnosis.records.view.tree</field>
+        <field name="model">diagnosis.diagnosis.list</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_diagnosis" model="ir.actions.act_window">
+        <field name="name">Diagnosis</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">diagnosis.diagnosis.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Investigation List -->
+    <record id="pos_prescription_investigation_view_form" model="ir.ui.view">
+        <field name="name">Investigation.records.view.form</field>
+        <field name="model">investigation.list</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="category_id" options="{'no_create': False}"/>
+                            <field name="test_type" widget="many2many_tags" />
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_investigation_view_tree" model="ir.ui.view">
+        <field name="name">Investigation.records.view.tree</field>
+        <field name="model">investigation.list</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="test_type" />
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_investigation" model="ir.actions.act_window">
+        <field name="name">Test Sample</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">investigation.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Excercise           -->
+    <record id="pos_prescription_excercise_view_form" model="ir.ui.view">
+        <field name="name">excercise.records.view.form</field>
+        <field name="model">excercise.excercise</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                          <field name="instruction_ids" widget="many2many_tags"/>
+<!--                            <field name="move2" />-->
+<!--                            <field name="type_of_test2" />-->
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_excercise_view_tree" model="ir.ui.view">
+        <field name="name">excercise.records.view.tree</field>
+        <field name="model">excercise.excercise</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="part_location" />
+                <field name="move2" />
+                <field name="type_of_test2" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_excercise" model="ir.actions.act_window">
+        <field name="name">Part/Body</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">excercise.excercise</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Ortho List -->
+    <record id="pos_prescription_ortho_view_form" model="ir.ui.view">
+        <field name="name">ortho.records.view.form</field>
+        <field name="model">ortho.list</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_ortho_view_tree" model="ir.ui.view">
+        <field name="name">ortho.records.view.tree</field>
+        <field name="model">ortho.list</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_ortho" model="ir.actions.act_window">
+        <field name="name">Side</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ortho.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Items -->
+    <record id="pos_prescription_Items_view_form" model="ir.ui.view">
+        <field name="name">item.item.view.form</field>
+        <field name="model">item.item</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="material" />
+                            <field name="comments" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_items_view_tree" model="ir.ui.view">
+        <field name="name">item.item.view.tree</field>
+        <field name="model">item.item</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="material" />
+                <field name="comments" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_item" model="ir.actions.act_window">
+        <field name="name">Item</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">item.item</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- notes view -->
+    <record id="pos_prescription_notes_view_form" model="ir.ui.view">
+        <field name="name">notes.notes.view.form</field>
+        <field name="model">note.note</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_notes_view_tree" model="ir.ui.view">
+        <field name="name">notes.notes.view.tree</field>
+        <field name="model">note.note</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_note" model="ir.actions.act_window">
+        <field name="name">Notes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">note.note</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Medicine Dose view -->
+    <record id="pos_prescription_medicine_dose_view_form" model="ir.ui.view">
+        <field name="name">medicine.dose.view.form</field>
+        <field name="model">medicine.dose</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_medicine_dose_view_tree" model="ir.ui.view">
+        <field name="name">medicine.dose.view.tree</field>
+        <field name="model">medicine.dose</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_medicine_dose" model="ir.actions.act_window">
+        <field name="name">Dose</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.dose</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Medicine Group view -->
+    <record id="pos_prescription_medicine_group_view_form" model="ir.ui.view">
+        <field name="name">medicine.group.view.form</field>
+        <field name="model">medicine.group</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_medicine_group_view_tree" model="ir.ui.view">
+        <field name="name">medicine.group.view.tree</field>
+        <field name="model">medicine.group</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_medicine_group" model="ir.actions.act_window">
+        <field name="name">Medicine Group</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Medicine Composition view -->
+    <record id="pos_prescription_medicine_composition_view_form" model="ir.ui.view">
+        <field name="name">medicine.composition.view.form</field>
+        <field name="model">medicine.composition</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_medicine_composition_view_tree" model="ir.ui.view">
+        <field name="name">medicine.composition.view.tree</field>
+        <field name="model">medicine.composition</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_medicine_composition" model="ir.actions.act_window">
+        <field name="name">Medicine Composition</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.composition</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Medicine Route view -->
+    <record id="pos_prescription_medicine_route_view_form" model="ir.ui.view">
+        <field name="name">medicine.route.view.form</field>
+        <field name="model">medicine.route</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_medicine_route_view_tree" model="ir.ui.view">
+        <field name="name">medicine.route.view.tree</field>
+        <field name="model">medicine.route</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_medicine_route" model="ir.actions.act_window">
+        <field name="name">Medicine Route</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.route</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Medicine After/before food view -->
+    <record id="pos_prescription_medicine_food_view_form" model="ir.ui.view">
+        <field name="name">medicine.food.view.form</field>
+        <field name="model">medicine.food</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_medicine_food_view_tree" model="ir.ui.view">
+        <field name="name">medicine.food.view.tree</field>
+        <field name="model">medicine.food</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_medicine_food" model="ir.actions.act_window">
+        <field name="name">Food</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.food</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Medicine frequency view -->
+    <record id="pos_prescription_medicine_frequency_view_form" model="ir.ui.view">
+        <field name="name">medicine.frequency.view.form</field>
+        <field name="model">med.frequency</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_medicine_frequency_view_tree" model="ir.ui.view">
+        <field name="name">med.frequency.view.tree</field>
+        <field name="model">med.frequency</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_med_frequency" model="ir.actions.act_window">
+        <field name="name">Medicine Frequency</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">med.frequency</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="patient_type_form" model="ir.ui.view">
+        <field name="name">patient.type.view.form</field>
+        <field name="model">patient.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="patient_type_tree" model="ir.ui.view">
+        <field name="name">patient.type.view.tree</field>
+        <field name="model">patient.type</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_patient_type" model="ir.actions.act_window">
+        <field name="name">Patient Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">patient.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="pos_prescription_medicine_type_view_form" model="ir.ui.view">
+        <field name="name">medicine.type.view.form</field>
+        <field name="model">medicine.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_medicine_type_view_tree" model="ir.ui.view">
+        <field name="name">medicine.type.view.tree</field>
+        <field name="model">medicine.type</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_pos_prescription_med_type" model="ir.actions.act_window">
+        <field name="name">Medicine Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="pos_prescription_product_type_view_form" model="ir.ui.view">
+        <field name="name">product.type.view.form</field>
+        <field name="model">product.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_product_type_view_tree" model="ir.ui.view">
+        <field name="name">product.type.view.tree</field>
+        <field name="model">product.type</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_pos_prescription_med_product_type" model="ir.actions.act_window">
+        <field name="name">Product Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="pos_prescription_interaction_interaction_view_form" model="ir.ui.view">
+        <field name="name">interaction.interaction.view.form</field>
+        <field name="model">interaction.interaction</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+<!--                            <field name="company_id" />-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_interaction_interaction_view_tree" model="ir.ui.view">
+        <field name="name">interaction.interaction.view.tree</field>
+        <field name="model">interaction.interaction</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+<!--                <field name="company_id" />-->
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_pos_prescription_interaction" model="ir.actions.act_window">
+        <field name="name">Interaction</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">interaction.interaction</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_allergy_reaction_tree" model="ir.ui.view">
+        <field name="name">allergy.reaction.tree</field>
+        <field name="model">allergy.reaction</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_allergy_reaction_form" model="ir.ui.view">
+        <field name="name">allergy.reaction.form</field>
+        <field name="model">allergy.reaction</field>
+        <field name="arch" type="xml">
+            <form string="Allergy Reaction">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_allergy_reaction" model="ir.actions.act_window">
+        <field name="name">Allergy Reactions</field>
+        <field name="res_model">allergy.reaction</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create allergy reaction types for clinical use.
+            </p>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_red_flag_tree" model="ir.ui.view">
+        <field name="name">red.flag.indicator.tree</field>
+        <field name="model">red.flag.indicator</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_red_flag_form" model="ir.ui.view">
+        <field name="name">red.flag.indicator.form</field>
+        <field name="model">red.flag.indicator</field>
+        <field name="arch" type="xml">
+            <form string="Red Flag Indicator">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_red_flag_indicator" model="ir.actions.act_window">
+        <field name="name">Red Flags Indicators</field>
+        <field name="res_model">red.flag.indicator</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Red Flags indicators for clinical use.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_exercise_instruction_tree" model="ir.ui.view">
+        <field name="name">exercise.instruction.tree</field>
+        <field name="model">exercise.instruction</field>
+        <field name="arch" type="xml">
+            <tree string="Exercise Instructions">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_exercise_instruction_form" model="ir.ui.view">
+        <field name="name">exercise.instruction.form</field>
+        <field name="model">exercise.instruction</field>
+        <field name="arch" type="xml">
+            <form string="Exercise Instruction">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_exercise_instruction" model="ir.actions.act_window">
+        <field name="name">Exercise Instructions</field>
+        <field name="res_model">exercise.instruction</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="view_diagnosis_secondary_tree" model="ir.ui.view">
+        <field name="name">diagnosis.secondary.tree</field>
+        <field name="model">diagnosis.secondary</field>
+        <field name="arch" type="xml">
+            <tree string="Secondary Diagnoses">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_diagnosis_secondary_form" model="ir.ui.view">
+        <field name="name">diagnosis.secondary.form</field>
+        <field name="model">diagnosis.secondary</field>
+        <field name="arch" type="xml">
+            <form string="Secondary Diagnosis">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_diagnosis_secondary" model="ir.actions.act_window">
+        <field name="name">Secondary Diagnoses</field>
+        <field name="res_model">diagnosis.secondary</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create secondary diagnoses for clinical use.
+            </p>
+        </field>
+    </record>
+    <record id="view_test_category_tree" model="ir.ui.view">
+        <field name="name">test.category.tree</field>
+        <field name="model">test.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_test_category_form" model="ir.ui.view">
+        <field name="name">test.category.form</field>
+        <field name="model">test.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_test_category" model="ir.actions.act_window">
+        <field name="name">Test Categories</field>
+        <field name="res_model">test.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+</odoo>

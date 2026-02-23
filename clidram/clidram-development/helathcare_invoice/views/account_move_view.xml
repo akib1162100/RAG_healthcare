@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="account_move_view_custom_invoice" model="ir.ui.view">
+        <field name="name">account.move.view.custom.invoice</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="button_print_invoice" string="Print Invoice" type="object" class="btn-outline-success"/>
+
+                <button name="button_print_invoice_with_header_footer"
+                        string="Invoice Header Footer" type="object" class="btn-info"/>
+            </xpath>
+
+            <xpath expr="//sheet/group[1]/group[2]/field[@name='currency_id']" position="after">
+                <field name="invoice_category_id"/>
+                <field name="discount_authorized_person"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_invoice_tree_invoice_category" model="ir.ui.view">
+        <field name="name">account.invoice.tree.invoice.category</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_state']" position="before">
+                <field name="invoice_category_id"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_state']" position="after">
+                <field name="payment_methods" invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_filter_invoice_category" model="ir.ui.view">
+        <field name="name">account.invoice.select.invoice.category</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/filter[@name='status']" position="after">
+                <filter string="Invoice Category" name="invoice_category_id"
+                        context="{'group_by':'invoice_category_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="prescription_order_view_inherit_tree" model="ir.ui.view">
+        <field name="name">prescription.order.knk.tree.inherit</field>
+        <field name="model">prescription.order.knk</field>
+        <field name="inherit_id" ref="pos_prescription_knk.view_hms_prescription_order_tree_kanak"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='state']" position="after">
+                <field name="patient_age"/>
+                <field name="patient_sex"/>
+                <field name="patient_phone"/>
+                <field name="weight" optional="hide"/>
+                <field name="unit" optional="hide"/>
+                <field name="height" optional="hide"/>
+                <field name="bmi" optional="hide"/>
+                <field name="systolic" optional="hide"/>
+                <field name="diastolic" optional="hide"/>
+                <field name="pulse" optional="hide"/>
+                <field name="respiratory_rate" optional="hide"/>
+                <field name="complain_list" optional="hide"/>
+                <field name="medicine_name" optional="hide"/>
+                <field name="diagnosis" optional="hide"/>
+                <field name="old_history" optional="hide"/>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='patient_id']" position="after">
+                <field name="patient_seq"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

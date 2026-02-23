@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+    <data>
+
+        <template id="inherit_footer_default" inherit_id="website.footer_custom"
+             name="Show Appointment Footer" customize_show="True" active="True">
+            <xpath expr="//div[@id='footer']//ul" position="replace">
+                <ul class="list-unstyled">
+					<li><a href="/">Home</a></li>
+					<li><a href="#">About us</a></li>
+					<li><a href="#">Products</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Legal</a></li>
+					<li><a href="/contactus">Contact us</a></li>
+                    <li><a href="/appointment">Book an Appointment</a></li>
+                </ul>
+
+            </xpath>
+        </template>
+        <template id="book_appoint_mgmt_template" name="Website Book Appointment Template">
+            <t t-call="website.layout">
+                <div class="oe_structure"/>
+                <form class="form-horizontal" action="/appointment/book" id="appoint_book_now" role="form" method="post" data-toggle="validator">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="lang_date_format" t-att-value="lang_date_format"/>
+                    <input type="hidden" name="lang_code" t-att-value="lang_code"/>
+                    <div class="oe_structure"/>
+                    <div class="container mt16 mb16">
+                    <div class="container">
+                        <span>
+                            <h4 style="font-weight:bold;color:#555555;font-size:20px;">BOOK AN APPOINTMENT</h4>
+                        </span>
+                    </div>
+                    <div class="container" style="border: 0.5px solid #ced4da;">
+                        <div class="container-fluid p-2">
+                            <span>
+                                <h5 class="mb16 mt16" style="font-weight:bold;color:#555555;"> Find &amp; Book Your Appointment</h5>
+                            </span>
+                            <div class="row mb16 mt16">
+                                <div class="col-lg-2" style="font-size:14px; color:#6A6A6A;">
+                                    Appointment With
+                                </div>
+                                <div class="col-lg-4">
+                                    <select class="form-control appoint_groups" name="appoint_groups" id="appoint_groups" required="1" style="cursor: pointer;">
+                                        <option value="" selected="1" disabled="1">--Select--</option>
+                                        <t t-foreach="group_id" t-as="group">
+                                            <option t-att-value="group.id"><span t-esc="group.group_name"/></option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb16 mt16">
+                                <div class="col-lg-2" style="font-size:14px; color:#6A6A6A;">
+                                    Date
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- <input class="form-control appoint_date" type="date" id="appoint_date" name="appoint_date"
+                                    required="1" style="cursor: pointer;"/> -->
+                                    <div class="input-group appoint_date_div date" id="appoint_datetime_picker" data-target-input="nearest">
+                                        <input type="text" class="form-control appoint_date" id="appoint_date"
+                                             autocomplete="off" data-target="#appoint_datetime_picker" name="appoint_date"
+                                             required="1" style="cursor: pointer;" data-toggle="datetimepicker"/>
+                                        <div class="input-group-append" data-target="#appoint_datetime_picker"
+                                            data-toggle="datetimepicker">
+                                            <div class="input-group-text" style="height: 100%;"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb16 mt16">
+                                <div class="col-lg-6">
+                                    <button class="btn btn-primary float-end" id="button_find_appointee"> FIND AND BOOK </button>
+                                </div>
+                            </div>
+                            <div id="appointee_listing"></div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <template id="appointee_listing_template" name="Appointee Listing Template">
+            <div class="row mt16" >
+                <div class="col-md-12 appoint_loader" style="display:none;"/>
+                <div class="container">
+                    <h5 class="mb16 mt16" style="font-weight:bold;color:#555555;margin-left: 16px;">APPOINTEE LISTING</h5>
+                </div>
+                <t t-set="curr_company_id" t-value="request.env.user.company_id.id"/>
+                <t t-set="app_current_company_persons" t-value="app_group_obj.appoint_person_ids.filtered(lambda l:l.company_id.id == False or l.company_id.id == curr_company_id)"/>
+                <t t-if="app_current_company_persons">
+                    <t t-set="app_per" t-value="app_current_company_persons.filtered(lambda l : l.time_slot_ids and l.time_slot_ids.filtered(lambda o: (o.company_id.id == False or o.company_id.id == curr_company_id) and o.day == selected_day))"/>
+                    <t t-set="count" t-value="(len(app_per)/3) + 1"/>
+                    <t t-set="i" t-value="0"/>
+                    <t t-set="j" t-value="3"/>
+                    <t t-set="k" t-value="0"/>
+                        <t t-foreach="app_per" t-as="appoint_persons">
+                            <t t-if="count > k">
+                                <div class="container row ml0 mr0">
+                                    <t t-foreach="app_per[i:j]" t-as="appoint_person">
+                                    <t t-if="appoint_person.time_slot_ids.filtered(lambda o: (o.company_id.id == False or o.company_id.id == curr_company_id) and o.day == selected_day)">
+                                        <!-- height: 415px; -->
+                                        <div class="col-lg-4 mb32" style="">
+                                            <div class="card card-default appoint_person_panel" style="padding:10px;" t-att-id="appoint_person.id">
+                                                <div class="row mb-4">
+                                                    <div class="col-md-4 col-6">
+                                                        <t t-if="appoint_person.image_1920">
+                                                            <img class="person_image" t-attf-src="/web/image/res.partner/#{appoint_person.id}/image_1920" alt="Not found" width="100%" height="100%"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <img class="person_image" src="/wk_website_appointment/static/src/img/image3.jpeg" alt="Not found" width="100%" height="100%"/>
+                                                        </t>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="container name_detail">
+                                                            <div t-if="appoint_person.name">
+                                                                <span>
+                                                                    <h5 class="" style="font-weight:bold;color:#555555;font-size:14px;"><t t-esc="appoint_person.name"/></h5>
+                                                                </span>
+                                                            </div>
+                                                            <div t-if="appoint_person.specialist">
+                                                                <span>
+                                                                    <h5 class="" style="color:#555555;font-size:14px;">Speciality: <t t-esc="appoint_person.specialist"/></h5>
+                                                                </span>
+                                                            </div>
+                                                            <div t-if="appoint_person.work_exp">
+                                                                <span>
+                                                                    <h5 class="" style="color:#555555;font-size:14px;">Work Experience: <t t-esc="appoint_person.work_exp"/></h5>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container" t-if="appoint_person.about_person" >
+                                                    <t t-set="about" t-value="appoint_person.about_person if len(appoint_person.about_person) &lt;= 100 else appoint_person.about_person[:126]"/>
+                                                    <h5 style="color:#6c6c6c;font-size:14px;"> <t t-esc="about"/> </h5>
+                                                </div>
+                                                <hr style="margin:0px;color:#e7e7e7;"/>
+                                                <!-- ~~~~~~~~~~~~ TIME SLOTS ~~~~~~~~~~~~~~~~~~~~ -->
+                                                <t t-call="wk_website_appointment.appoint_person_time_slot_template"/>
+                                                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                                                <div t-if="website_show_tz" class="container mt4 text-secondary">
+                                                    * Time displayed in <t t-esc="appoint_person.tz"> UTC </t> timezone
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                            <t t-set="i" t-value="j"/>
+                            <t t-set="j" t-value="j+3"/>
+                            <t t-set="k" t-value="k+1"/>
+                        </t>
+                    </t>
+                </t>
+
+                <!-- ~~~~~~~~~~~~~ NO Appointee found for this date but appointees are available ~~~~~~~~~~~~~~~~~~~ -->
+                <t t-set="flag" t-value="0"/>
+                <t t-foreach="app_current_company_persons" t-as="appoint_person">
+                    <t t-if="not appoint_person.time_slot_ids.filtered(lambda o: (o.company_id.id == False or o.company_id.id == curr_company_id) and o.day == selected_day)">
+                        <t t-set="flag" t-value="flag + 1"/>
+                    </t>
+                </t>
+                <t t-if="app_current_company_persons and len(app_current_company_persons) == flag">
+                    <div class="ml16">
+                        <h3 style="color:#6A6A6A;"> NO APPOINTEE FOUND </h3>
+                    </div>
+                </t>
+                <t t-if="not app_current_company_persons">
+                    <div class="ml16">
+                        <h3 style="color:#6A6A6A;"> NO APPOINTEE FOUND </h3>
+                    </div>
+                </t>
+            </div>
+        </template>
+
+        <template id="appoint_slot_time" name="Appoint Slot time">
+            <div class="appoint_slot_time_div">
+                <t t-set="slot_available" t-value="website._is_slot_available(appoint_person.id,slot.id,appoint_date)"/>
+                <div class="card card-default mb8 appoint_timeslot_panel" t-att-id="slot.id"
+                    t-att-style="'--tooltip-color: #38a745cf; --tooltip-box-shadow: 1px 1px 1px 1px #38a745cf;' if slot_available else '--tooltip-color: #dc354591;--tooltip-box-shadow: 1px 1px #dc354591;'">
+                    <div class="row" style="padding:8px;">
+                        <div class="start_time" style="display:none;"><t t-esc="slot.float_time_convert(slot.start_time)"/></div>
+                        <div t-att-class="'col-md-6 col-lg-8 col-sm-8 timeslot' if slot_available else 'col-md-6 col-lg-8 col-sm-8 timeslot text-muted'">
+                            <t t-esc="slot.name"/>
+                        </div>
+                        <div class="col-md-6 col-lg-4 col-sm-4" t-att-data-already-booked="website._check_appoint_already_booked(appoint_date, slot.id)">
+                            <button type="submit"
+                                t-att-class="'btn button_book_now btn-success' if slot_available else 'btn button_book_now btn-danger disabled'">
+                                <span t-if="slot_available">BOOK NOW </span>
+                                <span t-else="">Not Available </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="appoint_person_time_slot_template" name="Person TimeSlot">
+            <t t-set="person_timeslots_for_day" t-value="appoint_person.time_slot_ids.filtered(lambda o:(o.company_id.id == False or o.company_id.id == curr_company_id) and o.day == selected_day)"/>
+            <t t-if="person_timeslots_for_day">
+                <span t-if="person_timeslots_for_day">
+                    <div class="container mt8 mb16">
+                        <div class="pull-left mb8" style="">
+                            <b class="" style="font-weight:bold;color:#364051;font-size:14px;">Time Slot</b>
+                        </div>
+                    </div>
+                </span>
+                <t t-if="len(person_timeslots_for_day) &lt;= 3">
+                    <div class="mb8" style="">
+                        <t t-foreach="person_timeslots_for_day" t-as="slot">
+                            <t t-call="wk_website_appointment.appoint_slot_time"/>
+                        </t>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="container">
+                        <div t-att-id="'simpleCarousel_%s' % appoint_person.id" class="scroll-container" style="overflow: auto; height:10rem;">
+                        <div class="scroll">
+
+                                <div class="timeslot_height active h-auto">
+                                    <t t-foreach="person_timeslots_for_day" t-as="slot">
+                                    <t t-call="wk_website_appointment.appoint_slot_time"/>
+                                    </t>
+                                </div>
+                        </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="confirm_book_appoint_mgmt_template" name="Confirm Appointment Booking">
+            <t t-call="website.layout">
+                <div class="oe_structure"/>
+                <div class="container mt16 mb16"  style="color:#666666;">
+                    <div class="container">
+                        <span style="font-weight:bold;">
+                            <h4 style="font-weight:bold;color:#555555;font-size:20px;">BOOK AN APPOINTMENT</h4>
+                            <!-- rgba(63, 60, 60, 0.84) -->
+                        </span>
+                    </div>
+                    <div class="card">
+                        <div class="container-fluid">
+                            <div class="row mb8 mt16 ml0 mr0 justify-content-center" style="font-size:16px; color:#555555;font-weight:bold;">
+                                APPOINTMENT DETAILS
+                            </div>
+                            <form class="form-horizontal" action="/appointment/confirmation" id="form_appoint_confirmed" role="form" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="appoint_group" t-att-value="appoint_group.id"/>
+                                <input type="hidden" name="appoint_person" t-att-value="appoint_person.id"/>
+                                <input type="hidden" name="appoint_date" t-att-value="appoint_date"/>
+                                <input type="hidden" name="appoint_slot" t-att-value="appoint_slot.id"/>
+                                <input type="hidden" name="appoint_charge" t-att-value="appoint_charge"/>
+                                <div class="row mb8 mt8 ml0 mr0 justify-content-center">
+                                        <t t-if="appoint_person.image_1920">
+                                            <img class="col-md-1 col-6 person_image" t-attf-src="/web/image/res.partner/#{appoint_person.id}/image_1920" alt="Not found" width="100%" height="100%" style="float:none;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <img class="col-md-1 col-6 person_image" src="/wk_website_appointment/static/src/img/image3.jpeg" alt="Not found" width="100%" height="100%" style="float:none;"/>
+                                        </t>
+                                </div>
+                                <div class="row mb8 mt8 ml0 mr0 justify-content-center" style="font-weight:bold; font-size:15px; color:#6A6A6A;">
+                                    <t t-esc="appoint_person.name"/>
+                                </div>
+                                <div class="row mb8 mt8 ml0 mr0 justify-content-center text-center" style="font-size:16px; color:#6A6A6A;">
+                                        We acknowledge the appointment request with
+                                        <t t-esc="appoint_person.name"/>
+                                        <t t-if="appoint_person.email">(<t t-esc="appoint_person.email"/>)</t>
+                                </div>
+                                <div class="row mt8 ml0 mr0 justify-content-center text-center">
+                                    <div class="col-md-1"/>
+                                    <div class="col-md-10 bg-primary well text-center mb8" style="padding: 6px;color:#FFFFFF; font-size: 20px; font-weight: bold;    background-color: #2d91e7;text-transform:capitalize;">
+                                        <t t-esc="appoint_slot.start_time" t-options='{"widget": "float_time"}'/> - <t t-esc="appoint_slot.end_time" t-options='{"widget": "float_time"}'/>,
+                                        <span t-field="appoint_slot.day"/>,
+                                        <t t-esc="appoint_date" t-options='{"widget": "date" , "format": "d MMM, y"}'/>
+                                    </div>
+                                    <div class="col-md-1"/>
+                                </div>
+                                <div t-if="website.env.user != request.website.user_id" class="row ml0 mr0 justify-content-center text-center" style="font-size:16px;color:#6A6A6A;">
+                                    Name : <t t-esc="customer.name"/> <t t-if="customer.email">(<t t-esc="customer.email"/>)</t>
+                                </div>
+                                <div class="row ml0 mr0 justify-content-center text-center" style="font-size:16px;color:#6A6A6A;"
+                                    t-if="customer.phone or customer.mobile">
+                                        Available Contact Number : <t t-if="customer.phone"><t t-esc="customer.phone"/></t>, <t t-if="customer.mobile"><t t-esc="customer.mobile"/></t>
+                                </div>
+                                <div class="ml0 mr0 mb8 mt8 justify-content-center text-center" style="font-size:16px;color:#6A6A6A;font-weight:bold;">
+                                    Appointment Charge : &#160; <t t-esc="appoint_charge" t-options='{"widget": "monetary", "display_currency": appoint_currency}'/>
+                                </div>
+                                <div class="row ml0 mr0 mb16 mt8 justify-content-center text-center">
+                                    <div class="col-md-1"/>
+                                    <div class="col-md-10" style="padding:0px;">
+                                        <textarea name="appoint_desc" rows="5" cols="100"
+                                            id="appoint_desc"
+                                            class="form-control"
+                                            placeholder="Type your message..."
+                                        />
+                                    </div>
+                                    <div class="col-md-1"/>
+                                </div>
+                                  <div class="row ml0 mr0 mb16 justify-content-center">
+                                    <div class="col-md-1"/>
+                                    <div class="col-md-10" style="padding:0px;">
+                                        <label for="appoint_attachments" class="form-label"
+                                               style="font-size:14px; color:#6A6A6A; font-weight:600;">
+                                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                            Attach Document (Optional)
+                                        </label>
+                                        <input type="file" name="appoint_attachments"/>
+                                        <small class="form-text text-muted" style="font-size:12px;">
+                                            Accepted format: PDF, DOC, DOCX, JPG, PNG, GIF, TXT
+                                        </small>
+                                        <div id="file_list" class="mt8" style="font-size:13px; color:#555555;"></div>
+                                    </div>
+                                    <div class="col-md-1"/>
+                                </div>
+                                <div class="row ml0 mr0 mb16 mt8 justify-content-center">
+                                    <div class="col-md-1"/>
+                                    <div class="col-md-10 text-right " style="padding:0px;">
+                                    <p t-if="appoint_error" class="text-danger mt8" style="display: inline;padding: 5px;border-radius: 2px;">
+                                        Some occur occured..!! Please try Booking the Appointment again.
+                                    </p>
+                                    <a href="/appointment"  class="btn btn-secondary float-start" style="font-weight:bold; font-size:15px;">Replan Booking</a>
+                                    <!-- ~~~~~~~~~~~~ check if the user is public or not ~~~~~~~~~~~~~~~~ -->
+                                    <t t-set="is_user_public" t-value="website.env.user == request.website.user_id"/>
+                                    <div t-if="not is_user_public">
+                                        <button type="submit" class="btn btn-success float-end" id="button_confirm_booking" style="font-weight:bold; font-size:15px;">Confirm Booking</button>
+                                    </div>
+                                    <div t-if="is_user_public" class=" text-left">
+                                        <div id="loginModal" class="modal fade" role="dialog">
+                                          <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h4 style="color:#823838;">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"> Alert </i>
+                                                </h4>
+                                              </div>
+                                              <div class="modal-body" style="color:black;">
+                                                    <h4 style="color:rgba(0, 0, 0, 0.78);">You must first
+                                                    <a href="/web/login?redirect=/appointment" style="text-decoration: underline;" help="Click here to login."> login</a>
+                                                    to book an appointment.</h4>
+                                              </div>
+                                              <!-- Modal footer -->
+                                              <div class="modal-footer">
+                                                <button id="login_modal_close" type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-success float-end" style="font-weight:bold; font-size:15px;">Confirm Booking</a>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-1"/>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+    </data>
+</odoo>

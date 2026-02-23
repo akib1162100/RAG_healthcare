@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_store_whatsapp_otp_tree" model="ir.ui.view">
+        <field name="name">store.whatsapp.otp.tree</field>
+        <field name="model">store.whatsapp.otp</field>
+        <field name="arch" type="xml">
+            <tree string="WhatsApp OTP Records" default_order="date_time desc">
+                <field name="partner_id"/>
+                <field name="signup_phone"/>
+                <field name="signup_otp"/>
+                <field name="date_time"/>
+                <field name="is_verified"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_store_whatsapp_otp_form" model="ir.ui.view">
+        <field name="name">store.whatsapp.otp.form</field>
+        <field name="model">store.whatsapp.otp</field>
+        <field name="arch" type="xml">
+            <form string="WhatsApp OTP">
+                <header>
+                    <button name="action_send_otp" type="object" string="Send OTP" class="btn-success"
+                            groups="base.group_erp_manager"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="partner_id" force_save="1"/>
+                        <field name="signup_phone"/>
+                        <field name="signup_otp"/>
+                        <field name="date_time"/>
+                        <field name="is_verified"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+       <!-- Action -->
+    <record id="action_store_whatsapp_otp" model="ir.actions.act_window">
+        <field name="name">WhatsApp OTP</field>
+        <field name="res_model">store.whatsapp.otp</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+        <!-- Menu -->
+    <menuitem id="menu_store_whatsapp_root"
+              name="WhatsApp OTP"
+              sequence="10"/>
+
+    <menuitem id="menu_store_whatsapp_otp"
+              name="OTP Records"
+              parent="menu_store_whatsapp_root"
+              action="action_store_whatsapp_otp"
+              sequence="10"/>
+</odoo>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="dynamic_dashboard">
+        <div class="container-fluid my-3">
+            <button class="btn btn-primary add_block" data-type="tile" type="button">Add Tile
+            </button>
+            <button class="btn btn-primary add_block" data-type="graph" type="button">Add Graph
+            </button>
+
+            <button class="btn btn-primary view_tile_items" data-type="tile" type="button">View Tile List
+            </button>
+            <button class="btn btn-primary View_graph_items" data-type="graph" type="button">View Graph List
+            </button>
+
+            <div class=" o_dynamic_dashboard row">
+            </div>
+            <div style="padding-top: 100px" class="o_dynamic_chart row">
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicDashboardTileStyle_00">
+        <div  t-att-class="widget.cols +' col-sm-12 col-md-12 tile block'"  t-att-data-id="widget.id">
+            <div t-att-style="widget.color+widget.text_color"
+                 class="tile-container align-items-center  position-relative w-100 h-auto my-3">
+                <a t-att-style="widget.text_color"
+                   class="block_setting position-absolute tile-container__setting-icon"><i
+                        class="fa fa-cog"></i></a>
+                <div class="row mx-2" >
+                    <div t-att-style="widget.icon_color"
+                        class="tile-container__icon-container col-4 bg-white  d-flex justify-content-center align-items-center">
+                        <i t-att-class="widget.icon"></i>
+                    </div>
+                    <div class="tile-container__status-container col-8">
+                        <h2 class="status-container__title" ><t t-esc="widget.name"/></h2>
+                        <div class="ps3">
+                            <span class="h1" style="    font-weight: 700;
+                            font-size: 35px;
+                            font-family: Geneva;
+                            color: #070770;" >
+                                <t t-esc="widget.value"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+       
+    </t>
+    <t t-name="DynamicDashboardTileStyle_01">
+        <div t-att-class="widget.cols + ' col-sm-12 col-md-12 tile block'" t-att-data-id="widget.id">
+            <div t-att-style="widget.color + widget.text_color"
+                 class="tile-container align-items-center position-relative w-100 h-auto my-3 tile-hover">
+                <a t-att-style="widget.text_color"
+                   class="block_setting position-absolute tile-container__setting-icon"><i class="fa fa-cog"></i></a>
+                <div class="row mx-2">
+                    <div t-att-style="widget.icon_color"
+                        class="tile-container__icon-container col-4 bg-white d-flex align-items-center justify-content-center">
+                        <i t-att-class="widget.icon"></i>
+                    </div>
+                    <div class="tile-container__status-container col-8">
+                        <span class="status-container__title"><t t-esc="widget.name"/></span>
+                        <div class="ps3">
+                            <span class="font-weight-bold" style="font-weight: 700;
+                            font-size: 35px;
+                            font-family: Geneva;
+                            " >
+                                <t t-esc="widget.value"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+    
+    <t t-name="DynamicDashboardTileStyle_02">
+        <div  t-att-class="widget.cols + ' col-sm-12 col-md-12 tile2 '" >
+            <div class="tile my-3 block  tile-hover" t-att-data-id="widget.id">
+              <div t-att-style="widget.color + widget.text_color" class="tile-header">
+                <strong class="status-container__title font-weight-bo"><t t-esc="widget.name"/></strong>
+                <a t-att-style="widget.text_color" class="block_setting close">
+                    <i class="fa fa-cog"></i>
+                </a>
+              </div>
+              <div class="tile-body">
+                <div class="d-flex flex-column align-items-center">
+                  <span class="icon" t-att-style="widget.icon_color" ><i t-att-class="widget.icon" ></i></span>
+                  <span class="count mb-2" style="font-weight: 700;
+                  font-size: 35px;
+                  font-family: Geneva;
+                  " ><t t-esc="widget.value"/></span>
+                </div>
+              </div>
+            </div>
+          </div>
+       
+    </t>
+    <t t-name="DynamicDashboardTileStyle_03">
+        <div t-att-class="widget.cols + ' col-sm-12 col-md-12 tile block'" t-att-data-id="widget.id">
+            <div t-att-style="widget.color + widget.text_color"
+                 class="tile-container align-items-center position-relative w-100 h-auto my-3 tile-hover ">
+                
+                 <div t-att-style="widget.icon_color" class="block_setting position-absolute tile-container__setting-icon-left">
+                    <i t-att-class="widget.icon" style="font-size: 2.5em;"></i>
+                 </div>
+                 <a t-att-style="widget.text_color" class="block_setting position-absolute tile-container__setting-icon">
+                    <i class="fa fa-cog"></i>
+                </a>
+                <div class="row mx-2 align-items-center">
+                    <!-- <div t-att-style="widget.icon_color"
+                        class="tile-container__icon-container col-md-3 bg-white d-flex justify-content-center align-items-center">
+                        <i t-att-class="widget.icon" style="font-size: 2em;"></i>
+                    </div> -->
+                    <div class="col-md-12 text-center">
+                        <div class="ps3">
+                            <span class="font-weight-bold" style="font-weight: 700;
+                            font-size: 35px;
+                            font-family: Geneva;
+                            " >
+                                <t t-esc="widget.value"/>
+                            </span>
+                        </div>
+                        <strong class="status-container__title font-weight-bo"><t t-esc="widget.name"/></strong>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+       
+    </t>
+    <t t-name="DynamicDashboardTileStyle_04">
+   
+               
+        <div t-att-class="widget.cols + ' col-sm-12 col-md-12 tile_container4 block'">
+            <div class="tile my-3 tile-hover block"  t-att-data-id="widget.id">
+                <div t-att-style="widget.color+widget.text_color" class="tile-header">
+                    <i t-att-style="widget.icon_color+'font-size: 2.5em;'" t-att-class="widget.icon"></i>
+                    <strong class="status-container__title font-weight-bo"><t t-esc="widget.name"/></strong>
+                    <span  class="block_setting ">
+                        <i style="font-size: .9em;" class="fa fa-cog"></i>
+                    </span>
+                </div>
+                <div class="tile-content">
+                    <div class="ps3 text-center">
+                        <span class="" style="font-weight: 700;
+                        font-size: 35px;
+                        font-family: Geneva;
+                        " >
+                            <t t-esc="widget.value"/>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <!-- Add more tiles as needed -->
+        
+    </t>
+    
+    
+    
+    <t t-name="DynamicDashboardTileStyle_05">
+        <div t-att-class="widget.cols + ' col-sm-12 col-md-12 tile  tile_style_0'" >
+            <div class="tile  block tile-hover" t-att-data-id="widget.id" t-att-style="widget.color + widget.text_color ">
+                    <div t-att-style="widget.icon_color" class="tile-icon rounded">
+                        <i t-att-class="widget.icon"></i>
+                    </div>
+                <a t-att-style="widget.text_color" class="block_setting position-absolute tile-container__setting-icon">
+                    <i class="fa fa-cog"></i>
+                </a>
+                <div class="ps3">
+                    <span class="font-weight-bold" style="font-weight: 700;
+                    font-size: 35px;
+                    font-family: Geneva;
+                    " >
+                        <t t-esc="widget.value"/>
+                    </span>
+                </div>
+                <strong><t t-esc="widget.name"/></strong>
+            </div>
+        </div>
+    </t>
+    
+    
+    
+    <t t-name="DynamicDashboardChart">
+        <!-- <head>
+            <meta charset="UTF-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Dashboard</title>
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+                  integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA=="
+                  crossorigin="anonymous"/>
+        </head> -->
+        <div style="padding-bottom:30px" t-att-class="widget.cols +' col-4 block'" t-att-data-id="widget.id">
+                <div class="card p-2 h-100">
+                    <!-- <div class="card-header">
+                        <div class="row">
+                           
+                           
+                            <div class="col">
+                                <div style="float:right;"><i title="Configuration" class="fa fa-cog block_setting fa-x" style="
+                                    position: absolute;
+                                    top: 10px;
+                                    right: 10px;
+                                "/></div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <i title="Configuration" class="fa fa-cog block_setting fa-x" style="
+                                    position: absolute;
+                                    top: 10px;
+                                    right: 10px;
+                                "/>
+                    <div class="card-body" id="in_ex_body_hide">
+                        <div class="row">
+                            
+                            <canvas class="chart_graphs" width="200" t-att-height="widget.graph_width"> </canvas>
+                               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+</templates>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.gemini</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='integration']" position="after">
+                <div class="app_settings_block" data-string="Gemini AI" data-key="discuss_gemini_integration"
+                     string="Gemini AI">
+                    <h2>Gemini AI Integration</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div>
+                                <label for="enable_gemini" string="Enable Gemini Integration"/>
+
+                            </div>
+                            <div>
+                                <field name="enable_gemini"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div>
+                                <label for="gemini_api_key" string="API Key"/>
+
+                            </div>
+                            <div>
+                                <field name="gemini_api_key"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div>
+                                <label for="gemini_model" string="Model"/>
+                            </div>
+                            <div>
+                                <field name="gemini_model"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div>
+                                <label for="gemini_partner_id" string="Gemini Partner"/>
+                            </div>
+                            <div>
+                                <field name="gemini_partner_id"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div>
+                                <label for="max_context_messages" string="Context Messages"/>
+
+                            </div>
+                            <div>
+                                <field name="max_context_messages"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div>
+                                <label for="is_gemini_response_added" string="Will Gemini Response Added In conversation"/>
+                            </div>
+                            <div>
+                                <field name="is_gemini_response_added"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

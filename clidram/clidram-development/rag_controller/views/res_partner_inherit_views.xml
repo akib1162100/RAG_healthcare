@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit wk_appointment partner view to add OTP templates -->
+        <record id="view_partner_form_inherit_wk_appointment_rag" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.wk.appointment.rag</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="wk_appointment.inherit_base_res_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='appoint_product_id']" position="after">
+                    <field name="new_appointment_template_id" attrs="{'invisible': [('available_for_appoint', '=', False)]}"/>
+                    <field name="approved_appointment_template_id" attrs="{'invisible': [('available_for_appoint', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit pos_prescription_knk partner view to add WhatsApp and Signup OTP templates -->
+        <record id="view_partner_form_inherit_pos_prescription_rag" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.pos.prescription.rag</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="pos_prescription_knk.res_partner_physician"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='is_default_whatsapp_contact']" position="after">
+                    <field name="whatsapp_template_id"/>
+                    <field name="whatsapp_otp_template_id"/>
+                    <field name="signup_otp_template_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

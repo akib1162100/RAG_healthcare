@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+    <data noupdate="1">
+
+        <function model="ir.default" name="set"
+            eval="('res.config.settings', 'website_appoint_payment_mode', 'before_appoint')"/>
+
+        <function model="ir.default" name="set"
+            eval="('res.config.settings', 'show_cancel_booking', True)"/>
+
+        <record id="menu_appointment" model="website.menu">
+            <field name="name">Appointment</field>
+            <field name="url">/appointment</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">30</field>
+        </record>
+
+      </data>
+</odoo>

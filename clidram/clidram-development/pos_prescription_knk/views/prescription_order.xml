@@ -1,0 +1,1060 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="order_line_knk" model="ir.ui.view">
+        <field name="name">prescription.order.line.knk.tree</field>
+        <field name="model">prescription.order.line.knk</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Prescription Line" editable="bottom">
+                <field name="prescription_id"/>
+                <field name="product_id" string="Medicine Name"/>
+                <field name="short_comment"/>
+                <field name="qty_per_day" required="1"/>
+                <field name="days" required="1"/>
+                <field name="quantity" required="1" string="Total Qty"/>
+                <field name="qty_available" readonly="1" optional="hide"/>
+                <field name="unit_price"/>
+                <field name="subtotal"/>
+                <field name="dose"/>
+                <field name="composition"/>
+                <field name="route"/>
+                <field name="whn_to_take"/>
+                <field name="t_qty"/>
+                <field name="med_group"/>
+                <field name="frequency"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="test_line">
+        <field name="name">Prescription Order line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">prescription.order.line.knk</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="order_line_knk"/>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add Prescrition.
+            </p>
+        </field>
+    </record>
+
+    <record id="order_line_new_knk" model="ir.ui.view">
+        <field name="name">prescription.order.line.knk.new.tree</field>
+        <field name="model">prescription.order.line.knk.new</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Prescription Line" editable="bottom">
+                <field name="prescription_id"/>
+                <field name="product_id" string="Medicine Name"/>
+                <field name="short_comment"/>
+                <field name="qty_per_day" required="1"/>
+                <field name="days" required="1"/>
+                <field name="quantity" required="1" string="Total Qty"/>
+                <field name="qty_available" readonly="1" optional="hide"/>
+                <field name="unit_price"/>
+                <field name="subtotal"/>
+                <field name="dose_id"/>
+                <field name="composition_id"/>
+                <field name="route_id"/>
+                <field name="whn_to_take_id"/>
+                <field name="knk_t_qty"/>
+                <field name="med_group_id"/>
+                <field name="frequency_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="test_line_new">
+        <field name="name">Prescription Order line New</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">prescription.order.line.knk.new</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="order_line_new_knk"/>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add Prescrition.
+            </p>
+        </field>
+    </record>
+
+    <!-- Prescription Line -->
+    <record id="view_hms_prescription_line_tree_kanak" model="ir.ui.view">
+        <field name="name">prescription.order.line.knk.tree</field>
+        <field name="model">prescription.order.line.knk</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Prescription Line" editable="bottom">
+                <field name="product_id" string="Medicine Name"/>
+                <field name="short_comment"/>
+                <field name="qty_per_day" required="1"/>
+                <field name="days" required="1"/>
+                <field name="quantity" required="1" string="Total Qty"/>
+                <field name="qty_available" readonly="1" optional="hide"/>
+                <field name="unit_price"/>
+                <field name="subtotal"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_hms_prescription_line_form_kanak" model="ir.ui.view">
+        <field name="name">prescription.order.line.knk.form</field>
+        <field name="model">prescription.order.line.knk</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Prescription Line">
+                <group>
+                    <group>
+                        <field name="product_id"/>
+                    </group>
+                    <group>
+                        <field name="quantity"/>
+                        <field name="short_comment"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_hms_prescription_line_search_kanak" model="ir.ui.view">
+        <field name="name">prescription.order.line.knk.search</field>
+        <field name="model">prescription.order.line.knk</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Prescription Line">
+                <field name="prescription_id"/>
+                <field name="short_comment"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Prescription ID" name="name_groupby" domain="[]"
+                            context="{'group_by':'prescription_id'}"/>
+                    <filter string="Comment" name="short_comment_groupby" domain="[]"
+                            context="{'group_by':'short_comment'}"/>
+                    <filter string="Medication Template" name="product_id_groupby" domain="[]"
+                            context="{'group_by':'product_id'}"/>
+                    <filter string="Quantity" name="quantity_groupby" domain="[]" context="{'group_by':'quantity'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Prescription -->
+    <record id="view_hms_prescription_order_tree_kanak" model="ir.ui.view">
+        <field name="name">prescription.order.knk.tree</field>
+        <field name="model">prescription.order.knk</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Prescription Order" decoration-info="state=='prescription'"
+                  decoration-muted="state=='canceled'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="physician_id"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="disease" optional="hide"/>
+                <field name="short_code" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_open_complaint_image_editor" model="ir.actions.client">
+        <field name="name">Prescription Image Editor</field>
+        <field name="tag">image_editor_action</field>
+        <field name="context">
+            {
+            'record_id': active_id,
+            'model': 'complaint.record.line',
+            'field_name': 'image',
+            'image_url': '/web/image/complaint.record.line/' + active_id + '/image'
+            }
+        </field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_hms_prescription_order_form" model="ir.ui.view">
+        <field name="name">prescription.order.knk.form</field>
+        <field name="model">prescription.order.knk</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Prescription Order">
+                <header>
+                    <button name="button_confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+
+                    <button name="send_whatsapp_message" states="prescribed" string="Send Whatsapp Message"
+                            type="object" class="btn-success" icon="fa-whatsapp"/>
+
+                    <button name="button_print_prescription" states="prescribed"
+                            string="Print Prescription" type="object" class="oe_highlight"/>
+                    <button name="button_reset" states="prescription" string="Reset to Draft" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,prescription"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title">
+                        <label for="name" string="Prescription Reference"/>
+                        <h1>
+                            <div class="d-flex">
+                                <field name="priority" widget="priority" class="me-3"/>
+                                <field class="text-break" name="name"/>
+                            </div>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="patient_id" attrs="{'readonly':[('state','!=','draft')]}"
+                                   options="{'no_create': True, 'no_edit': True}"/>
+                            <field name="patient_age" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="physician_id" attrs="{'readonly':[('state','!=','draft')]}"
+                                   options="{'no_create': True, 'no_edit': True}"/>
+                            <field name="patient_seq"/>
+                            <field name="prescription_template_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="prescription_template_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="active" invisible="1"/>
+                            <field name="old_prescription" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                            <field name="product_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="qr_image" widget='image' class="oe_avatar"
+                                   attrs="{'invisible':[('patient_seq','=',False)]}"/>
+                            <field name="patient_medical_history" readonly="1" invisible="1"/>
+                            <field name="check_patient"/>
+                            <!--                            <field name="prescription_attachment" widget="pdf_viewer"/>-->
+                            <field name="prescription_attachment" widget="binary"/>
+                            <field name="has_any_red_flag" widget="boolean_toggle" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="vital_lines"
+                              string="Vitals">
+                            <notebook>
+
+                                <!-- VITALS PAGE -->
+                                <page string="Vitals">
+                                    <group>
+                                        <group>
+                                            <field name="v_weight" invisible="1"/>
+                                            <field name="weight_uom_id" options="{'no_create': True}" invisible="1"/>
+
+                                            <field name="v_height" invisible="1"/>
+                                            <field name="h_unit" invisible="1"/>
+                                            <field name="v_bmi"
+                                                   decoration-danger="v_bmi and (v_bmi &gt;= 30 or v_bmi &lt; 17)"
+                                                   decoration-warning="v_bmi and ((v_bmi &gt;= 25 and v_bmi &lt; 30) or (v_bmi &gt;= 17 and v_bmi &lt; 18.5))"
+                                                   decoration-success="v_bmi and v_bmi &gt;= 18.5 and v_bmi &lt; 25"/>
+
+                                            <field name="blood_presure"
+                                                   decoration-danger="blood_presure and (blood_presure &gt;= 180 or blood_presure &lt;= 90)"
+                                                   decoration-warning="blood_presure and ((blood_presure &gt; 90 and blood_presure &lt;= 100) or (blood_presure &gt;= 140 and blood_presure &lt; 180))"
+                                                   decoration-success="blood_presure and blood_presure &gt; 100 and blood_presure &lt; 140"/>
+
+                                            <field name="blood_presure_2"
+                                                   decoration-danger="blood_presure_2 and (blood_presure_2 &gt;= 110 or blood_presure_2 &lt;= 60)"
+                                                   decoration-warning="blood_presure_2 and blood_presure_2 &gt; 90 and blood_presure_2 &lt; 110"
+                                                   decoration-success="blood_presure_2 and blood_presure_2 &gt; 60 and blood_presure_2 &lt;= 90"/>
+
+                                            <field name="v_pulse"
+                                                   decoration-danger="v_pulse and (v_pulse &gt; 120 or v_pulse &lt; 50)"
+                                                   decoration-warning="v_pulse and ((v_pulse &gt;= 50 and v_pulse &lt; 60) or (v_pulse &gt; 99 and v_pulse &lt;= 120))"
+                                                   decoration-success="v_pulse and v_pulse &gt;= 60 and v_pulse &lt;= 99"/>
+
+                                            <field name="v_respiratory_rate"
+                                                   decoration-danger="v_respiratory_rate and (v_respiratory_rate &lt; 10 or v_respiratory_rate &gt; 24)"
+                                                   decoration-warning="v_respiratory_rate and ((v_respiratory_rate &gt;= 10 and v_respiratory_rate &lt; 12) or (v_respiratory_rate &gt; 20 and v_respiratory_rate &lt;= 24))"
+                                                   decoration-success="v_respiratory_rate and v_respiratory_rate &gt;= 12 and v_respiratory_rate &lt;= 20"/>
+
+                                            <field name="pain_score"
+                                                   decoration-danger="pain_score &gt;= 7"
+                                                   decoration-warning="pain_score &gt;= 4 and pain_score &lt;= 6"
+                                                   decoration-success="pain_score &gt;= 0 and pain_score &lt;= 3"/>
+
+                                            <field name="temperature"
+                                                   decoration-danger="temperature and (temperature &gt; 102.2 or temperature &lt; 96)"
+                                                   decoration-warning="temperature and temperature &gt;= 100.4 and temperature &lt;= 102.2"
+                                                   decoration-success="temperature and temperature &gt;= 97 and temperature &lt; 100.4"/>
+
+                                            <field name="spo2"
+                                                   decoration-danger="spo2 and spo2 &lt; 92"
+                                                   decoration-warning="spo2 and spo2 &gt;= 92 and spo2 &lt;= 94"
+                                                   decoration-success="spo2 and spo2 &gt;= 95"/>
+
+<!--                                            <field name="glassgow_coma_scale"-->
+<!--                                                   decoration-danger="glassgow_coma_scale &lt;= 12"-->
+<!--                                                   decoration-warning="glassgow_coma_scale &gt;= 13 and glassgow_coma_scale &lt;= 14"-->
+<!--                                                   decoration-success="glassgow_coma_scale == 15"/>-->
+                                        </group>
+
+                                        <group>
+                                            <field name="motor_power"
+                                                   decoration-danger="motor_power and motor_power &lt; 40"
+                                                   decoration-warning="motor_power and motor_power &gt;= 40 and motor_power &lt;= 50"
+                                                   decoration-success="motor_power and motor_power &gt; 50 and motor_power &lt;= 60"/>
+
+                                            <field name="pupil_reaction"
+                                                   decoration-danger="pupil_reaction == 'r'"
+                                                   decoration-warning="pupil_reaction == 'a'"
+                                                   decoration-success="pupil_reaction == 'g'"/>
+
+                                            <field name="pupil_reaction_right"
+                                                   decoration-danger="pupil_reaction_right == 'r'"
+                                                   decoration-warning="pupil_reaction_right == 'a'"
+                                                   decoration-success="pupil_reaction_right == 'g'"/>
+
+
+                                            <field name="rbs"
+                                                   decoration-danger="rbs and (rbs &gt; 301 or rbs &lt; 70)"
+                                                   decoration-warning="rbs and rbs &gt;= 141 and rbs &lt;= 300"
+                                                   decoration-success="rbs and rbs &gt;= 70 and rbs &lt;= 140"/>
+
+                                            <field name="nihss"
+                                                   decoration-danger="nihss and nihss &gt;= 16"
+                                                   decoration-warning="nihss and nihss &gt;= 5 and nihss &lt;= 15"
+                                                   decoration-success="nihss != False and nihss &gt;= 0 and nihss &lt;= 4"/>
+
+                                            <field name="cardiac_rythm_type"/>
+
+                                            <field name="cardiac_rythm"
+                                                   decoration-danger="cardiac_rythm in ('new_a_f', 'vt', 'brady')"
+                                                   decoration-warning="cardiac_rythm == 'irregular'"
+                                                   decoration-success="cardiac_rythm == 'sinus'"/>
+
+                                            <field name="dyspnea"
+                                                   decoration-danger="dyspnea == 'iv'"
+                                                   decoration-warning="dyspnea == 'iii'"
+                                                   decoration-success="dyspnea == 'i' or dyspnea == 'ii'"/>
+
+                                            <field name="gcs_total_score"
+                                                   readonly="1"
+                                                   decoration-success="gcs_total_score == 15"
+                                                   decoration-warning="gcs_total_score &gt;= 13 and gcs_total_score &lt; 15"
+                                                   decoration-danger="gcs_total_score and gcs_total_score &lt; 13"/>
+                                        </group>
+                                    </group>
+
+<!--                                    <field name="vital_ids">-->
+<!--                                        <tree editable="bottom">-->
+<!--                                            <field name="sequence"-->
+<!--                                                   widget="handle"/>-->
+<!--                                            <field name="name"/>-->
+<!--                                            <field name="w_unit" decoration-warning="w_unit &gt; 10"/>-->
+<!--                                            <field name="height" optional="hide"/>-->
+<!--                                            <field name="bmi" optional="hide"/>-->
+<!--                                            <field name="blood_presure" optional="hide"/>-->
+<!--                                            <field name="blood_presure_2" optional="hide"/>-->
+<!--                                            <field name="pulse"-->
+<!--                                                   decoration-danger="pulse and (pulse &gt; 120 or pulse &lt; 40)"/>-->
+
+<!--                                            <field name="respiratory_rate"-->
+<!--                                                   decoration-danger="respiratory_rate and (respiratory_rate &lt; 10 or respiratory_rate &gt; 25)"/>-->
+<!--                                            <field name="temperature" decoration-danger="temperature > 39"/>-->
+<!--                                            <field name="spo2"-->
+<!--                                                   decoration-danger="spo2 and spo2 &lt; 92"-->
+<!--                                                   decoration-warning="spo2 &gt;= 92 and spo2 &lt; 95"-->
+<!--                                                   decoration-success="spo2 &gt;= 95"/>-->
+<!--                                            <field name="motor_power"-->
+<!--                                                   decoration-danger="motor_power and motor_power &lt; 40"-->
+<!--                                                   decoration-warning="motor_power &gt;= 40 and motor_power &lt; 60"-->
+<!--                                                   decoration-success="motor_power &gt;= 60"-->
+<!--                                                   optional="hide"/>-->
+<!--                                            <field name="pupil_reaction" optional="hide"/>-->
+<!--                                            <field name="rbs" decoration-danger="rbs and (rbs &gt; 300 or rbs &lt; 70)"-->
+<!--                                                   optional="hide"/>-->
+<!--                                            <field name="nihss"-->
+<!--                                                   decoration-danger="nihss &gt; 15"-->
+<!--                                                   decoration-warning="nihss &gt;= 5 and nihss &lt;= 15"-->
+<!--                                                   decoration-success="nihss and nihss &lt; 5"-->
+<!--                                                   optional="hide"/>-->
+
+<!--                                            <field name="gcs_total_score"-->
+<!--                                                   decoration-success="gcs_total_score == 15"-->
+<!--                                                   decoration-warning="gcs_total_score &gt;= 13 and gcs_total_score &lt; 15"-->
+<!--                                                   decoration-danger="gcs_total_score and gcs_total_score &lt; 13"-->
+<!--                                                   readonly="1"-->
+<!--                                                   optional="hide"/>-->
+<!--                                        </tree>-->
+<!--                                    </field>-->
+                                </page>
+
+                                <page name="height_weight_page" string="Height and Weight">
+                                    <field name="bmi_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="v_weight" width="150px"/>
+                                            <field name="weight_uom_id" options="{'no_create': True}" width="150px"/>
+                                            <field name="v_height" width="150px"/>
+                                            <field name="v_bmi" optional="hide" width="150px"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                                <!-- GCS PAGE -->
+                                <page string="GCS Score">
+                                    <field name="gcs_score_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="eye_response_id"/>
+                                            <field name="verbal_response_id"/>
+                                            <field name="motor_response_id"/>
+                                            <field name="total_score"
+                                                   readonly="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                            </notebook>
+                        </page>
+                        <page name="Complaints_lines" string="Complaints">
+                            <notebook>
+                                <page name="complaint_page" string="Complaints">
+                                    <field name="complaint_id" mode="tree,form">
+                                        <form>
+                                            <group>
+                                                <group>
+                                                    <field name="period_domain_ids" invisible="1"/>
+                                                    <field name='complaint_list_id'/>
+                                                    <field name="location_id"/>
+                                                    <field name='period' domain="[('id', 'in', period_domain_ids)]"/>
+                                                    <field name="trigger_domain_ids" invisible="1"/>
+                                                    <field name="temporal_domain_ids"
+                                                           invisible="1"/>
+                                                    <field name="allergy_domain_ids" invisible="1"/>
+                                                    <field name="red_flag_domain_ids" invisible="1"/>
+
+                                                    <field name="trigger_context_ids" widget="many2many_tags"/>
+
+
+                                                    <field name="red_flag_selection_ids"
+                                                           decoration-danger="red_flag_selection_ids"/>
+
+
+                                                    <field name="temporal_pattern_id"/>
+
+                                                    <field name="allergy_reaction_ids" />
+                                                    <field name="allergy_severity"
+                                                           widget="selection"
+                                                           decoration-success="allergy_severity == 'none'"
+                                                           decoration-warning="allergy_severity in ['mild', 'moderate']"
+                                                           decoration-danger="allergy_severity == 'severe'"/>
+                                                </group>
+
+                                                <group>
+                                                    <field name="clinical_overview"/>
+                                                    <field name="view_all_buttons" widget="boolean_toggle"/>
+                                                    <button name="action_select_image" type="object"
+                                                            string="Select Image"
+                                                            class="oe_highlight"
+                                                            attrs="{'invisible': ['|', ('parent.state', '=', 'prescribed'), ('view_all_buttons', '=', False)]}"/>
+                                                    <field name="image" widget="image" class="oe_avatar"
+                                                           options="{'zoom': true, 'size': [100, 100]}"
+                                                           attrs="{'invisible': [('view_all_buttons', '=', False)]}"/>
+                                                    <button name="%(action_open_complaint_image_editor)d" type="action"
+                                                            string="Edit Image" class="oe_highlight"
+                                                            attrs="{'invisible': ['|', ('parent.state', '=', 'prescribed'), ('view_all_buttons', '=', False)]}"/>
+                                                    <field name='patient_id' invisible="1"/>
+                                                </group>
+                                            </group>
+                                        </form>
+                                        <tree string="Complaints">
+                                            <field name="sequence" widget='handle'/>
+                                            <field name="period_domain_ids" invisible="1"/>
+                                            <field name='complaint_list_id'/>
+                                            <field name="location_id"/>
+                                            <field name='period' domain="[('id', 'in', period_domain_ids)]"/>
+                                            <field name="trigger_domain_ids" invisible="1"/>
+                                            <field name="temporal_domain_ids"
+                                                   invisible="1"/>
+                                            <field name="allergy_domain_ids" invisible="1"/>
+                                            <field name="red_flag_domain_ids" invisible="1"/>
+
+                                            <field name="trigger_context_ids" widget="many2many_tags"/>
+
+
+                                            <field name="red_flag_selection_ids"
+                                                   decoration-danger="red_flag_selection_ids"/>
+
+
+                                            <field name="temporal_pattern_id" optional="hide"/>
+
+                                            <field name="allergy_reaction_ids" optional="hide"/>
+                                            <field name="allergy_severity"
+                                                   widget="selection"
+                                                   decoration-success="allergy_severity == 'none'"
+                                                   decoration-warning="allergy_severity == 'mild'"
+                                                   decoration-info="allergy_severity == 'moderate'"
+                                                   decoration-danger="allergy_severity == 'severe'"/>
+
+
+                                            <field name="clinical_overview" optional="hide"/>
+                                            <field name="view_all_buttons" widget="boolean_toggle"/>
+                                            <button name="action_select_image" type="object" string="Select Image"
+                                                    class="oe_highlight"
+                                                    attrs="{'invisible': ['|', ('parent.state', '=', 'prescribed'), ('view_all_buttons', '=', False)]}"/>
+                                            <field name="image" widget="image" class="oe_avatar"
+                                                   options="{'zoom': true, 'size': [100, 100]}"
+                                                   attrs="{'invisible': [('view_all_buttons', '=', False)]}"/>
+                                            <button name="%(action_open_complaint_image_editor)d" type="action"
+                                                    string="Edit Image" class="oe_highlight"
+                                                    attrs="{'invisible': ['|', ('parent.state', '=', 'prescribed'), ('view_all_buttons', '=', False)]}"/>
+                                            <field name='patient_id' invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="history_page" string="History">
+                                    <field name="history_id">
+                                        <tree string="History" editable="bottom">
+                                            <field name="sequence" widget='handle'/>
+                                            <field name='name' required="1" string="History"/>
+                                            <field name='history_period' string="Onset &amp; Duration"/>
+                                            <field name='history_category_id'/>
+
+                                            <field name="progression"/>
+                                            <field name="severity"/>
+                                            <field name="associated_symptoms"/>
+
+                                            <field name='patient_id' invisible="1"/>
+                                        </tree>
+                                    </field>
+                                    <label for="patient_history"/>
+                                    <field name="patient_history"/>
+                                </page>
+                                <page name="past_history" string="Past Medical History">
+                                    <field name="past_medical_history_line_ids"
+                                           attrs="{'readonly':[('state','=','prescribed')]}">
+                                        <tree editable="bottom">
+                                            <field name="symptom_id" options="{'no_create': True}"/>
+                                            <field name="result_domain_ids" invisible="1"/>
+                                            <field name="result_id" options="{'no_create': True}"
+                                                   domain="[('id', 'in', result_domain_ids)]"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="medication_history" string="Medication History">
+                                    <field name="medication_history_line_ids"
+                                           attrs="{'readonly':[('state','=','prescribed')]}">
+                                        <tree editable="bottom">
+                                            <field name="medicine_id"/>
+                                            <field name="medicine_group_id"/>
+                                            <field name="dose"/>
+                                            <field name="frequency"/>
+                                            <field name="otc_herbal_supplement"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="family_history" string="Family History">
+                                    <field name="family_history_line_ids"
+                                           attrs="{'readonly':[('state','=','prescribed')]}">
+                                        <tree editable="bottom">
+                                            <field name="family_history_config_id" options="{'no_create': True}"/>
+                                            <field name="result_domain_ids" invisible="1"/>
+                                            <field name="family_history_result_id" options="{'no_create': True}"
+                                                   domain="[('id', 'in', result_domain_ids)]"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="social_history" string="Social History">
+                                    <field name="social_history_line_ids"
+                                           attrs="{'readonly':[('state','=','prescribed')]}">
+                                        <tree editable="bottom">
+                                            <field name="social_history_config_id" options="{'no_create': True}"/>
+                                            <field name="result_domain_ids" invisible="1"/>
+                                            <field name="social_history_result_id" options="{'no_create': True}"
+                                                   domain="[('id', 'in', result_domain_ids)]"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="sign_page" string="Examination">
+                                    <field name="sign_ids">
+                                        <tree string="symptoms" editable="bottom">
+                                            <field name="sequence" widget='handle'/>
+                                            <field name='name'/>
+                                            <field name='location'/>
+                                            <field name='intensity'/>
+                                            <field name='patient_id' invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="physical_examination_page" string="Physical Examination">
+                                    <group>
+                                        <group>
+                                            <field name="general_condition_id" options="{'no_create': True}"/>
+                                            <field name="pallor_id" options="{'no_create': True}"/>
+                                            <field name="msk_id" options="{'no_create': True}"/>
+                                            <field name="edema_id" options="{'no_create': True}"/>
+                                            <field name="lymph_nodes_id" options="{'no_create': True}"/>
+                                        </group>
+                                        <group>
+                                            <field name="hydration_id" options="{'no_create': True}"/>
+                                            <field name="cvs_id" options="{'no_create': True}"/>
+                                            <field name="rs_id" options="{'no_create': True}"/>
+                                            <field name="abdomen_id" options="{'no_create': True}"/>
+                                            <field name="neuro_id" options="{'no_create': True}"/>
+                                            <field name="ent_id" options="{'no_create': True}"/>
+                                        </group>
+                                    </group>
+<!--                                    <field name="physical_examination_ids">-->
+<!--                                        <tree string="Physical Examination" editable="bottom">-->
+<!--                                            <field name="sequence" widget="handle"/>-->
+<!--                                            <field name="general"/>-->
+<!--                                            <field name="heent"/>-->
+<!--                                            <field name="cvs"/>-->
+<!--                                            <field name="respiratory"/>-->
+<!--                                            <field name="abdomen"/>-->
+<!--                                            <field name="msk"/>-->
+<!--                                            <field name="cns"/>-->
+<!--                                        </tree>-->
+<!--                                    </field>-->
+                                </page>
+
+                            </notebook>
+                        </page>
+                        <page name="diagnosis" string="Diagnosis">
+                            <field name="diagnosis_ids">
+                                <tree string="Diagnosis" editable="bottom">
+                                    <field name="secondary_diagnosis_ids" invisible="1"/>
+                                    <field name="name"/>
+<!--                                    <field name="selected_secondary_diagnosis_id"-->
+<!--                                           options="{'no_create': True, 'no_edit': True}"/>-->
+                                    <field name="selected_secondary_diagnosis_ids" widget="many2many_tags"
+                                           options="{'no_create': True, 'no_edit': True}"/>
+                                    <field name="icd10_code_id"/>
+                                    <field name="snomed_ct_code"/>
+<!--                                    <field name="disease_id" options="{'no_create': True, 'no_edit': True}"/>-->
+                                    <field name="disease_short_code_id" options="{'no_create': True, 'no_edit': True}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="prescription_lines_new" string="Medication"
+                              attrs="{'invisible':[('old_prescription','=',True)]}">
+                            <field name="order_line_new_ids">
+                                <tree string="Prescription" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="med_group_id" width="50px"/>
+                                    <field name="composition_id" width="50px"/>
+                                    <field name="product_id" width="50px"/>
+                                    <field name="dose_id" width="50px" optional="hide"/>
+                                    <field name="allergy_status" width="50px"/>
+                                    <field name="duration_type" width="50px" optional="hide"/>
+                                    <field name="duration_value" width="50px" optional="hide"/>
+                                    <field name="route_id" width="50px" optional="hide"/>
+                                    <field name="whn_to_take_id" width="50px"/>
+                                    <field name="frequency_id" width="50px"/>
+                                    <field name="knk_t_qty" width="50px"/>
+                                </tree>
+                            </field>
+                        </page>
+
+
+                        <page name="prescription_lines" string="Medication"
+                              attrs="{'invisible':[('old_prescription','=',False)]}">
+                            <field name="order_line_ids">
+                                <tree string="Prescription" editable="bottom">
+                                    <field name="sequence" widget='handle'/>
+                                    <field name='med_group' readonly="0" width="30px"/>
+                                    <field name='composition' readonly="0" width="30px"/>
+                                    <field name='product_id' width="40px"/>
+                                    <field name='dose' width="15px"/>
+                                    <field name='route' width="35px"/>
+                                    <field name="whn_to_take" width="50px"/>
+                                    <field name='frequency' width="30px"/>
+                                    <field name="duration_unit" width="40px"/>
+                                    <field name="duration_value" width="20px"/>
+                                    <field name="allergy_status" width="20px"/>
+                                    <field name="t_qty" width="130px"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page name="Advice_lines" string="Advice">
+                            <notebook>
+                                <page name="Investigation_page" string="Investigations">
+                                    <field name="investigation_ids">
+                                        <tree string="Investigations" editable="bottom">
+                                            <field name="sequence" widget='handle'/>
+                                            <field name="category_id" options="{'no_create': False}"/>
+                                            <field name='investigation_list_id' width="20%"/>
+                                            <field name='test_type' widget="many2many_tags" width="80%"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                    <label for="investigation_result"/>
+                                    <field name="investigation_result"/>
+                                </page>
+                                <page name="Excercise_page" string="Excercise">
+                                    <!-- <field name="sequence" widget='handle'/> -->
+
+                                    <field name="excercise_ids">
+
+                                        <tree string="Excercise" editable="bottom">
+                                            <field name="sequence" widget='handle'/>
+                                            <field name="instruction_domain_ids" invisible="1"/>
+                                            <field name='name'/>
+                                            <field name="instruction_id"/>
+                                            <!--                                            <field name='part_location'/>-->
+                                            <!--                                            <field name="move2"/>-->
+                                            <!--                                            <field name='type_of_test2'/>-->
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="Ortho_page" string="Ortho/Prosthesis">
+                                    <field name="ortho_ids">
+                                        <tree string="Ortho" editable="bottom">
+                                            <field name="sequence" widget='handle'/>
+                                            <field name='name'/>
+                                            <field name='location'/>
+                                            <field name='side'/>
+                                            <field name='material' readonly="0"/>
+                                            <field name='comments' readonly="0"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="diet_page" string="Diet">
+                                    <field name="description" placeholder="Diet..."/>
+                                </page>
+                                <page name="extra_notes_page" string="Extra Notes">
+                                    <field name="extra_notes" placeholder="Notes..."/>
+                                </page>
+                                <page name="procedure_page" string="Procedure">
+                                    <field name="procedure_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="procedure_config_ids" options="{'no_create': True}"
+                                                   widget="many2many_tags"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                    <label for="procedure_result"/>
+                                    <field name="procedure_result"/>
+                                </page>
+                            </notebook>
+                        </page>
+                        <page name="old_medical_history" string="Old History">
+                            <field name="medical_history_ids">
+                                <tree delete="0" create="0" edit="0">
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="medication"/>
+                                    <field name="investigation"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="patient_details_history" string='Patient Details'>
+                            <field name="patient_details"/>
+                        </page>
+                        <page name="follow_up_notes" string="Follow Up Notes">
+                            <group>
+                                <field name="next_visit_days"/>
+                                <field name="date_of_next_visit"/>
+                                <field name="symptom_status"/>
+                                <field name="medication_adherence"/>
+                                <field name="performance_status_update"/>
+                                <field name="counseling_behavioral_response"/>
+                                <separator/>
+                                <field name="additional_comments" placeholder="Additional Comments..."/>
+                                <field name="side_effects" placeholder="Side Effects..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <div name="note_group" col="12" class="mt-2 mt-md-0">
+                        <field name="notes_line_id" placeholder="......Notes" nolabel="1" style="min-width:100%"/>
+                        <!-- <group>
+                        </group> -->
+                        <div class="clearfix"/>
+                    </div>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'open_attachments': True}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_hms_prescription_order_search" model="ir.ui.view">
+        <field name="name">prescription.order.knk.search</field>
+        <field name="model">prescription.order.knk</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Prescription Order">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="patient_id"/>
+                <!-- <field name="order_line_ids" string="Medicine" filter_domain="[('order_line_ids.product_id', 'ilike', self)]" /> -->
+                <field name="physician_id"/>
+                <!-- <field name="notes" /> -->
+                <field name="company_id"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Patient" name="patient_id_groupby" domain="[]" context="{'group_by':'patient_id'}"/>
+
+                    <filter string="Prescription Date" name="date_groupby" domain="[]" context="{'group_by':'date'}"/>
+                    <filter string="Prescribing Doctor" name="physician_id_groupby" domain="[]"
+                            context="{'group_by':'physician_id'}"/>
+                    <filter name="today" string="Today's Prescription"
+                            domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <filter string="Company" name="company_group" domain="[]" context="{'group_by':'company_id'}"/>
+                    <filter string="Patient id" name="patient_group" domain="[]" context="{'group_by':'patient_seq'}"/>
+
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_hms_prescription_order_kanban">
+        <field name="name">Prescription Order kanban</field>
+        <field name="model">prescription.order.knk</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey">
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_content">
+                            <div class="oe_kanban_vignette oe_semantic_html_override">
+                                <div class="oe_kanban_details">
+                                    <h3>
+                                        <a type="open">
+                                            <field name="name"/>
+                                        </a>
+                                    </h3>
+                                    <ul>
+                                        <li t-if="record.date.raw_value">
+                                            <b>Date:</b>
+                                            <field name="date"/>
+                                        </li>
+                                        <li t-if="record.patient_id.raw_value">
+                                            <b>Patient:</b>
+                                            <field name="patient_id"/>
+                                        </li>
+                                        <li t-if="record.physician_id.raw_value">
+                                            <b>Physician:</b>
+                                            <field name="physician_id"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="view_prescription_calendar_knk" model="ir.ui.view">
+        <field name="name">prescription.order.knk.calendar</field>
+        <field name="model">prescription.order.knk</field>
+        <field name="type">calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Prescriptions" color="patient_id" date_start="date">
+                <field name="physician_id"/>
+                <field name="patient_id"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="view_prescription_pivot" model="ir.ui.view">
+        <field name="name">prescription.order.knk.pivot</field>
+        <field name="model">prescription.order.knk</field>
+        <field name="arch" type="xml">
+            <pivot string="Prescription Orders">
+                <field name="date" type="row"/>
+                <field name="physician_id" type="row"/>
+                <field name="description" type="col"/>
+                <!-- <field name="order_line_ids" type="row" />
+                <field name="order_line_new_ids" type="row"/> -->
+            </pivot>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_hms_prescription_order_view">
+        <field name="name">Prescription Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">prescription.order.knk</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot</field>
+        <field name="search_view_id" ref="view_hms_prescription_order_search"/>
+        <field name="view_id" ref="view_hms_prescription_order_tree_kanak"/>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add Prescrition.
+            </p>
+        </field>
+    </record>
+
+    <!-- Motor Response Views -->
+    <record id="view_gsc_motor_tree" model="ir.ui.view">
+        <field name="name">gsc.motor.response.tree</field>
+        <field name="model">gsc.motor.response</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="score"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_gsc_motor_form" model="ir.ui.view">
+        <field name="name">gsc.motor.response.form</field>
+        <field name="model">gsc.motor.response</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="score"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gsc_motor_response" model="ir.actions.act_window">
+        <field name="name">Best Motor Response</field>
+        <field name="res_model">gsc.motor.response</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Verbal Response Views -->
+    <record id="view_gsc_verbal_tree" model="ir.ui.view">
+        <field name="name">gsc.verbal.response.tree</field>
+        <field name="model">gsc.verbal.response</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="score"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_gsc_verbal_form" model="ir.ui.view">
+        <field name="name">gsc.verbal.response.form</field>
+        <field name="model">gsc.verbal.response</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="score"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gsc_verbal_response" model="ir.actions.act_window">
+        <field name="name">Best Verbal Response</field>
+        <field name="res_model">gsc.verbal.response</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Eye Response Views -->
+    <record id="view_gsc_eye_tree" model="ir.ui.view">
+        <field name="name">gsc.eye.response.tree</field>
+        <field name="model">gsc.eye.response</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="score"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_gsc_eye_form" model="ir.ui.view">
+        <field name="name">gsc.eye.response.form</field>
+        <field name="model">gsc.eye.response</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="score"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gsc_eye_response" model="ir.actions.act_window">
+        <field name="name">Best Eye Response</field>
+        <field name="res_model">gsc.eye.response</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Views for Trigger / Context -->
+    <record id="view_trigger_context_tree" model="ir.ui.view">
+        <field name="name">trigger.context.tree</field>
+        <field name="model">trigger.context</field>
+        <field name="arch" type="xml">
+            <tree string="Trigger / Context">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_trigger_context_form" model="ir.ui.view">
+        <field name="name">trigger.context.form</field>
+        <field name="model">trigger.context</field>
+        <field name="arch" type="xml">
+            <form string="Trigger / Context">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Views for Temporal Pattern -->
+    <record id="view_temporal_pattern_tree" model="ir.ui.view">
+        <field name="name">temporal.pattern.tree</field>
+        <field name="model">temporal.pattern</field>
+        <field name="arch" type="xml">
+            <tree string="Temporal Pattern / Timeline Tag">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_temporal_pattern_form" model="ir.ui.view">
+        <field name="name">temporal.pattern.form</field>
+        <field name="model">temporal.pattern</field>
+        <field name="arch" type="xml">
+            <form string="Temporal Pattern / Timeline Tag">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_trigger_context" model="ir.actions.act_window">
+        <field name="name">Trigger / Context</field>
+        <field name="res_model">trigger.context</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_temporal_pattern" model="ir.actions.act_window">
+        <field name="name">Temporal Pattern / Timeline Tag</field>
+        <field name="res_model">temporal.pattern</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

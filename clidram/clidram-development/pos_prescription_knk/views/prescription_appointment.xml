@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="prescription_appintment_view_form" model="ir.ui.view">
+        <field name="name">appointment.record.view.form</field>
+        <field name="model">pres.appointment</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name='action_confirm' attrs="{'invisible':[('appointment_status','not in', ['draft'])]}" string="Confirm" type="object" class="oe_highlight" />
+                    <button name="start_appointment" attrs="{'invisible':[('appointment_status','not in',['confirm'])]}" string="Start" type="object" class="oe_highlight" />
+                    <button name="finish_appointment_create_prescription" attrs="{'invisible':[('appointment_status','not in',['in_consultation'])]}" string="Create Prescription" type="object" class="oe_highlight" />
+                    <button name="cancel_appointment" attrs="{'invisible':[('appointment_status','in',['cancel'])]}" string="Cancel" type="object" />
+                    <field name="appointment_status" widget="statusbar" statusbar_visible="draft,confirm,in_consultation,done,cancel" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_prescription" type="object" class="oe_stat_button" icon="fa-book" string="Prescription" attrs="{'invisible':[('prescription_created','=',False)]}">
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" style="margin-right:10px;" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id" options="{'no_create': True, 'no_edit': True}" attrs="{'readonly':[('appointment_status','!=','draft')]}" />
+                            <field name="physician_id" options="{'no_create': True, 'no_edit': True}" attrs="{'readonly':[('appointment_status','!=','draft')]}" />
+                            <field name="patient_age" attrs="{'readonly':[('appointment_status','!=','draft')]}" />
+                            <field name="patient_ident_nu" attrs="{'readonly':[('appointment_status','!=','draft')]}" />
+                        </group>
+                        <group>
+                            <field name="appointment_date" attrs="{'readonly':[('appointment_status','!=','draft')]}" />
+                            <field name="company_id" />
+                            <field name="schedule_id" attrs="{'invisible':['|',('appointment_date','=',False),('physician_id','=',False)],'readonly':[('appointment_status','!=','draft')]}" options="{'no_create': True, 'no_edit': True}" />
+                            <field name="prescription_created" invisible="1" />
+                            <field name="prescription_id" invisible="1" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="patient-vitals" string="Vitals">
+                            <group>
+                                <group>
+                                    <label for="height" />
+                                    <div name="height">
+                                        <field name="height" class="oe_inline" attrs="{'readonly':[('appointment_status', 'not in', ['in_consultation'])]}" />
+                                    </div>
+                                    <label for="weight" />
+                                    <div name="weight">
+                                        <field name="weight" class="oe_inline" attrs="{'readonly':[('appointment_status', 'not in', ['in_consultation'])]}" /><label for="w_unit" />
+                                        <field name="w_unit" class="oe_inline" attrs="{'readonly':[('appointment_status','not in', ['in_consultation'])]}" />
+                                    </div>
+                                </group>
+                                <group>
+                                    <label for="bmi" />
+                                    <div name="bmi">
+                                        <field name="bmi" readonly="1" />
+                                    </div>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Blood Preasure">
+                                    <label for="blood_presure" />
+                                    <div name="blood_presure">
+                                        <field name="blood_presure" class="oe_inline" attrs="{'readonly': [('appointment_status','not in',['in_consultation'])]}" />
+                                    </div>
+                                    <label for="blood_presure_2" />
+                                    <div name="blood_presure_2">
+                                        <field name="blood_presure_2" class="oe_inline" attrs="{'readonly': [('appointment_status','not in',['in_consultation'])]}" />
+                                    </div>
+                                </group>
+                                <group string="Pulse">
+                                    <label for="pulse" />
+                                    <div name="pulse">
+                                        <field name="pulse" class="oe_inline" attrs="{'readonly': [('appointment_status','not in',['in_consultation'])]}" />
+                                    </div>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Respiratory Rate">
+                                    <label for="respiratory_rate" />
+                                    <div name="respiratory_rate">
+                                        <field name="respiratory_rate" class="oe_inline" attrs="{'readonly': [('appointment_status','not in',['in_consultation'])]}" />
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="Medical History">
+                            <group>
+                                <label for="medical_history" />
+                                <div name="medical_history">
+                                    <field name="medical_history" class="oe_inline" />
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="appointment_record_knk_view_tree" model="ir.ui.view">
+        <field name="name">appointment.prescription.view.tree</field>
+        <field name="model">pres.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="patient_id" />
+                <field name="patient_phone" />
+                <field name="patient_mail" />
+                <field name="physician_id" />
+                <field name="appointment_status" />
+            </tree>
+        </field>
+    </record>
+    <record id="appointment_record_knk_view_search" model="ir.ui.view">
+        <field name="name">appointment.prescription.view.search</field>
+        <field name="model">pres.appointment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Appointment" />
+                <field name="patient_id" string="Patient" />
+                <field name="physician_id" string="Physician" />
+                <group expand="0" string="Group By">
+                    <filter string="Physician" name="physician_id" context="{'group_by': 'physician_id'}" />
+                    <filter string="Patient" name="patient_id" context="{'group_by': 'patient_id'}" />
+                    <filter name="today" string="Today's Appointment" domain="[('appointment_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('appointment_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_pres_appointment_knk" model="ir.ui.view">
+        <field name="name">pres.appointment.calendar</field>
+        <field name="model">pres.appointment</field>
+        <field name="type">calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Prescriptions" color="patient_id" date_start="appointment_date">
+                <field name="physician_id" />
+                <field name="patient_id" />
+                <field name="schedule_id"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="action_appointment_prescription" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pres.appointment</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="search_view_id" ref="appointment_record_knk_view_search" />
+        <field name="view_id" ref="appointment_record_knk_view_tree" />
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add Prescrition.
+            </p>
+        </field>
+    </record>
+</odoo>

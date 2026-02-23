@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_company_form_pos_knk" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.pos.knk</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='favicon']" position="after">
+                <field name="timing" />
+                <field name="company_note"/>
+                <field name="ctm_logo" widget="image"/>
+                <field name="company_footer" widget="image"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hospitalization</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10" />
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='pos_interface_section']" position="after">
+                <h2>Online Booking</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane" />
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Allowed Advance Booking Days</span>
+                            <div class="text-muted">
+                                No of days for which advance booking is allowed
+                            </div>
+                            <div class="text-muted">
+                                <field name="allowed_booking_online_days" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane" />
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Minutes in each slot</span>
+                            <div class="text-muted">
+                                Configure your slot length, 15 or 30 min
+                            </div>
+                            <div class="text-muted">
+                                <field name="booking_slot_time" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane" />
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Allowed Booking per Slot</span>
+                            <div class="text-muted">
+                                No of allowed booking per slot, Once slot is fully booked will not be shown to users.
+                            </div>
+                            <div class="text-muted">
+                                <field name="allowed_booking_per_slot" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="allowed_booking_payment" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label string="Online Payment" for="allowed_booking_payment" />
+                            <div class="text-muted" id="allowed_booking_payment">
+                                Allow users to pay online for their appointments.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="prescription_config_settings_form" model="ir.ui.view">
+        <field name="name">Prescription Config Settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="1"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Prescription" string="Prescription"
+                     data-key="pos_prescription_knk">
+                    <h2>Prescription</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="o_setting_box" style="margin-left:16px;">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="whatsapp_template_id" string="Whatsapp Template"/>
+                                <div class="text-muted">
+                                    ⇒ Select the default Whatsapp Template for Prescription
+                                </div>
+                                <field name="company_id" invisible="1"/>
+                                <field name="whatsapp_template_id" required="1" opttions="{'no_create': True}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt16 o_settings_container">
+                        <div class="o_setting_box" style="margin-left:16px;">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="whatsapp_otp_template_id" string="Whatsapp Template"/>
+                                <div class="text-muted">
+                                    ⇒ Select the default Whatsapp Template for Patient OTP Verification
+                                </div>
+                                <field name="company_id" invisible="1"/>
+                                <field name="whatsapp_otp_template_id" required="1" opttions="{'no_create': True}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt16 o_settings_container">
+                        <div class="o_setting_box" style="margin-left:16px;">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="signup_otp_template_id" string="Signup OTP Template"/>
+                                <div class="text-muted">
+                                    ⇒ Select the default Signup OTP Template Verification
+                                </div>
+                                <field name="company_id" invisible="1"/>
+                                <field name="signup_otp_template_id" required="1" opttions="{'no_create': True}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

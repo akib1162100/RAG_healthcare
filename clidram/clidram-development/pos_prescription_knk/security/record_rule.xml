@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="prescription_knk_rule" model="ir.rule">
+                <field name="name">Prescription</field>
+                <field name="model_id" ref="model_prescription_order_knk"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="prescription_schedule_rule" model="ir.rule">
+                <field name="name">Prescription Schedule</field>
+                <field name="model_id" ref="model_appointment_schedule"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="prescription_appointment_rule" model="ir.rule">
+                <field name="name">Prescription Appointment</field>
+                <field name="model_id" ref="model_pres_appointment"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="radiology_req_company_rule" model="ir.rule">
+                <field name="name">Radiology Request</field>
+                <field name="model_id" ref="model_radiology_request"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="referral_partner_company_rule" model="ir.rule">
+                <field name="name">Referral Partner</field>
+                <field name="model_id" ref="model_referral_partner"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <record id="patient_type_company_rule" model="ir.rule">
+                <field name="name">Patient Type</field>
+                <field name="model_id" ref="model_patient_type"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="medicine_dose_company_rule" model="ir.rule">
+                <field name="name">Medicine Dose</field>
+                <field name="model_id" ref="model_medicine_dose"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="medicine_group_company_rule" model="ir.rule">
+                <field name="name">Medicine Group</field>
+                <field name="model_id" ref="model_medicine_group"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="medicine_composition_company_rule" model="ir.rule">
+                <field name="name">Medicine Composition</field>
+                <field name="model_id" ref="model_medicine_composition"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="medicine_route_company_rule" model="ir.rule">
+                <field name="name">Medicine Route</field>
+                <field name="model_id" ref="model_medicine_route"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="medicine_food_company_rule" model="ir.rule">
+                <field name="name">Medicine Food</field>
+                <field name="model_id" ref="model_medicine_food"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="med_frequency_company_rule" model="ir.rule">
+                <field name="name">Medicine Frequency</field>
+                <field name="model_id" ref="model_med_frequency"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+
+        <record id="note_note_company_rule" model="ir.rule">
+                <field name="name">Note</field>
+                <field name="model_id" ref="model_note_note"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="diagnosis_diagnosis_list_company_rule" model="ir.rule">
+                <field name="name">Diagnosis List</field>
+                <field name="model_id" ref="model_diagnosis_diagnosis_list"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="diagnosis_diagnosis_company_rule" model="ir.rule">
+                <field name="name">Diagnosis</field>
+                <field name="model_id" ref="model_diagnosis_diagnosis"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="complaint_list_company_rule" model="ir.rule">
+                <field name="name">Complaint List</field>
+                <field name="model_id" ref="model_complaint_list"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="period_record_company_rule" model="ir.rule">
+                <field name="name">Period Record</field>
+                <field name="model_id" ref="model_period_record"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="complaint_record_line_company_rule" model="ir.rule">
+                <field name="name">Complaint Record</field>
+                <field name="model_id" ref="model_complaint_record_line"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="history_list_company_rule" model="ir.rule">
+                <field name="name">History List</field>
+                <field name="model_id" ref="model_history_list"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <record id="sign_list_company_rule" model="ir.rule">
+                <field name="name">Sign List</field>
+                <field name="model_id" ref="model_sign_list"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="location_location_company_rule" model="ir.rule">
+                <field name="name">Location</field>
+                <field name="model_id" ref="model_location_location"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="intensity_intensity_company_rule" model="ir.rule">
+                <field name="name">Intensity</field>
+                <field name="model_id" ref="model_intensity_intensity"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <record id="test_type_company_rule" model="ir.rule">
+                <field name="name">Test Type</field>
+                <field name="model_id" ref="model_test_type"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="investigation_list_company_rule" model="ir.rule">
+                <field name="name">Investigation List</field>
+                <field name="model_id" ref="model_investigation_list"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+
+        <record id="part_location_company_rule" model="ir.rule">
+                <field name="name">Part Location</field>
+                <field name="model_id" ref="model_part_location"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="excercise_excercise_company_rule" model="ir.rule">
+                <field name="name">Excercise</field>
+                <field name="model_id" ref="model_excercise_excercise"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="ortho_list_company_rule" model="ir.rule">
+                <field name="name">Ortho List</field>
+                <field name="model_id" ref="model_ortho_list"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <record id="vital_uom_company_rule" model="ir.rule">
+                <field name="name">Vital UoM</field>
+                <field name="model_id" ref="model_vital_uom"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="vital_list_line_company_rule" model="ir.rule">
+                <field name="name">vITAL lIST lINE</field>
+                <field name="model_id" ref="model_vital_list_line"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="item_item_company_rule" model="ir.rule">
+                <field name="name">Item Item</field>
+                <field name="model_id" ref="model_item_item"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <record id="symptom_list_company_rule" model="ir.rule">
+                <field name="name">Symptom List</field>
+                <field name="model_id" ref="model_symptom_config"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="result_list_company_rule" model="ir.rule">
+                <field name="name">Result List</field>
+                <field name="model_id" ref="model_result_config"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="procedure_list_company_rule" model="ir.rule">
+                <field name="name">Procedure List</field>
+                <field name="model_id" ref="model_procedure_config"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <record id="family_history_config_company_rule" model="ir.rule">
+                <field name="name">Family History List</field>
+                <field name="model_id" ref="model_family_history_config"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="family_history_result_company_rule" model="ir.rule">
+                <field name="name">Family History Result</field>
+                <field name="model_id" ref="model_family_history_result"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <record id="social_history_config_company_rule" model="ir.rule">
+                <field name="name">Social History List</field>
+                <field name="model_id" ref="model_social_history_config"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="social_history_result_company_rule" model="ir.rule">
+                <field name="name">Social History Result</field>
+                <field name="model_id" ref="model_social_history_result"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+        <!-- General Condition -->
+        <record id="physical_general_condition_company_rule" model="ir.rule">
+                <field name="name">General Condition Company Rule</field>
+                <field name="model_id" ref="model_physical_general_condition"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- Pallor -->
+        <record id="physical_pallor_company_rule" model="ir.rule">
+                <field name="name">Pallor Company Rule</field>
+                <field name="model_id" ref="model_physical_pallor"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- MSK -->
+        <record id="physical_msk_company_rule" model="ir.rule">
+                <field name="name">MSK Company Rule</field>
+                <field name="model_id" ref="model_physical_msk"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- Edema -->
+        <record id="physical_edema_company_rule" model="ir.rule">
+                <field name="name">Edema Company Rule</field>
+                <field name="model_id" ref="model_physical_edema"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- Lymph Nodes -->
+        <record id="physical_lymph_nodes_company_rule" model="ir.rule">
+                <field name="name">Lymph Nodes Company Rule</field>
+                <field name="model_id" ref="model_physical_lymph_nodes"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- Hydration -->
+        <record id="physical_hydration_company_rule" model="ir.rule">
+                <field name="name">Hydration Company Rule</field>
+                <field name="model_id" ref="model_physical_hydration"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- CVS -->
+        <record id="physical_cvs_company_rule" model="ir.rule">
+                <field name="name">CVS Company Rule</field>
+                <field name="model_id" ref="model_physical_cvs"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- RS -->
+        <record id="physical_rs_company_rule" model="ir.rule">
+                <field name="name">RS Company Rule</field>
+                <field name="model_id" ref="model_physical_rs"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- Abdomen -->
+        <record id="physical_abdomen_company_rule" model="ir.rule">
+                <field name="name">Abdomen Company Rule</field>
+                <field name="model_id" ref="model_physical_abdomen"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- Neuro -->
+        <record id="physical_neuro_company_rule" model="ir.rule">
+                <field name="name">Neuro Company Rule</field>
+                <field name="model_id" ref="model_physical_neuro"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+        <!-- ENT -->
+        <record id="physical_ent_company_rule" model="ir.rule">
+                <field name="name">ENT Company Rule</field>
+                <field name="model_id" ref="model_physical_ent"/>
+                <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
+        </record>
+
+</odoo>

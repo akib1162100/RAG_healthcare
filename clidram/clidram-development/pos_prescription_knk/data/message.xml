@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="prescription_wa_template" model="wa.template">
+        <field name="name">prescription_template</field>
+        <field name="model_id" ref="pos_prescription_knk.model_prescription_order_knk"/>
+        <field name="category">utility</field>
+        <field name="template_type">template</field>
+        <field name="language">en</field>
+        <field name="state">added</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Here is the template
+                    </p>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="prescription_wa_template_body" model="components">
+        <field name="type">body</field>
+        <field name="formate">text</field>
+        <field name="wa_template_id" ref="pos_prescription_knk.prescription_wa_template"/>
+        <field name="text">Body..</field>
+    </record>
+</odoo>

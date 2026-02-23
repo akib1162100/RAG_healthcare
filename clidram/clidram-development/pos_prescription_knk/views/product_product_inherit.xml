@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="knk_product_product_inherit" model="ir.ui.view">
+        <field name="name">product.template.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_general']//field[@name='uom_po_id']" position="after">
+                <field name="med_group_id" />
+                <field name="composition_id" />
+                <field name="dose_id" />
+                <field name="route_id" />
+                <field name="whn_to_take_id" />
+                <field name="frequency_id" />
+                <field name="knk_t_qty" />
+            </xpath>
+
+            <xpath expr="//page[@name='general_information']" position="after">
+                <page string="Product Type">
+                    <group>
+                        <group>
+                            <field name="marketer_id"/>
+                            <field name="medicine_type_id"/>
+                            <field name="introduction"/>
+                            <field name="benefits"/>
+                            <field name="med_description"/>
+                            <field name="how_to_use"/>
+                            <field name="safety_advice"/>
+                            <field name="if_miss"/>
+                            <field name="med_product_type_id"/>
+                        </group>
+                        <group>
+                            <field name="prescription_required"/>
+                            <field name="fact_box"/>
+                            <field name="primary_use"/>
+                            <field name="storage"/>
+                            <field name="use_off_label"/>
+                            <field name="common_side_effects"/>
+                            <field name="country_of_origin_id"/>
+                            <field name="how_it_works"/>
+                            <field name="reference"/>
+                        </group>
+                    </group>
+                </page>
+                 <page string="Interaction">
+                    <group>
+                        <group>
+                            <field name="alcohol_interaction_id"/>
+                            <field name="pregnancy_interaction_id"/>
+                            <field name="lactation_interaction_id"/>
+                            <field name="driving_interaction_id"/>
+                            <field name="kidney_interaction_id"/>
+                            <field name="liver_interaction_id"/>
+                        </group>
+                    </group>
+                 </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="knk_product_product_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.product.tree</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name='arch' type='xml'>
+            <xpath expr="//tree/field[@name='product_template_variant_value_ids']" position="before">
+                <field name="med_group_id"/>
+                <field name="composition_id"/>
+            </xpath>
+            
+        </field>
+    </record>
+</odoo>

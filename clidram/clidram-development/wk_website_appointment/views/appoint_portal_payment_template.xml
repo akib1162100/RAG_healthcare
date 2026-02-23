@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+
+    <template id="portal_appoint_page_inherit_payment" name="Payment on My Appointments" inherit_id="wk_website_appointment.portal_my_appointments_page">
+        <xpath expr="//div[@id='o_portal_appoint_actions']" position="attributes">
+            <attribute name="class">offset-md-3 col-md-2 col-sm-2 col-12 hidden-print</attribute>
+        </xpath>
+        <xpath expr="//div[@id='o_portal_appoint_actions']" position="before">
+            <t t-set="tx_ids" t-value="appointment.payment_tx_ids.filtered(lambda tx: tx.state in ('pending', 'authorized', 'done'))"/>
+            <t t-set="pending_manual_txs" t-value="tx_ids.filtered(lambda tx: tx.state == 'pending' and tx.provider_id.code in ('custom', 'manual'))"/>
+            <a t-if="(pending_manual_txs or not tx_ids) and appointment.appoint_state not in ['new', 'pending', 'rejected'] and
+                appointment.amount_total and appointment.invoice_status != 'paid' and payment_mode == 'after_appoint'"
+                class="btn btn-primary btn-block mb8 col-md-1 btn-sm col-6" data-bs-toggle="modal" data-bs-target="#appoint_pay"
+                t-att-href="appointment.get_portal_url(anchor='appoint_pay')">
+                <i class="fa fa-arrow-circle-right"/> Pay Now
+            </a>
+
+            <a t-if="(pending_manual_txs or not tx_ids) and appointment.appoint_state in ['new', 'pending', 'approved'] and
+                appointment.amount_total and appointment.invoice_status != 'paid' and payment_mode == 'before_appoint'"
+                class="btn btn-primary btn-block mb8 col-md-1 btn-sm col-6" data-bs-toggle="modal" data-bs-target="#appoint_pay"
+                t-att-href="appointment.get_portal_url(anchor='appoint_pay')">
+                <i class="fa fa-arrow-circle-right"/> Pay Now
+            </a>
+        </xpath>
+        <xpath expr="//div[hasclass('card-body')]" position="after">
+            <div class="row" t-if="(pending_manual_txs or not tx_ids) and appointment.appoint_state in ['new', 'pending', 'approved'] and appointment.amount_total and appointment.invoice_status != 'paid'" id="portal_pay">
+                <div class="modal fade" id="appoint_pay" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Pay with</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div t-if="pms or providers" id="payment_method" class="col-md-12">
+                                    <t t-call="payment.checkout">                                        
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+     <template id="inherit_portal_appointment_report" name="Appointment portal page inherit payment" inherit_id="wk_website_appointment.portal_appointment_report">
+        <xpath expr="//div[@name='cancel_booking_div']" position="after">
+            <t t-set="tx_ids" t-value="appointment.payment_tx_ids.filtered(lambda tx: tx.state in ('pending', 'authorized', 'done'))"/>
+            <t t-if="tx_ids">
+                <div class="col-12">
+                    <strong>Transactions</strong>
+                    <t t-foreach="tx_ids" t-as="tx">
+                    <div>
+                        <span t-esc="tx.reference"/>
+                        <span class="text-muted" t-field="tx.create_date"/>
+                        <t t-if="tx.state == 'done'">
+                            <span class="badge bg-success orders_label_text_align"><i class="fa fa-fw fa-check"/> Done</span>
+                        </t>
+                        <t t-if="tx.state != 'done'">
+                            <span class="badge bg-info orders_label_text_align"><i class="fa fa-fw fa-clock-o"/> Waiting</span>
+                            <t t-if="tx.state_message"><br /><span t-esc="tx.state_message"/></t>
+                        </t>
+                    </div>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="inherit_portal_appoint_error" name="Appointment error display: payment errors"
+            inherit_id="wk_website_appointment.portal_appoint_error">
+        <xpath expr="//t[@name='generic']" position="after">
+            <t t-if="error == 'pay_appoint_invalid_doc'">
+                There was an error processing your payment: invalid appointment.
+            </t>
+            <t t-if="error == 'pay_appoint_invalid_doc_state'">
+                There was an error processing your payment: invalid appointment state.
+            </t>
+            <t t-if="error == 'pay_appoint_invalid_token'">
+                There was en error processing your payment: invalid credit card ID.
+            </t>
+
+            <t t-if="error == 'pay_appoint_tx_amount'">
+                There was an error processing your payment: transaction amount issue.<br />
+                <t t-if="appointment.payment_tx_id">
+                    <t t-esc="appointment.payment_tx_id.amount"/> / <t t-esc="appointment.amount_total"/>
+                </t>
+            </t>
+            <t t-if="error == 'pay_appoint_tx_fail'">
+                There was an error processing your payment: transaction failed.<br />
+                <t t-if="appointment.payment_tx_id and appointment.payment_tx_id.state_message">
+                    <t t-esc="appointment.payment_tx_id.state_message"/>
+                </t>
+            </t>
+            <t t-if="error == 'pay_appoint_tx_state'">
+                There was an error processing your payment: transaction issue.<br />
+                <t t-if="appointment.payment_tx_id and appointment.payment_tx_id.state_message">
+                    <t t-esc="appointment.payment_tx_id.state_message"/>
+                </t>
+            </t>
+            <t t-if="error == 'pay_appoint_tx_confirm'">
+                There was an error processing your payment: impossible to validate appointment.
+            </t>
+            <t t-if="error == 'pay_appoint_tx_token'">
+                There was an error processing your payment: issue with credit card ID validation.
+            </t>
+        </xpath>
+    </template>
+
+    <template id="inherit_portal_appoint_success" name="Appointment success display: payment success"
+            inherit_id="wk_website_appointment.portal_appoint_success">
+        <xpath expr="//a[hasclass('close')]" position="after">
+            <t t-if="success == 'pay_appoint'">
+                <!-- Appointment successfully paid. -->
+                Done, your online payment has been successfully processed. Thank you for your order.
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

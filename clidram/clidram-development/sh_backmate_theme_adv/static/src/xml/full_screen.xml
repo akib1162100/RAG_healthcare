@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="FullScreenTemplate">
+		<div class="o_full_screen">
+			<a class="open_full_screen float-right" role="button">
+				<span class="icon-expand expand_img fa fa-expand" />
+				<span class="icon-compress compress_img fa fa-compress" />
+				<input type="checkbox" id="fullscreen_checkbox"/>
+			</a>
+		</div>
+	</t>
+</templates>

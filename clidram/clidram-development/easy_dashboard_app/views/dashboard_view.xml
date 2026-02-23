@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="action_dynamic_dashboard" model="ir.actions.client">
+            <field name="name">Dashboard</field>
+            <field name="tag">dynamic_dashboard</field>
+        </record>
+
+        <menuitem name="Dashboard"
+                  id="menu_dashboard"
+                  sequence="1"
+                  web_icon="easy_dashboard_app/static/description/icon.png"
+        />
+        <menuitem name="Dashboards" id="menu_dynamic_dashboard" parent="easy_dashboard_app.menu_dashboard"
+                  sequence="1" action="action_dynamic_dashboard"/>
+
+
+    </data>
+</odoo>

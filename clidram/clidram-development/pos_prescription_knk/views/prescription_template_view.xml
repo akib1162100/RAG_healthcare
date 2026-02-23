@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="pos_prescription_template_view_form" model="ir.ui.view">
+        <field name="name">Prescription.template.view.form</field>
+        <field name="model">prescription.template</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                	<div class="oe_title">
+                        <h1>
+                            <field name="name" class="oe_inline" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" />
+                            <field name="old_temp" invisible="1"/>
+                            <field name="attachment"/>
+                        </group>
+                    </group>
+                    <notebook>
+                    	<page name="Complaints_lines" string="Complaints">
+                            <notebook>
+                                <page name="complaint_page" string="Complaints">
+                                    <field name="complaint_res_ids">
+                                        <tree string="Complaints" editable="bottom">
+                                            <field name='complaint_list_id' />
+                                            <field name="location_id" string="Anatomy"/>
+                                            <field name='period' />
+                                            
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="history_page" string="History">
+                                    <field name="history_res_ids">
+                                        <tree string="History" editable="bottom">
+                                            <field name='name'/>
+                                            <field name='history_period'/>
+                                            <field name='history_category_id'/>
+                                            <field name='patient_id' invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="past_history" string="Past Medical History">
+                                    <field name="past_medical_history_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="symptom_id" options="{'no_create': True}"/>
+                                            <field name="result_id" options="{'no_create': True}"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="medication_history" string="Medication History">
+                                    <field name="medication_history_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="medicine_id"/>
+                                            <field name="medicine_group_id"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="family_history" string="Family History">
+                                    <field name="family_history_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="family_history_config_id" options="{'no_create': True}"/>
+                                            <field name="family_history_result_id" options="{'no_create': True}"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="social_history" string="Social History">
+                                    <field name="social_history_line_ids">
+                                        <tree editable="bottom">
+                                            <field name="social_history_config_id" options="{'no_create': True}"/>
+                                            <field name="social_history_result_id" options="{'no_create': True}"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+
+                                <page name="sign_page" string="Examination">
+                                    <field name="sign_res_ids">
+                                        <tree string="symptoms" editable="bottom">
+                                            <field name='name' />
+                                            <field name='location' />
+                                            <field name='intensity' />
+                                            <field name='patient_id' invisible="1" />
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </page>
+                        <page name="diagnosis" string="Diagnosis">
+                            <field name="diagnosis_res_ids">
+                                <tree string="Diagnosis" editable="bottom">
+                                    <field name="name" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="prescription_lines_new" string="Medication" attrs="{'invisible':[('old_temp','=',True)]}">
+                            <field name="prescription_new_ids">
+                                <tree string="Prescription" editable="bottom">
+                                    <field name='med_group_id' readonly="0" />
+                                    <field name='composition_id' readonly="0" />
+                                    <field name='product_id' />
+                                    <field name='dose_id' />
+                                    <field name='route_id' />
+                                    <field name="whn_to_take_id" />
+                                    <field name='frequency_id' />
+                                    <field name="knk_t_qty" />
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page name="prescription_lines" string="Medication" attrs="{'invisible':[('old_temp','=',False)]}">
+                            <field name="prescription_ids">
+                                <tree string="Prescription" editable="bottom">
+                                    <field name='med_group' readonly="0" />
+                                    <field name='composition' readonly="0" />
+                                    <field name='product_id' />
+                                    <field name='dose' />
+                                    <field name='route' />
+                                    <field name="whn_to_take" />
+                                    <field name='frequency' />
+                                    <field name="t_qty" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="Advice_lines" string="Advice">
+                            <notebook>
+                                <page name="Investigation_page" string="Investigations">
+                                    <field name="inves_res_ids">
+                                        <tree string="Investigations" editable="bottom">
+                                            <field name='investigation_list_id' width="10px"/>
+                                            <field name='test_type' widget="many2many_tags" width="750px"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="Excercise_page" string="Excercise">
+                                    <field name="excer_res_ids">
+                                        <tree string="Excercise" editable="bottom">
+                                            <field name='name' />
+                                            <field name='part_location'/>
+                                            <field name="move2" />
+                                            <field name='type_of_test2' />
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="Ortho_page" string="Ortho/Prosthesis">
+                                    <field name="ortho_list_ids">
+                                        <tree string="Ortho" editable="bottom">
+                                            <field name='name' />
+                                            <field name='location' />
+                                            <field name='side' />
+                                            <field name='material' readonly="0" />
+                                            <field name='comments' readonly="0" />
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="diet_page" string="Diet">
+                                    <field name="description" placeholder="Diet..." />
+                                </page>
+                            </notebook>
+                        </page>
+                    </notebook>
+                    <div name="note_group" col="12" class="mt-2 mt-md-0">
+                            <field name="template_note_ids" placeholder="......Notes" nolabel="1" style="min-width:100%"/>                                                
+                        <div class="clearfix" />
+                    </div>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pos_prescription_template_view_tree" model="ir.ui.view">
+        <field name="name">prescription.template.view.tree</field>
+        <field name="model">prescription.template</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pos_prescription_template" model="ir.actions.act_window">
+        <field name="name">Prescription Template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">prescription.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

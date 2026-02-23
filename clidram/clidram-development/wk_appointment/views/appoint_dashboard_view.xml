@@ -1,0 +1,291 @@
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+
+<odoo>
+	<data>
+
+		<record model="ir.actions.act_window" id="appoint_mgmt_new_appoint_dashboard_action">
+            <field name="name">New Appointments</field>
+            <field name="res_model">wk.appointment</field>
+            <field name="view_mode">kanban,calendar,tree,form</field>
+            <field name="domain">[('appoint_state','=','new')]</field>
+            <field name="binding_view_types">form</field>
+        </record>
+
+		<record model="ir.actions.act_window" id="appoint_mgmt_pending_appoint_dashboard_action">
+            <field name="name">Pending Appointments</field>
+            <field name="res_model">wk.appointment</field>
+            <field name="view_mode">kanban,calendar,tree,form</field>
+            <field name="domain">[('appoint_state','=','pending')]</field>
+            <field name="binding_view_types">form</field>
+        </record>
+
+		<record model="ir.actions.act_window" id="appoint_mgmt_approved_appoint_dashboard_action">
+            <field name="name">Approved Appointments</field>
+            <field name="res_model">wk.appointment</field>
+            <field name="view_mode">kanban,calendar,tree,form</field>
+            <field name="domain">[('appoint_state','=','approved')]</field>
+            <field name="binding_view_types">form</field>
+        </record>
+
+		<record model="ir.actions.act_window" id="appoint_mgmt_rejected_appoint_dashboard_action">
+            <field name="name">Rejected Appointments</field>
+            <field name="res_model">wk.appointment</field>
+            <field name="view_mode">kanban,calendar,tree,form</field>
+            <field name="domain">[('appoint_state','=','rejected')]</field>
+            <field name="binding_view_types">form</field>
+        </record>
+
+		<record model="ir.actions.act_window" id="appoint_mgmt_done_appoint_dashboard_action">
+            <field name="name">Done Appointments</field>
+            <field name="res_model">wk.appointment</field>
+            <field name="view_mode">kanban,calendar,tree,form</field>
+            <field name="domain">[('appoint_state','=','done')]</field>
+            <field name="binding_view_types">form</field>
+        </record>
+
+        <record id="appoint_mgmt_appoint_dashboard_kanban_view" model="ir.ui.view">
+            <field name="name">appointment.dashboard.kanaban.view</field>
+            <field name="model">appointment.dashboard</field>
+            <field name="arch" type="xml">
+                <kanban create="false" class="oe_background_grey o_kanban_dashboard o_account_kanban">
+                    <field name="color"/>
+                    <field name="name"/>
+					<field name="state"/>
+					<field name="kanban_dashboard"/>
+                    <field name="count_new_appoint"/>
+					<field name="count_pending_appoint"/>
+					<field name="count_approved_appoint"/>
+					<field name="count_rejected_appoint"/>
+					<field name="count_done_appoint"/>
+					<templates>
+	                    <t t-name="kanban-box">
+							<div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+		                        <div t-attf-class="#{kanban_color(0)}">
+		                            <t t-value="JSON.parse(record.kanban_dashboard.raw_value)" t-set="dashboard"/>
+		                            <t t-value="record.state.raw_value" t-set="state"/>
+		                            <t t-call="AppointmentDashTop"/>
+		                            <div class="container o_kanban_card_content o_visible">
+		                                <!-- <div class="row"> -->
+		                                    <t t-if="state == 'new'" t-call="AppointDashNew"/>
+											<t t-if="state == 'pending'" t-call="AppointDashPending"/>
+											<t t-if="state == 'approved'" t-call="AppointDashApproved"/>
+											<t t-if="state == 'done'" t-call="AppointDashDone"/>
+		                                <!-- </div> -->
+		                                <t t-call="JournalBodyGraph"/>
+		                            </div>
+									<!-- <div class="container o_kanban_card_manage_pane o_invisible">
+		                                <t t-call="JournalManage"/>
+		                            </div> -->
+									<div class="o_dropdown_kanban dropdown">
+										<t t-call="AppointDashDropdown"/>
+		                            </div>
+		                        </div>
+							</div>
+	                    </t>
+
+	                    <t t-name="AppointmentDashTop">
+							<t t-if="state == 'new'" t-set="bg_color" t-value="'bg-info'"/>
+							<t t-if="state == 'pending'" t-set="bg_color" t-value="'bg-warning'"/>
+							<t t-if="state == 'approved'" t-set="bg_color" t-value="'bg-success'"/>
+							<t t-if="state == 'rejected'" t-set="bg_color" t-value="'bg-danger'"/>
+							<t t-if="state == 'done'" t-set="bg_color" t-value="'bg_purple'"/>
+	                        <div t-attf-class="o_kanban_card_header #{bg_color}" style="margin:-8px -16px;padding:8px 16px;">
+	                            <div class="o_kanban_card_header_title">
+	                                <div class="o_primary">
+	                                    <a class="appoint_kanban_headline" t-if="state == 'new'" type="object" name="open_action"
+											context="{'action_name': 'appoint_mgmt_new_appoint_dashboard_action'}" style="font-size:15px;">
+											<i class="fa fa-plus-circle text-info" aria-hidden="true" title="Appointment Count"/>
+											<field name="count_new_appoint"/>
+											<field name="name"/><t t-if="count_new_appoint>1">s</t>
+										</a>
+										<a class="appoint_kanban_headline" t-if="state == 'pending'" type="object" name="open_action"
+											context="{'action_name': 'appoint_mgmt_pending_appoint_dashboard_action'}" style="font-size:15px;">
+											<i class="fa fa-history text-warning" aria-hidden="true" title="Appointment Count"/>
+											<field name="count_pending_appoint"/>
+											<field name="name"/><t t-if="count_pending_appoint>1">s</t>
+										</a>
+										<a class="appoint_kanban_headline" t-if="state == 'approved'" type="object" name="open_action"
+											context="{'action_name': 'appoint_mgmt_approved_appoint_dashboard_action'}" style="font-size:15px;">
+											<i class="fa fa-check-circle text-success" aria-hidden="true" title="Appointment Count"/>
+											<field name="count_approved_appoint"/>
+											<field name="name"/><t t-if="count_approved_appoint>1">s</t>
+										</a>
+										<a class="appoint_kanban_headline" t-if="state == 'rejected'" type="object" name="open_action"
+											context="{'action_name': 'appoint_mgmt_rejected_appoint_dashboard_action'}" style="font-size:15px;">
+											<i class="fa fa-times-circle text-danger" aria-hidden="true" title="Appointment Count"/>
+											<field name="count_rejected_appoint"/>
+											<field name="name"/><t t-if="count_rejected_appoint>1">s</t>
+										</a>
+										<a class="appoint_kanban_headline" t-if="state == 'done'" type="object" name="open_action"
+											context="{'action_name': 'appoint_mgmt_done_appoint_dashboard_action'}" style="font-size:15px;">
+											<i class="fa fa-check-circle-o" aria-hidden="true" style="color:#9365b8;" title="Appointment Count"/>
+											<field name="count_done_appoint"/>
+											<field name="name"/><t t-if="count_done_appoint>1">s</t>
+										</a>
+	                                </div>
+	                                <div class="o_secondary" t-att-title="record.name">
+										<div class="o_secondary">
+		                                </div>
+									</div>
+	                            </div>
+	                        </div>
+	                    </t>
+
+						<t t-name="AppointDashDropdown">
+							<a class="dropdown-toggle btn" data-toggle="dropdown" href="#" role="button">
+								<span class="fa fa-bars fa-lg" title="See more"/>
+							</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+							</ul>
+						</t>
+						<t t-name="AppointDashNew">
+	                        <div class="col-md-6 o_kanban_primary_left" groups="wk_appointment.appointment_officer_group">
+	                            <t t-if="state == 'new'">
+	                                <button type="object" name="action_create_new" class="btn btn-primary btn-sm" role="button">
+	                                    <span>Create New Appointment</span>
+	                                </button>
+	                            </t>
+							</div>
+						</t>
+						<t t-name="AppointDashPending">
+	                        <div class="col-md-6 o_kanban_primary_left">
+	                            <t t-if="state == 'pending'">
+	                                <div class="row mt32"/>
+	                            </t>
+							</div>
+						</t>
+	                    <t t-name="AppointDashApproved">
+							<div class="row" style="height:36px;">
+		                        <div class="col-md-6 o_kanban_primary_left">
+								<div class="row">
+									<t t-if="state == 'approved'" >
+										<div class="col-md-8 text-left">
+											<a t-if="dashboard.not_invoiced" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_approved_appoint_dashboard_action','use_domain': 'not_invoiced'}">
+												<span title="Appointments not yet Invoiced">
+													<t t-esc="dashboard.not_invoiced"/> To be Invoiced
+												</span>
+											</a>
+											<a t-if="dashboard.invoice_to_validate" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_approved_appoint_dashboard_action','use_domain': 'invoice_to_validate'}">
+												<span title="Invoices to Validate">
+													<t t-esc="dashboard.invoice_to_validate"/> Invoices to Validate
+												</span>
+											</a>
+										</div>
+										<div class="col-md-4">
+											<div t-if="dashboard.not_invoiced" class="row">
+												<t t-esc="dashboard.amount_total_not_invoiced"/>
+											</div>
+											<div t-if="dashboard.invoice_to_validate" class="row">
+												<t t-esc="dashboard.amount_total_invoice_to_validate"/>
+											</div>
+										</div>
+									</t>
+								</div>
+		                        </div>
+		                        <div class="col-md-6 o_kanban_primary_right">
+		                            <div class="row">
+		                                <div class="col-md-7">
+											<t t-if="state == 'approved'" >
+												<a t-if="dashboard.invoice_unpaid" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_approved_appoint_dashboard_action','use_domain': 'invoice_unpaid'}">
+													<span title="Invoices not paid">
+														<t t-esc="dashboard.invoice_unpaid"/> Invoices Unpaid
+													</span>
+												</a>
+												<a t-if="dashboard.invoice_paid" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_approved_appoint_dashboard_action','use_domain': 'invoice_paid'}">
+													<span title="Invoices Paid">
+														<t t-esc="dashboard.invoice_paid"/> Invoices Paid
+													</span>
+												</a>
+											</t>
+		                                </div>
+		                                <div class="col-md-5">
+		                                    <span t-if="state == 'approved'" >
+												<div t-if="dashboard.invoice_unpaid" class="row" style="white-space: nowrap;">
+													<t t-esc="dashboard.amount_total_invoice_unpaid"/>
+												</div>
+												<div t-if="dashboard.invoice_paid" class="row" style="white-space: nowrap;">
+													<t t-esc="dashboard.amount_total_invoice_paid"/>
+												</div>
+											</span>
+		                                </div>
+		                            </div>
+		                        </div>
+							</div>
+	                    </t>
+						<t t-name="AppointDashDone">
+							<div class="row" style="height:36px;">
+		                        <div class="col-md-6 o_kanban_primary_left">
+									<div class="row">
+										<div class="col-md-8 text-left">
+											<a t-if="dashboard.not_invoiced" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_done_appoint_dashboard_action','use_domain': 'not_invoiced'}">
+												<span title="Appointments not yet Invoiced">
+													<t t-esc="dashboard.not_invoiced"/> To be Invoiced
+												</span>
+											</a>
+											<a t-if="dashboard.invoice_to_validate" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_done_appoint_dashboard_action','use_domain': 'invoice_to_validate'}">
+												<span title="Invoices to Validate">
+													<t t-esc="dashboard.invoice_to_validate"/> Invoices to Validate
+												</span>
+											</a>
+										</div>
+										<div class="col-md-4">
+											<div t-if="dashboard.not_invoiced" class="row">
+												<t t-esc="dashboard.amount_total_not_invoiced"/>
+											</div>
+											<div t-if="dashboard.invoice_to_validate" class="row">
+												<t t-esc="dashboard.amount_total_invoice_to_validate"/>
+											</div>
+										</div>
+									</div>
+								</div>
+		                        <div class="col-md-6 o_kanban_primary_right">
+		                            <div class="row">
+		                                <div class="col-md-7">
+											<a t-if="dashboard.invoice_unpaid" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_done_appoint_dashboard_action','use_domain': 'invoice_unpaid'}">
+												<span title="Invoices not paid">
+													<t t-esc="dashboard.invoice_unpaid"/> Invoices Unpaid
+												</span>
+											</a>
+											<a t-if="dashboard.invoice_paid" type="object" name="open_action" context="{'action_name': 'appoint_mgmt_done_appoint_dashboard_action','use_domain': 'invoice_paid'}">
+												<span title="Invoices Paid">
+													<t t-esc="dashboard.invoice_paid"/> Invoices Paid
+												</span>
+											</a>
+		                                </div>
+		                                <div class="col-md-5">
+		                                    <span t-if="state == 'done'" >
+												<div t-if="dashboard.invoice_unpaid" class="row" style="white-space: nowrap;">
+													<t t-esc="dashboard.amount_total_invoice_unpaid"/>
+												</div>
+												<div t-if="dashboard.invoice_paid" class="row" style="white-space: nowrap;">
+													<t t-esc="dashboard.amount_total_invoice_paid"/>
+												</div>
+											</span>
+		                                </div>
+		                            </div>
+		                        </div>
+							</div>
+	                    </t>
+						<t t-name="JournalBodyGraph">
+	                        <div class="o_kanban_graph_section">
+	                            <field name="kanban_dashboard_graph" graph_type="bar" widget="dashboard_graph"/>
+	                        </div>
+	                    </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+		<record id="appoint_mgmt_appoint_dashboard_action" model="ir.actions.act_window">
+		   <field name="name">Appointment Dashboard</field>
+		   <field name="res_model">appointment.dashboard</field>
+		   <field name="type">ir.actions.act_window</field>
+		   <field name="binding_view_types">form</field>
+		   <field name="view_mode">kanban</field>
+	   </record>
+
+	</data>
+</odoo>

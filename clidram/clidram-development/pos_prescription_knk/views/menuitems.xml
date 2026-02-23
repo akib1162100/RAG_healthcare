@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="prescription_root_menu" name="CLiDRaM" web_icon="pos_prescription_knk,static/description/icon_pos.jpeg" />
+    <menuitem id="hos_prescription" name="Prescription" parent="prescription_root_menu" action="act_open_hms_prescription_order_view" />
+    <menuitem id="patient_menu" parent="prescription_root_menu" name="Patient" sequence="2">
+    <menuitem id="patient_menu_view" action="patient_action" sequence="1" />
+    <menuitem id="patient_import_view" action="import_patient_entry_action" name="Import Patient" sequence="2" />
+    </menuitem>
+    <menuitem id="physician_menu" parent="prescription_root_menu" action="physician_action" sequence="3" />
+    <menuitem id="configuration_menu" parent="prescription_root_menu" name='Configuration' sequence="100">
+    <menuitem id="complaints_menu" name="Complaints" action="action_pos_prescription_complaint" sequence="1" />
+    <menuitem id="periods_menu" name="Periods" action="action_pos_prescription_periods" sequence="2" />
+    <menuitem id="patient_type_menu" name="Patient Type" action="action_patient_type" sequence="2" />
+
+    <menuitem id="history_menu" name="History" action="action_pos_prescription_history" sequence="3" />
+    <menuitem id="signs_menu" name="Examination" action="action_pos_prescription_sign" sequence="5" />
+    <menuitem id="locations_menu" name="Anatomy" action="action_pos_prescription_location" sequence="6" />
+    <menuitem id="intensity_menu" name="Intensity" action="action_pos_prescription_intensity" sequence="7" />
+    <menuitem id="investigation_menu" name="Test Sample" action="action_pos_prescription_investigation" sequence="9" />
+    <menuitem id="excercise_menu" name="Part/body" action="action_pos_prescription_excercise" sequence="10" />
+    <menuitem id="ortho_menu" name="Side" action="action_pos_prescription_ortho" sequence="11" />
+    <menuitem id="diagnosis_menu" name="Diagnosis" action="action_pos_prescription_diagnosis" sequence="12" />
+    <menuitem id="ortho_item_menu" name="Ortho Item" action="action_pos_prescription_item" sequence="18" />
+    <menuitem id="medicines_all_menu" name="Medicines Menu" sequence="19">
+    <menuitem id="medicines_menu" name="Medicines" action="product_template_action_knk_product" sequence="1" />
+    <menuitem id="medicine_dose" name="Dose" action="action_pos_prescription_medicine_dose" sequence="2" />
+    <menuitem id="medicine_group" name="Group" action="action_pos_prescription_medicine_group" sequence="3" />
+    <menuitem id="medicine_composition" name="Composition" action="action_pos_prescription_medicine_composition" sequence="4" />
+    <menuitem id="medicine_route" name="Route" action="action_pos_prescription_medicine_route" sequence="5" />
+    <menuitem id="medicine_food" name="When to take" action="action_pos_prescription_medicine_food" sequence="6" />
+    <menuitem id="medicine_frequency" name="Frequency" action="action_pos_prescription_med_frequency" sequence="7" />
+    <menuitem id="medicine_type" name="Medicine Type" action="action_pos_prescription_med_type" sequence="8" />
+    <menuitem id="med_product_type" name="Product Type" action="action_pos_prescription_med_product_type" sequence="9" />
+    <menuitem id="med_interaction" name="Interaction" action="action_pos_prescription_interaction" sequence="10" />
+    </menuitem>
+    <menuitem id="vtl_menu" sequence="20" name="Vital Menu">
+    <menuitem id="menu_prescr_uom_form_action" action="uom.product_uom_form_action" sequence="20" />
+    </menuitem>
+    <menuitem id="rpt_menu" sequence="21" name="Template">
+    <menuitem id="template_menu" name="Prescription Template" action="action_pos_prescription_template" sequence="2" />
+    </menuitem>
+    <menuitem id='note_value' sequence="22" name="Notes">
+    <menuitem id="note_note_view_menu" name="Notes" action="action_pos_prescription_note" sequence="3" />
+    </menuitem>
+    </menuitem>
+<!--    <menuitem id="menu_prescription_report" parent="prescription_root_menu" name="Reporting" action="pos_prescription_knk.action_prescription_order_report_all" sequence="12"/>-->
+<!--    <menuitem id="menu_prescription_appointment_id" parent="prescription_root_menu" name="Appointment" action="pos_prescription_knk.action_appointment_prescription" />-->
+
+<!--    <menuitem id="menu_radiology_request_id" parent="prescription_root_menu" action="pos_prescription_knk.action_radiology_request"/>-->
+
+    <menuitem id="referral_partner_menu" action="action_referral_partner_form" parent="prescription_root_menu" sequence="11" />
+
+    <menuitem id="appointment_schedule" name="Appointment" parent="configuration_menu" sequence="100">
+
+    <menuitem id="appointment_schedule_menu" action="action_appointment_schedule_form" sequence="1" />
+    <menuitem id="appointment_schedule_slot_menu" action="action_appointment_schedule_slot_form" sequence="2"/>
+    <menuitem id="appointment_scheduler_wizard_menu" action="appointment_scheduler_wizard_action" sequence="3"/>
+    </menuitem>
+	
+	<!-- GSC Score -->
+	<menuitem id="gsc_score_menu" name="GSC Score" parent="configuration_menu" sequence="200" />
+	<menuitem id="gsc_motor_menu" name="Best Motor Response" parent="gsc_score_menu" action="action_gsc_motor_response" sequence="1" />
+	<menuitem id="gsc_verbal_menu" name="Best Verbal Response" parent="gsc_score_menu" action="action_gsc_verbal_response" sequence="2" />
+	<menuitem id="gsc_eye_menu" name="Best Eye Response" parent="gsc_score_menu" action="action_gsc_eye_response" sequence="3" />
+	
+	<menuitem id="trigger_context_menu" name="Trigger / Context" parent="configuration_menu" sequence="300" action="action_trigger_context"/>
+    <menuitem id="temporal_pattern_menu" name="Temporal Pattern / Timeline Tag" parent="configuration_menu" sequence="310" action="action_temporal_pattern"/>
+    <menuitem id="allergy_reaction_menu" name="Allergy Reactions" parent="configuration_menu" action="action_allergy_reaction" sequence="320"/>
+    <menuitem id="red_flag_indicator_menu" name="Red Flags Indicators" parent="configuration_menu" action="action_red_flag_indicator" sequence="330"/>
+    <menuitem id="exercise_instruction_menu" name="Exercise Instructions" parent="configuration_menu" action="action_exercise_instruction" sequence="350"/>
+    <menuitem id="diagnosis_secondary_menu" name="Secondary Diagnoses" parent="exercise_instruction_menu" action="action_diagnosis_secondary" sequence="360"/>
+    <menuitem id="test_category_menu" name="Test Categories" parent="configuration_menu" action="action_test_category" sequence="340"/>
+
+
+</odoo>
+
+
+

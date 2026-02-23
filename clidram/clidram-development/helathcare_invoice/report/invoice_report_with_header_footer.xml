@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_healthcare_custom_invoice_header_footer">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="print_with_payments" t-value="True"/>
+                <t t-call="helathcare_invoice.helathcare_invoice_external_layout_header_footer">
+                    <div class="page" style="font-size: 11px; margin-top: 85px !important;">
+                        <div class="row col-12" style="border-top: 1px solid black;">
+                            <div style="font-size: 16px !important; text-align: center !important">
+                                <strong>
+                                    OP Bill
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="row col-12"
+                             style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                            <div class="col-4">
+                                <span>
+                                    <strong>Name:
+                                        <t t-esc="o.partner_id.name"/>
+                                    </strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>
+                                        Date:
+                                    </strong>
+                                    <t t-esc="o.invoice_date"/>
+                                </span>
+                            </div>
+
+                            <div class="col-4">
+                                <span>
+                                    <strong>ID:</strong>
+                                    <t t-esc="o.partner_id.seq"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>
+                                        Bill:
+                                        <t t-esc="o.payment_reference"/>
+                                    </strong>
+                                </span>
+                            </div>
+
+                            <div class="col-4">
+                                <span>
+                                    <strong>
+                                        Age / Gender:
+                                    </strong>
+                                    <t t-esc="o.age"/>
+                                    YRS /
+                                    <span t-field="o.gender"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>
+                                        Doctor:
+                                    </strong>
+                                    <t t-esc="o.source_doctor_id.name"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row col-12 mt-3">
+                            <table class="table table-sm o_main_table table-borderless">
+                                <thead class="font-weight-bold">
+                                    <tr>
+                                        <th style="text-align: left;">Description</th>
+                                        <!--                                        <th>HSN/SAC</th>-->
+                                        <th style="text-align: center;">Quantity</th>
+                                        <th style="text-align: center;">Charges</th>
+                                        <!--<t t-if="any(line.discount > 0 for line in o.invoice_line_ids)">
+                                            <th style="text-align: right;">Discount (%)</th>
+                                        </t>-->
+                                        <t t-if="any(line.discount > 0 or line.discount_fixed > 0 for line in o.invoice_line_ids)">
+                                            <th style="text-align: center;">Discount</th>
+                                        </t>
+                                        <th style="text-align: right;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.invoice_line_ids" t-as="l">
+                                        <tr>
+                                            <td>
+                                                <span t-field="l.name" t-options="{'widget': 'text'}"/>
+                                            </td>
+                                            <!--                                            <td style="text-align: center;">-->
+                                            <!--                                                <t t-esc="l.product_id.l10n_in_hsn_code"/>-->
+                                            <!--                                            </td>-->
+                                            <td style="text-align: center;">
+                                                <t t-esc="'%.0f'%(l.quantity)"/>
+                                            </td>
+                                            <td style="text-align: center;">₹
+                                                <t t-esc="l.price_unit"
+                                                   t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <!-- Conditional display for Discount column value -->
+                                            <!--                                            <t t-if="l.discount > 0">-->
+                                            <!--                                                <td style="text-align: right;">-->
+                                            <!--                                                    <t t-esc="l.discount"-->
+                                            <!--                                                       t-options='{"widget": "integer"}'/>-->
+                                            <!--                                                    %-->
+                                            <!--                                                </td>-->
+                                            <!--                                            </t>-->
+                                            <t t-if="l.discount > 0 or l.discount_fixed > 0">
+                                                <td style="text-align: center;">₹
+                                                    <t t-esc="l.discount if l.discount > 0 else l.discount_fixed"
+                                                       t-options='{"widget": "float", "precision": 2}'/>
+                                                </td>
+                                            </t>
+
+                                            <td style="text-align: right;">₹
+                                                <t t-esc="l.price_subtotal"
+                                                   t-options='{"widget": "float", "precision": 2}'/>
+                                            </td>
+                                            <!--                                            <td style="text-align: right;">-->
+                                            <!--                                                <t t-esc="l.price_subtotal"-->
+                                            <!--                                                   t-options='{"widget": "float", "precision": 0}'/>-->
+                                            <!--                                            </td>-->
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--                        <div class="row col-12">-->
+                        <!--                            <div class="col-6">-->
+
+                        <!--                            </div>-->
+                        <!--                            <div class="col-6">-->
+                        <!--                                <table class="table table-sm o_main_table table-borderless">-->
+                        <!--                                    <t t-set="tax_totals" t-value="o.tax_totals"/>-->
+                        <!--                                    <t t-call="account.document_tax_totals"/>-->
+                        <!--                                    <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]"-->
+                        <!--                                       t-as="amount_by_group">-->
+                        <!--                                        <tr>-->
+                        <!--                                            <t t-if="tax_totals['display_tax_base']">-->
+                        <!--                                                <td colspan="5">-->
+                        <!--                                                    <span t-esc="amount_by_group['tax_group_name']"/>-->
+                        <!--                                                    <span t-if="not amount_by_group['hide_base_amount']"-->
+                        <!--                                                          class="text-nowrap">on-->
+                        <!--                                                        <t t-esc="amount_by_group['formatted_tax_group_base_amount']"/>-->
+                        <!--                                                    </span>-->
+                        <!--                                                </td>-->
+                        <!--                                                <td class="text-end o_price_total" colspan="1">-->
+                        <!--                                                    <span class="text-nowrap"-->
+                        <!--                                                          t-esc="amount_by_group['formatted_tax_group_amount']"/>-->
+                        <!--                                                </td>-->
+                        <!--                                            </t>-->
+                        <!--                                            <t t-else="">-->
+                        <!--                                                <td colspan="5">-->
+                        <!--                                                    <span class="text-nowrap"-->
+                        <!--                                                          t-esc="amount_by_group['tax_group_name']"/>-->
+                        <!--                                                </td>-->
+                        <!--                                                <td class="text-end o_price_total" colspan="1">-->
+                        <!--                                                    <span class="text-nowrap"-->
+                        <!--                                                          t-esc="amount_by_group['formatted_tax_group_amount']"/>-->
+                        <!--                                                </td>-->
+                        <!--                                            </t>-->
+                        <!--                                        </tr>-->
+                        <!--                                    </t>-->
+                        <!--                                </table>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+
+
+                        <div class="row col-12">
+                            <div class="col-6">
+
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm o_main_table table-borderless">
+                                    <tr class="border-black">
+                                        <td colspan="5">
+                                            <span>Total:
+                                            </span>
+                                        </td>
+                                        <td class="text-end" colspan="1">₹
+                                            <t t-esc="o.amount_total"
+                                               t-options='{"widget": "float", "precision": 2}'/>
+                                        </td>
+                                    </tr>
+                                    <t t-if="print_with_payments">
+                                        <t t-if="o.payment_state != 'invoicing_legacy'">
+                                            <t t-set="payments_vals"
+                                               t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
+                                            <t t-foreach="payments_vals" t-as="payment_vals">
+                                                <tr t-if="payment_vals['is_exchange'] == 0">
+                                                    <td colspan="5">
+                                                        <span>Paid Amount:
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-end" colspan="1">₹
+                                                        <t t-esc="payment_vals['amount']"
+                                                           t-options='{"widget": "float", "precision": 2}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-if="len(payments_vals) > 0">
+                                                <tr class="border-black">
+                                                    <td colspan="5">
+                                                        <strong>Dues</strong>
+                                                    </td>
+                                                    <td class="text-end" colspan="1">₹
+                                                        <t t-esc="o.amount_residual"
+                                                           t-options='{"widget": "float", "precision": 2}'/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!--                        <div class="row mt-2">-->
+                        <!--                            <div class="col-12" style="font-weight:bold;">-->
+                        <!--                                Please use the following communication for your payment :-->
+                        <!--                                <t t-esc="o.payment_reference"/>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+
+                        <div class="row col-12">
+                            <div class="col-6">
+                                <t t-if="o.discount_authorized_person">
+                                    <div class="row">
+                                        <div style="font-weight:bold;">
+                                            Discount Authorised Person :
+                                            <t t-esc="o.discount_authorized_person"/>
+                                        </div>
+                                    </div>
+                                </t>
+
+                                <t t-if="payments_vals and len(payments_vals) > 0">
+                                    <div class="row mt-2">
+                                        <div  style="font-weight:bold;">
+                                            <t t-foreach="payments_vals" t-as="payment_vals">
+                                                <t t-if="payment_vals['is_exchange'] == 0">
+                                                    <div>
+                                                        <t t-esc="payment_vals['date']"/>
+                                                        , Received ₹
+                                                        <t t-esc="payment_vals['amount']"
+                                                           t-options='{"widget": "float", "precision": 2}'/>
+                                                        Paid By
+                                                        <t t-esc="payment_vals['payment_method_name']"/>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+
+                                <!--                        <div class="row mt-2">-->
+                                <!--                            <div class="col-12" style="font-weight:bold;">-->
+                                <!--                                Total (In Words):-->
+                                <!--                                <t t-esc="o.amount_total_words"/>-->
+                                <!--                            </div>-->
+                                <!--                        </div>-->
+                                <div class="mt-3 text-center" style="text-align: left !important;">
+                                    <span style="text-align: left !important;">
+                                        <strong>This is a computer generated invoice and do not require any signature
+                                        </strong>
+                                    </span>
+                                </div>
+
+                                <div class="row mt-2 text-end" style="text-align: left !important;">
+                                    <span style="text-align: left !important;">
+                                        <strong>Printed By:<t t-esc="user.name"/>. Date:
+                                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%y %H:%M')"/>
+                                        </strong>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-6" style="text-align: center;">
+                                <t t-if="o.payment_state == 'paid'">
+                                    <img src="/helathcare_invoice/static/img/paid.png"
+                                         style="height: 90px;"/>
+                                </t>
+                                <t t-elif="o.payment_state == 'partial'">
+                                    <img src="/helathcare_invoice/static/img/partial.jpg"
+                                         style="height: 90px;"/>
+                                </t>
+                                <t t-else="">
+                                    <img src="/helathcare_invoice/static/img/unpaid.jpg"
+                                         style="height: 90px;"/>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="helathcare_invoice.helathcare_invoice_external_layout_header_footer">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <!--            <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.sudo().key}}">-->
+        <!--                <t t-out="0"/>-->
+        <!--            </t>-->
+        <t t-call="helathcare_invoice.helathcare_invoice_external_layout_header_footer_standard">
+            <t t-out="0"/>
+        </t>
+
+    </template>
+
+    <template id="helathcare_invoice.helathcare_invoice_external_layout_header_footer_standard">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            <div class="row">
+                <div class="col-12">
+                    <img t-if="company.invoice_header" t-att-src="image_data_uri(company.invoice_header)"
+                         style="width: 100%;" alt="Logo"/>
+                </div>
+            </div>
+        </div>
+
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_report_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
+             t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-2">
+                <!-- This div ensures that the address is not cropped by the header. -->
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-out="0"/>
+        </div>
+
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+            <div class="row text-center" style="border-top: 1px solid black;">
+                <div class="col-12">
+                    <img t-if="company.invoice_footer" t-att-src="image_data_uri(company.invoice_footer)"
+                         style="width: 100%;" alt="Logo"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <record id="paperformat_healthcare_invoice_report_header_footer" model="report.paperformat">
+        <field name="name">Invoice Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_custom_invoice_with_header_footer" model="ir.actions.report">
+        <field name="name">Invoice Report With Header and Footer</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">helathcare_invoice.report_healthcare_custom_invoice_header_footer</field>
+        <field name="report_file">helathcare_invoice.report_healthcare_custom_invoice_header_footer</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="helathcare_invoice.paperformat_healthcare_invoice_report_header_footer"/>
+    </record>
+</odoo>

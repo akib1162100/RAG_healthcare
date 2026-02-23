@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="canvas_image_editor.ImageEditor" owl="1">
+        <div class="o_image_editor_container">
+            <canvas t-ref="canvas" height="700" width="700" style="border:1px solid #ccc; width: 700px; height: 700px;"></canvas>
+
+            <!-- Enhanced Tools Section -->
+            <div class="toolbar-container bg-light p-2 border-top">
+                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                    <!-- Color Picker -->
+                    <input type="color" id="colorPicker" value="#ff0000"
+                           style="width:40px;margin-right: 10px;margin-top: 3px;"/>
+
+                    <!-- Drawing Tools -->
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-outline-primary rounded-start"
+                                t-on-click="() => this.selectTool('text')" title="Add Text">
+                            <i class="fa fa-font me-1"></i>Text
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary"
+                                t-on-click="() => this.selectTool('draw')" title="Free Drawing">
+                            <i class="fa fa-pencil me-1"></i>Draw
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary rounded-end"
+                                t-on-click="() => this.selectTool('rectangle')" title="Add Rectangle">
+                            <i class="fa fa-square-o me-1"></i>Shape
+                        </button>
+                    </div>
+
+                    <!-- Markup Tools -->
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-outline-success rounded-start"
+                                t-on-click="() => this.selectTool('highlight')" title="Add Highlight">
+                            <i class="fa fa-highlighter me-1"></i>Highlight
+                        </button>
+                        <button class="btn btn-sm btn-outline-success rounded-end"
+                                t-on-click="() => this.selectTool('arrow')" title="Add Arrow">
+                            <i class="fa fa-arrow-right me-1"></i>Arrow
+                        </button>
+                    </div>
+
+                    <!-- Delete -->
+                    <button class="btn btn-sm btn-outline-danger"
+                            t-on-click="deleteSelected" title="Delete Selected">
+                        <i class="fa fa-trash me-1"></i>Delete
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced Footer -->
+            <div class="modal-footer d-flex justify-content-center bg-light border-top">
+                <div class="btn-group" role="group">
+                    <button style="margin-right: 10px;" class="btn btn-sm btn-outline-secondary" t-on-click="discardChanges">
+                        <i class="fa fa-times me-1"></i>Cancel
+                    </button>
+                    <button class="btn btn-sm btn-success" t-on-click="saveImage">
+                        <i class="fa fa-save me-1"></i>Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

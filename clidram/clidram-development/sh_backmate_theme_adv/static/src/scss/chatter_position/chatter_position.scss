@@ -1,0 +1,41 @@
+body{
+	.o_action_manager{
+		.o_action{
+			@if $chatter_type == 'bottom'{
+				.oe_chatter{
+                    @include media-breakpoint-up(md){
+                        min-width: 650px;
+                        max-width: 100% !important;
+                        width: 100%;
+                        padding: 24px 32px;
+                    }
+                    @media screen and (min-width: 1500px){
+                        max-width: 1320px !important;
+                    }
+                    .o_ChatterContainer{
+                        @include media-breakpoint-only(lg){
+                            max-width: 100% !important;
+                            width: 100%;
+                            padding: 24px 32px;
+                        }
+                    }
+				}
+			}
+            @if $chatter_type == "sided"{
+                @include media-breakpoint-down(md){
+                    flex-direction: column !important;
+                    overflow: auto;
+                }
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="pos_prescription_procedure_config_view_form" model="ir.ui.view">
+        <field name="name">procedure.config.view.form</field>
+        <field name="model">procedure.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_procedure_config_view_tree" model="ir.ui.view">
+        <field name="name">procedure.config.view.tree</field>
+        <field name="model">procedure.config</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="pos_prescription_symptom_config_view_form" model="ir.ui.view">
+        <field name="name">symptom.config.view.form</field>
+        <field name="model">symptom.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="result_ids" widget="many2many_tags"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_symptom_config_view_tree" model="ir.ui.view">
+        <field name="name">symptom.config.view.tree</field>
+        <field name="model">symptom.config</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="pos_prescription_result_config_view_form" model="ir.ui.view">
+        <field name="name">result.config.view.form</field>
+        <field name="model">result.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_result_config_view_tree" model="ir.ui.view">
+        <field name="name">result.config.view.tree</field>
+        <field name="model">result.config</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="pos_prescription_family_history_view_form" model="ir.ui.view">
+        <field name="name">family_history.view.form</field>
+        <field name="model">family.history.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="result_ids" widget="many2many_tags"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_family_history_view_tree" model="ir.ui.view">
+        <field name="name">family_history.view.tree</field>
+        <field name="model">family.history.config</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+
+    <record id="pos_prescription_social_history_view_form" model="ir.ui.view">
+        <field name="name">social_history.view.form</field>
+        <field name="model">social.history.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="result_ids" widget="many2many_tags"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_social_history_view_tree" model="ir.ui.view">
+        <field name="name">social_history.view.tree</field>
+        <field name="model">social.history.config</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_prescription_family_history_result_view_form" model="ir.ui.view">
+        <field name="name">family.history.result.form</field>
+        <field name="model">family.history.result</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_family_history_result_view_tree" model="ir.ui.view">
+        <field name="name">family.history.result.tree</field>
+        <field name="model">family.history.result</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="pos_prescription_social_history_result_view_form" model="ir.ui.view">
+        <field name="name">social.history.result.form</field>
+        <field name="model">social.history.result</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_history_category_view_form" model="ir.ui.view">
+        <field name="name">history.category.form</field>
+        <field name="model">history.category</field>
+        <field name="arch" type="xml">
+            <form string="Category">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_prescription_history_category_view_tree" model="ir.ui.view">
+        <field name="name">history.category.tree</field>
+        <field name="model">history.category</field>
+        <field name="arch" type="xml">
+            <tree string="Category">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_prescription_social_history_result_view_tree" model="ir.ui.view">
+        <field name="name">social.history.result.tree</field>
+        <field name="model">social.history.result</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_symptom_config_form" model="ir.actions.act_window">
+        <field name="name">Symptom</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">symptom.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_procedure_config_form" model="ir.actions.act_window">
+        <field name="name">procedure</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">procedure.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_result_config_form" model="ir.actions.act_window">
+        <field name="name">Result</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">result.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_family_history_form" model="ir.actions.act_window">
+        <field name="name">Family History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">family.history.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_family_result_form" model="ir.actions.act_window">
+        <field name="name">Result</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">family.history.result</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="action_social_history_form" model="ir.actions.act_window">
+        <field name="name">Social History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">social.history.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_social_result_form" model="ir.actions.act_window">
+        <field name="name">Result</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">social.history.result</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_history_category_form" model="ir.actions.act_window">
+        <field name="name">Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">history.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="symptom_menu_root"
+              name="Symptom"
+              parent="configuration_menu"
+              sequence="50"/>
+
+    <menuitem id="symptom_config_menu"
+              parent="symptom_menu_root"
+              name="Symptom"
+              action="action_symptom_config_form"
+              sequence="10"/>
+
+    <menuitem id="result_config_menu"
+              parent="symptom_menu_root"
+              name="Result"
+              action="action_result_config_form"
+              sequence="11"/>
+
+    <menuitem id="procedure_config_menu"
+              parent="configuration_menu"
+              name="Procedure"
+              action="action_procedure_config_form"
+              sequence="12"/>
+
+
+    <menuitem id="family_menu"
+              name="Family"
+              parent="configuration_menu"
+              sequence="50"/>
+
+    <menuitem id="family_history_menu"
+              parent="family_menu"
+              name="Family History"
+              action="action_family_history_form"
+              sequence="10"/>
+
+    <menuitem id="family_result_menu"
+              parent="family_menu"
+              name="Result"
+              action="action_family_result_form"
+              sequence="11"/>
+
+    <menuitem id="social_menu"
+              name="Social"
+              parent="configuration_menu"
+              sequence="50"/>
+
+    <menuitem id="social_history_menu"
+              parent="social_menu"
+              name="Social History"
+              action="action_social_history_form"
+              sequence="10"/>
+
+    <menuitem id="social_result_menu"
+              parent="social_menu"
+              name="Result"
+              action="action_social_result_form"
+              sequence="11"/>
+
+    <menuitem id="history_category_menu"
+              name="Category"
+              parent="configuration_menu"
+              action="action_history_category_form"
+              sequence="11"/>
+
+
+
+
+    <menuitem id="physical_examination_menu_root"
+              name="Physical Examination"
+              parent="configuration_menu"
+              sequence="60"/>
+
+
+
+    <record id="physical_general_condition_view_form" model="ir.ui.view">
+        <field name="name">physical.general.condition.form</field>
+        <field name="model">physical.general.condition</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_general_condition_view_tree" model="ir.ui.view">
+        <field name="name">physical.general.condition.tree</field>
+        <field name="model">physical.general.condition</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_general_condition" model="ir.actions.act_window">
+        <field name="name">General Condition</field>
+        <field name="res_model">physical.general.condition</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_general_condition_menu"
+              name="General Condition"
+              parent="physical_examination_menu_root"
+              action="action_physical_general_condition"
+              sequence="10"/>
+
+
+
+    <record id="physical_pallor_view_form" model="ir.ui.view">
+        <field name="name">physical.pallor.form</field>
+        <field name="model">physical.pallor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_pallor_view_tree" model="ir.ui.view">
+        <field name="name">physical.pallor.tree</field>
+        <field name="model">physical.pallor</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_pallor" model="ir.actions.act_window">
+        <field name="name">Pallor</field>
+        <field name="res_model">physical.pallor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_pallor_menu"
+              name="Pallor"
+              parent="physical_examination_menu_root"
+              action="action_physical_pallor"
+              sequence="20"/>
+
+
+    <record id="physical_msk_view_form" model="ir.ui.view">
+        <field name="name">physical.msk.form</field>
+        <field name="model">physical.msk</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_msk_view_tree" model="ir.ui.view">
+        <field name="name">physical.msk.tree</field>
+        <field name="model">physical.msk</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_msk" model="ir.actions.act_window">
+        <field name="name">MSK (Musculoskeletal)</field>
+        <field name="res_model">physical.msk</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_msk_menu"
+              name="MSK (Musculoskeletal)"
+              parent="physical_examination_menu_root"
+              action="action_physical_msk"
+              sequence="30"/>
+
+
+
+    <record id="physical_edema_view_form" model="ir.ui.view">
+        <field name="name">physical.edema.form</field>
+        <field name="model">physical.edema</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_edema_view_tree" model="ir.ui.view">
+        <field name="name">physical.edema.tree</field>
+        <field name="model">physical.edema</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_edema" model="ir.actions.act_window">
+        <field name="name">Edema</field>
+        <field name="res_model">physical.edema</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_edema_menu"
+              name="Edema"
+              parent="physical_examination_menu_root"
+              action="action_physical_edema"
+              sequence="40"/>
+
+
+    <record id="physical_lymph_nodes_view_form" model="ir.ui.view">
+        <field name="name">physical.lymph.nodes.form</field>
+        <field name="model">physical.lymph.nodes</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_lymph_nodes_view_tree" model="ir.ui.view">
+        <field name="name">physical.lymph.nodes.tree</field>
+        <field name="model">physical.lymph.nodes</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_lymph_nodes" model="ir.actions.act_window">
+        <field name="name">Lymph Nodes</field>
+        <field name="res_model">physical.lymph.nodes</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_lymph_nodes_menu"
+              name="Lymph Nodes"
+              parent="physical_examination_menu_root"
+              action="action_physical_lymph_nodes"
+              sequence="50"/>
+
+
+    <record id="physical_hydration_view_form" model="ir.ui.view">
+        <field name="name">physical.hydration.form</field>
+        <field name="model">physical.hydration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_hydration_view_tree" model="ir.ui.view">
+        <field name="name">physical.hydration.tree</field>
+        <field name="model">physical.hydration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_hydration" model="ir.actions.act_window">
+        <field name="name">Hydration</field>
+        <field name="res_model">physical.hydration</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_hydration_menu"
+              name="Hydration"
+              parent="physical_examination_menu_root"
+              action="action_physical_hydration"
+              sequence="60"/>
+
+
+
+    <record id="physical_cvs_view_form" model="ir.ui.view">
+        <field name="name">physical.cvs.form</field>
+        <field name="model">physical.cvs</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_cvs_view_tree" model="ir.ui.view">
+        <field name="name">physical.cvs.tree</field>
+        <field name="model">physical.cvs</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_cvs" model="ir.actions.act_window">
+        <field name="name">CVS</field>
+        <field name="res_model">physical.cvs</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_cvs_menu"
+              name="CVS"
+              parent="physical_examination_menu_root"
+              action="action_physical_cvs"
+              sequence="70"/>
+
+
+
+    <record id="physical_rs_view_form" model="ir.ui.view">
+        <field name="name">physical.rs.form</field>
+        <field name="model">physical.rs</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_rs_view_tree" model="ir.ui.view">
+        <field name="name">physical.rs.tree</field>
+        <field name="model">physical.rs</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_rs" model="ir.actions.act_window">
+        <field name="name">RS</field>
+        <field name="res_model">physical.rs</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_rs_menu"
+              name="RS"
+              parent="physical_examination_menu_root"
+              action="action_physical_rs"
+              sequence="80"/>
+
+
+    <record id="physical_abdomen_view_form" model="ir.ui.view">
+        <field name="name">physical.abdomen.form</field>
+        <field name="model">physical.abdomen</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_abdomen_view_tree" model="ir.ui.view">
+        <field name="name">physical.abdomen.tree</field>
+        <field name="model">physical.abdomen</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_abdomen" model="ir.actions.act_window">
+        <field name="name">Abdomen</field>
+        <field name="res_model">physical.abdomen</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_abdomen_menu"
+              name="Abdomen"
+              parent="physical_examination_menu_root"
+              action="action_physical_abdomen"
+              sequence="90"/>
+
+
+    <record id="physical_neuro_view_form" model="ir.ui.view">
+        <field name="name">physical.neuro.form</field>
+        <field name="model">physical.neuro</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_neuro_view_tree" model="ir.ui.view">
+        <field name="name">physical.neuro.tree</field>
+        <field name="model">physical.neuro</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_neuro" model="ir.actions.act_window">
+        <field name="name">Neuro (CNS Screen)</field>
+        <field name="res_model">physical.neuro</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_neuro_menu"
+              name="Neuro (CNS Screen)"
+              parent="physical_examination_menu_root"
+              action="action_physical_neuro"
+              sequence="100"/>
+
+
+
+    <record id="physical_ent_view_form" model="ir.ui.view">
+        <field name="name">physical.ent.form</field>
+        <field name="model">physical.ent</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="physical_ent_view_tree" model="ir.ui.view">
+        <field name="name">physical.ent.tree</field>
+        <field name="model">physical.ent</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_physical_ent" model="ir.actions.act_window">
+        <field name="name">ENT</field>
+        <field name="res_model">physical.ent</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="physical_ent_menu"
+              name="ENT"
+              parent="physical_examination_menu_root"
+              action="action_physical_ent"
+              sequence="110"/>
+
+
+</odoo>

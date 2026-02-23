@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Appointment schedule -->
+    <record id="referral_partner_form" model="ir.ui.view">
+        <field name="name">referral.partner.form</field>
+        <field name="model">referral.partner</field>
+        <field name="arch" type="xml">
+            <form string="Referral Partner">
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar" />
+                    <div class="oe_title mb24">
+                        <h1>
+                            <field class="text-break" name="name" default_focus="1" placeholder="e.g. Freeman" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" />
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                                <field name="city" placeholder="City" class="o_address_city" />
+                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}" />
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" />
+                                    <field name="country_id" />
+                                <!-- <div >
+                                    <field name="country_id" placeholder="Country" options="{no_open: True, no_create: True}" />
+                                </div>
+ -->                            </div>
+                        </group>
+                        <group>
+                            <field name="phone" widget="phone" />
+                            <field name="email" widget="email" context="{'gravatar_image': True}" />
+                            <field name="age" />
+                            <field name="gender" />
+                            <field name="age" />
+                            <field name="age" />
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_referral_partner_tree" model="ir.ui.view">
+        <field name="name">referral.partner.tree</field>
+        <field name="model">referral.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="email" />
+                <field name="phone" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_referral_partner_form" model="ir.actions.act_window">
+        <field name="name">Referral Partner</field>
+        <field name="res_model">referral.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Records Found.
+            </p>
+        </field>
+    </record>
+</odoo>

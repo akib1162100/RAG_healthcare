@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="import_patient_entry_wizard_view">
+			<field name="name">patient.import.extended.view</field>
+			<field name="model">patient.import</field>
+			<field name="arch" type="xml">
+				<form string="">
+					<separator string="This Wizard helps in import patient records..."/>
+					<group>
+						<group>
+							<field name="patient_file"/>
+						</group>
+					</group>
+					
+					<footer>
+						<button string="Import" name="import_patient"
+							type="object" class="oe_highlight"/>
+							or
+						<button string="Cancel" class="oe_link" special="cancel"/>	
+					</footer>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="import_patient_entry_action">
+			<field name="name">patient.import.action</field>
+			<field name="res_model">patient.import</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>		
+	</data>
+</odoo>

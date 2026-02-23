@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+    <record model="ir.ui.view" id="inherit_website_appoint_mgmt_book_appointment_form_view">
+        <field name="name">Appointment Form Inherit</field>
+        <field name="model">wk.appointment</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="wk_appointment.appoint_mgmt_book_appointment_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_transactions" type="object"
+                    class="oe_stat_button" icon="fa-money"
+                    attrs="{'invisible': [('payment_tx_count', '=', 0)]}">
+                    <field name="payment_tx_count" widget="statinfo" string="Transactions"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='create_date']" position="after">
+                <field name="tz" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_website_appoint_inherit_view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form.appoint.website.appoint.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="wk_appointment.inherit_view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='appoint_group_ids']" position="after">
+                <field name="tz" required="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

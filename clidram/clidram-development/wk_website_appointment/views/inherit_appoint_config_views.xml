@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+	<data>
+
+		<record id="website_inherit_appoint_config_form" model="ir.ui.view">
+			<field name="name">Appoint Config Settings Inherit in website</field>
+			<field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="wk_appointment.appoint_config_settings_form"/>
+			<field name="arch" type="xml">
+                <xpath expr="//div[@data-key='wk_appointment']" position="inside">
+					<h2> Other Settings </h2>
+					<div class="row mt16 o_settings_container">
+						<div class="col-xs-12 col-md-6 o_setting_box">
+							<div class="o_setting_left_pane">
+								<field name="show_cancel_booking"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="show_cancel_booking" string="Show Cancel Booking"/>
+								<div class="text-muted">
+									⇒ Enabling/disabling this setting will show/hide the Cancel Booking
+									  button from website by which customer can cancel their booked appointments
+									  before their approval.
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6 o_setting_box">
+							<div class="o_setting_left_pane">
+								<field name="website_show_tz"/>
+							</div>
+							<div class="o_setting_right_pane">
+								<label for="website_show_tz" string="Show Timezone Details"/>
+								<div class="text-muted">
+									⇒ Enabling/disabling this setting will show/hide the timezone details
+									  in Appointee from website by which customers can check the timezone before
+									  booking their appointments.
+								</div>
+							</div>
+						</div>
+					</div>
+					<h2>Customer Payments</h2>
+					<div class="row mt16 o_settings_container mb64">
+	                    <div class="col-xs-12 col-md-6 o_setting_box" title="Select any payment mode for customers">
+	                        <div class="o_setting_right_pane">
+	                            <label for="website_appoint_payment_mode" string="Appointment Payment Mode for Customers"/>
+	                            <div class="content-group">
+	                                <div class="row mt8">
+	                                    <label string="" for="website_appoint_payment_mode" class="col-md-1 o_light_label"/>
+	                                    <field name="website_appoint_payment_mode" required="1"/>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+					</div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

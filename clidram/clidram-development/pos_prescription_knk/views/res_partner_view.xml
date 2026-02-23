@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo >
+	<record id="res_partner_physician" model="ir.ui.view">
+		<field name="name">res.partner.physician</field >
+		<field name="model">res.partner</field >
+		<field name="inherit_id" ref="base.view_partner_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//sheet" position="before">
+				<header >
+					<button name="action_send_otp" type="object" string="Send OTP" class="btn-primary" attrs="{'invisible': [('is_verified', '=', True)]}" />
+					<button name="action_open_otp_wizard" type="object" string="Verify OTP" class="btn-success" attrs="{'invisible': [('is_verified', '=', True)]}" />
+				</header >
+			</xpath >
+
+			<xpath expr="//sheet/div[@name='button_box']" position="after">
+				<widget name="web_ribbon" title="Verified" bg_color="bg-success" attrs="{'invisible': [('is_verified', '=', False)]}" />
+			</xpath >
+
+			<div name="button_box" position="inside">
+				<button class="oe_stat_button" type="object" name="action_view_patient_prescription_order" icon="fa-list-alt" attrs="{'invisible': ['|',('partner_type', '!=', 'patient'),('prescription_count','=',0)]}">
+					<field string="Prescriptions" name="prescription_count" widget="statinfo" />
+				</button >
+				<button name="view_appointment" type="object" class="oe_stat_button" icon="fa-files-o" string="View Appointment" attrs="{'invisible': ['|',('partner_type', '!=', 'patient'),('pat_prescription_count','=',0)]}">
+					<field string="Appointments" name="pat_prescription_count" widget="statinfo" />
+				</button >
+				<button name="view_appointment_physician" type="object" class="oe_stat_button" icon="fa-files-o" string="Appointments Record" attrs="{'invisible': ['|',('partner_type', '!=', 'physician'),('phy_prescription_count','=',0)]}">
+					<field string="Appointments" name="phy_prescription_count" widget='statinfo' />
+				</button >
+			</div >
+			<xpath expr="//form//div[hasclass('oe_title')]//h1//field[@name='name']" position="before">
+				<field name="seq" />
+				<field name="priority" widget="priority" class="me-3" />
+			</xpath >
+			<xpath expr="//field[@name='company_type']" position="after">
+				<field name="partner_type" widget="radio" options="{'horizontal': true}" />
+			</xpath >
+			<xpath expr="//field[@name='vat']" position="before">
+				<field name="date_of_birth" />
+				<field name="age" />
+				<field name="age_type" />
+				<field name="gender" />
+				<field name="referral_partner_id" attrs="{'readonly':[('is_referral_editable','=',False)]}" />
+				<field name="is_referral_editable" invisible="1" />
+			</xpath >
+			<xpath expr="//group/field[@name='website']" position="after">
+				<field name="company_id" required="1" />
+				<field name="otp_code" invisible="1" />
+				<!--				<field name="otp_input" attrs="{'invisible': [('is_verified', '=', True)]}"/>-->
+				<field name="is_verified" readonly="1" invisible="1" force_save="1" />
+				<field name="patient_medical_history" attrs="{'invisible': [('partner_type', '=', 'physician')]}" />
+				<field name="patient_details" attrs="{'invisible': [('partner_type', '=', 'physician')]}" />
+				<field name="registered_id" attrs="{'invisible': [('partner_type', '=', 'physician')]}" />
+				<field name="id_number" attrs="{'invisible': [('partner_type', '=', 'physician')]}" />
+				<field name="emergency_contact_number" attrs="{'invisible': [('partner_type', '=', 'physician')]}" />
+				<field name="emergency_contact_name" attrs="{'invisible': [('partner_type', '=', 'physician')]}" />
+				<field name="relation" attrs="{'invisible': [('partner_type', '=', 'physician')]}" />
+				<field name="designation" attrs="{'invisible': [('partner_type', '=', 'patient')]}" />
+				<field name="reg_no" attrs="{'invisible': [('partner_type', '=', 'patient')]}" />
+				<field name="is_default_whatsapp_contact" attrs="{'invisible': [('partner_type', 'in', ['physician', 'patient'])]}" />
+				<field name="active" invisible="1" />
+			</xpath >
+
+			<xpath expr="//notebook" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//div[hasclass('oe_title')]//field[@name='company_type']" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//group/field[@name='vat']" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//group/field[@name='category_id']" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//group/field[@name='website']" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//group/field[@name='title']" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//group/field[@name='function']" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//div[hasclass('oe_title')]//field[@name='parent_id']" position="attributes">
+				<attribute name="invisible">1</attribute >
+			</xpath >
+			<xpath expr="//group//field[@name='website']" position="after">
+				<field name="physician_signature" widget="signature" class="signature_size" attrs="{'invisible': [('partner_type', '=', 'patient')]}" />
+
+			</xpath >
+			<field name="country_id" position="attributes">
+				<attribute name="readonly">0</attribute >
+				<attribute name="attrs">{}</attribute >
+			</field >
+
+			<field name="state_id" position="replace">
+				<field name="state_id" class="o_address_state" placeholder="State" options="{'no_create': True, 'no_edit': True}" attrs="{'readonly': [('type', '=', 'contact'), ('parent_id', '!=', False)]}" context="{'default_country_id': country_id, 'zip': zip}" />
+			</field >
+
+		</field >
+	</record >
+
+	<record id="view_res_partner_otp_wizard_form" model="ir.ui.view">
+		<field name="name">res.partner.otp.wizard.form</field >
+		<field name="model">res.partner.otp.wizard</field >
+		<field name="arch" type="xml">
+			<form string="Verify OTP">
+				<group >
+					<field name="partner_id" readonly="1" />
+					<field name="otp_input" />
+				</group >
+				<footer >
+					<button string="Verify" type="object" name="action_verify_otp" class="btn-success" />
+					<button string="Cancel" class="btn-danger" special="cancel" />
+				</footer >
+			</form >
+		</field >
+	</record >
+
+	<record id="view_patient_filter" model="ir.ui.view">
+		<field name="name">res.partner.filter</field >
+		<field name="model">res.partner</field >
+		<field name="priority" eval="1" />
+		<field name="arch" type="xml">
+			<search string="Patient">
+				<field name="name" filter_domain="[('name', 'ilike', self)]" />
+				<field name="age" />
+				<field name="mobile" />
+				<field name="phone" />
+				<field name="seq" />
+				<newline />
+				<newline />
+				<group expand="0" string="Group By...">
+					<filter string="Patient" name="partner_type" domain="[]" context="{'group_by':'partner_type'}" />
+					<filter string="Gender" name="gender_groupby" domain="[]" context="{'group_by':'gender'}" />
+					<filter string="Company" name="company_group" domain="[]" context="{'group_by':'company_id'}" />
+				</group >
+			</search >
+		</field >
+	</record >
+	<record id="patient_action" model="ir.actions.act_window">
+		<field name="name">Patients</field >
+		<field name="res_model">res.partner</field >
+		<field name="view_mode">kanban,tree,form</field >
+		<field name="search_view_id" ref="view_patient_filter" />
+		<field name="domain" eval="[('partner_type','=','patient')]" />
+		<field name="context">{'default_partner_type' : 'patient'}</field >
+	</record >
+	<record id="physician_action" model="ir.actions.act_window">
+		<field name="name">Physicians</field >
+		<field name="res_model">res.partner</field >
+		<field name="view_mode">kanban,tree,form</field >
+		<field name="search_view_id" ref="view_patient_filter" />
+		<field name="domain" eval="[('partner_type','=','physician')]" />
+		<field name="context">{'default_partner_type' : 'physician'}</field >
+	</record >
+	<record id="product_template_view_form_knk_new" model="ir.ui.view">
+		<field name="name">knk.product.template</field >
+		<field name="model">product.template</field >
+		<field name="inherit_id" ref="product.product_template_only_form_view" />
+		<field name="arch" type="xml">
+			<xpath expr="//div[@name='options']" position="inside">
+				<span class="d-inline-block">
+					<field name="is_medication_knk" />
+					<label for="is_medication_knk" string="Medicine" />
+				</span >
+			</xpath >
+		</field >
+	</record >
+	<record id="product_product_view_form_knk_new" model="ir.ui.view">
+		<field name="name">knk.product.product</field >
+		<field name="model">product.product</field >
+		<field name="inherit_id" ref="product.product_normal_form_view" />
+		<field name="arch" type="xml">
+			<xpath expr="//div[@name='options']" position="inside">
+				<span class="d-inline-block">
+					<field name="is_medication_knk" />
+					<label for="is_medication_knk" string="Medicine" />
+				</span >
+			</xpath >
+		</field >
+	</record >
+	<record id="product_template_search_view_knk_new" model="ir.ui.view">
+		<field name="name">product.template.search.knk.form</field >
+		<field name="model">product.template</field >
+		<field name="inherit_id" ref="product.product_template_search_view" />
+		<field name="arch" type="xml">
+			<filter name="consumable" position="after">
+				<filter name="filter_to_is_medicine" string="Medicine" domain="[('is_medication_knk', '=', True)]" />
+			</filter >
+		</field >
+	</record >
+	<record id="product_template_action_knk_product" model="ir.actions.act_window">
+		<field name="name">Medicines</field >
+		<field name="type">ir.actions.act_window</field >
+		<field name="res_model">product.product</field >
+		<field name="view_mode">kanban,tree,form,activity</field >
+		<field name="context" eval="{'search_default_filter_to_availabe_pos': 1, 'default_available_in_pos': True, 'create_variant_never': 'no_variant','search_default_filter_to_is_medicine':1}" />
+	</record >
+</odoo >

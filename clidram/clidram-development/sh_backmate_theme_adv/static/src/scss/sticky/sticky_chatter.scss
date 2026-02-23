@@ -1,0 +1,11 @@
+/* ================= Chatter Sticky Start ================== */
+@if $is_sticky_chatter == True{
+      @if $is_sticky_form == True {
+            .o_Chatter_fixedPanel {position: sticky;top: 0px;z-index: 1;background-color: #fff !important;}
+      }
+      @else {
+            .o_Chatter_fixedPanel {position: sticky;top: 0px !important;z-index: 1;}
+      }
+      .o_form_view .o_FormRenderer_chatterContainer.oe_chatter .o_ChatterContainer.overflow-auto{overflow: unset !important;}
+}
+/* ============= Chatter Sticky End=================== */

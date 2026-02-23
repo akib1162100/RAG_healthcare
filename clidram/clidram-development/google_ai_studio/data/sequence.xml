@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="google_ai_studio_name_seq" model="ir.sequence">
+        <field name="name">Google AI Studio Name Sequence</field>
+        <field name="code">medical.consultation</field>
+        <field name="prefix">Med-AI-</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

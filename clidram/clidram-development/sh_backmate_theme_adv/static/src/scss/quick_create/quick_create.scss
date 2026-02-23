@@ -1,0 +1,110 @@
+.sh_droupdown{
+    .o-dropdown--menu{
+        min-width: 280px;
+        max-width: 280px;
+        font-size: 15px;
+        border: 2px solid #e5e9f2;
+        border-color: #e5e9f2 !important;
+        box-shadow: 0 3px 12px 1px rgba(31, 43, 58, 0.1);
+        border-top: 3px solid $primaryColor !important;
+        border-bottom: 3px solid $primaryColor !important;
+        padding: 0  !important;
+        border-radius: 0.25rem;
+        margin-top: 5px ;
+        @include media-breakpoint-down(md) {
+            width: 100%;right: 0;left: 0 !important;min-width: 100%;max-width: 100%;
+        }
+        .sh_dropdown_inner{
+            .sh_create_title{
+                margin: 0;
+                font-weight: 700;
+                line-height: 1.1;
+                color: #526484;
+                font-size: 17px;
+            }
+            .sh_create_btn_group{
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                a{
+                    font-size: 16px;
+                    color: #526484;
+                    &:hover{
+                        color: $primaryColor !important;
+                    }
+                }
+            }
+        }
+        .sh_create_record{
+            margin: 0.75rem !important;
+            
+            .col-12{
+                margin-bottom: 0.75rem !important;
+                .form-group{
+                    .o_input_dropdown{
+                        .o-autocomplete{
+                            padding: 0 !important;
+                        }
+                    }
+                    .form-label{
+                        font-size: 15px;
+                        font-weight: 500;
+                        color: #526484;
+                        margin-bottom: .5rem;
+                    }
+                    .o_input{
+                        padding: 0.4375rem 0.5rem;
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 1.25rem;
+                        color: #526484;
+                        appearance: none;
+                    }
+                }
+            }
+        }
+        .sh_create_record_main{
+            margin-top: 0.75rem !important;
+            margin-bottom: 0.75rem !important;
+            .sh_create_record_ul{
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                .sh_quick_create_item{
+                    line-height: 1.25rem;
+                    padding: .5rem 1rem !important;
+                    font-size: 15px !important;
+                    display: flex;
+                    align-items: center;
+                    color: #526484;
+                    position: relative;
+                    a{
+                        color: #526484;
+                        width: 100%;
+                        &:hover{
+                            color: $primaryColor !important;
+                        }
+                    }
+                    &:hover{
+                        background: #f5f6fa;
+                        color: $primaryColor !important;
+                        .fa-pencil{
+                            visibility: visible;
+                        }
+                    }
+                    .sh_record_icon{
+                        font-size: 14px;
+                        font-weight: 900;
+                        margin-right: 0.75rem !important;
+                    }
+                    .fa-pencil{
+                        font-size: 14px;
+                        margin-left: auto;
+                        visibility: hidden;
+                    }
+                }
+            }
+            
+        }
+    }
+}

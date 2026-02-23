@@ -1,0 +1,107 @@
+/* extend_signup_page/static/src/css/signup_custom.css */
+
+/* ===== Signup Page Design ===== */
+
+.oe_signup_form {
+    max-width: 800px !important;;
+    margin: 40px auto;
+    background: #fff;
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    font-family: "Inter", sans-serif;
+}
+
+.oe_signup_form h2 {
+    font-weight: 700;
+    font-size: 28px;
+    color: #111;
+}
+
+/* Label + input styling */
+.oe_signup_form label {
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.oe_signup_form input,
+.oe_signup_form select {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 10px;
+    width: 100%;
+    transition: border-color 0.2s ease;
+}
+
+.oe_signup_form input:focus,
+.oe_signup_form select:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+/* Grid system */
+.oe_signup_form .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.oe_signup_form .col-md-6 {
+    flex: 1 1 calc(50% - 20px);
+}
+
+.oe_signup_form .col-md-12 {
+    flex: 1 1 100%;
+}
+
+/* WhatsApp + Get OTP button */
+.phone_input {
+    display: inline-block;
+    width: calc(100% - 120px);
+}
+
+#get_otp_btn {
+    display: inline-block;
+    width: 110px;
+    margin-left: 10px;
+    background-color: #16a34a;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    height: 36px;
+    font-weight: 500;
+}
+
+#get_otp_btn:hover {
+    background-color: #138a3c;
+}
+
+/* OTP Input */
+#otp_input_container {
+    margin-top: -10px;
+}
+
+/* Signup button */
+#signup_btn {
+    background-color: #2563eb !important;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    height: 44px;
+    border-radius: 8px;
+    margin-top: 25px;
+}
+
+#signup_btn:hover {
+    background-color: #1e4eff !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .oe_signup_form {
+        padding: 25px;
+    }
+    .oe_signup_form .col-md-6 {
+        flex: 1 1 100%;
+    }
+}

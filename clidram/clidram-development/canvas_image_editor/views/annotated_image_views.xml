@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--        <record id="action_open_image_editor" model="ir.actions.client">-->
+<!--            <field name="name">Image Editor</field>-->
+<!--            <field name="tag">image_editor_action</field>-->
+<!--            <field name="context">{'record_id': active_id, 'image_url': '/web/image/annotated.image/' + active_id + '/image_to_edit'}</field>-->
+<!--            <field name="target">new</field>-->
+<!--        </record>-->
+
+        <record id="action_open_image_editor" model="ir.actions.client">
+            <field name="name">Image Editor</field>
+            <field name="tag">image_editor_action</field>
+            <field name="context">
+                {
+                    'record_id': active_id,
+                    'model': 'annotated.image',
+                    'field_name': 'image_to_edit',
+                    'image_url': '/web/image/annotated.image/' + active_id + '/image_to_edit'
+                }
+            </field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_annotated_image_form" model="ir.ui.view">
+            <field name="name">annotated.image.form</field>
+            <field name="model">annotated.image</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="image_to_edit" widget="image"/>
+                            <button name="%(action_open_image_editor)d" type="action" string="Edit Image" class="oe_highlight"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- List View for Annotated Images -->
+        <record id="view_annotated_image_tree" model="ir.ui.view">
+            <field name="name">annotated.image.tree</field>
+            <field name="model">annotated.image</field>
+            <field name="arch" type="xml">
+                <tree string="Annotated Images" create="true" edit="true" delete="true">
+                    <field name="name"/>
+                    <field name="image_to_edit" widget='image'/>
+                    <field name="create_date"/>
+                    <field name="create_uid"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Window Action to open Annotated Images -->
+        <record id="action_annotated_image" model="ir.actions.act_window">
+            <field name="name">Annotated Images</field>
+            <field name="res_model">annotated.image</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_annotated_image_root"
+                  name="Image Editor"
+                  sequence="10"/>
+
+        <menuitem id="menu_annotated_image"
+                  name="Annotated Images"
+                  parent="menu_annotated_image_root"
+                  action="action_annotated_image"
+                  sequence="10"/>
+    </data>
+</odoo>

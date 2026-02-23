@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_rag" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.rag.controller</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="100"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Healthcare RAG" string="Healthcare RAG Integration" data-key="rag_controller">
+                    <h2>Healthcare RAG Integration configuration</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="rag_api_config">
+                            <div class="o_setting_right_pane">
+                                <label string="RAG API Base URL" for="rag_api_url"/>
+                                <div class="text-muted">
+                                    Define the url for your external RAG FastAPI server
+                                </div>
+                                <div class="mt8">
+                                    <field name="rag_api_url" placeholder="http://localhost:8000"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="rag_api_secret">
+                            <div class="o_setting_right_pane">
+                                <label string="RAG API Key" for="rag_api_key"/>
+                                <div class="text-muted">
+                                    Keep this secret secure
+                                </div>
+                                <div class="mt8">
+                                    <field name="rag_api_key" placeholder="my_secret_key" password="True"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="rag_bot_avatar_config">
+                            <div class="o_setting_right_pane">
+                                <label string="RAG Bot Avatar" for="rag_bot_partner_id"/>
+                                <div class="text-muted">
+                                    Select the Odoo Contact that acts as the AI Medical Assistant
+                                </div>
+                                <div class="mt8">
+                                    <field name="rag_bot_partner_id" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_rag_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'rag_controller'}</field>
+    </record>
+
+    <menuitem id="menu_rag_config_root" name="RAG Integration" sequence="100" web_icon="rag_controller,static/description/icon.png"/>
+    <menuitem id="menu_rag_config_settings" name="Settings" parent="menu_rag_config_root" action="action_rag_config_settings" sequence="10"/>
+</odoo>

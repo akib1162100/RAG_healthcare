@@ -1,0 +1,22 @@
+<odoo>
+    <record id="medical_disease_view_tree" model="ir.ui.view">
+        <field name="name">medical.disease.tree.view</field>
+        <field name="model">medical.disease</field>
+        <field name="arch" type="xml">
+            <tree string="Diseases" editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="long_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="medical_disease_action" model="ir.actions.act_window">
+        <field name="name">Diseases</field>
+        <field name="res_model">medical.disease</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="ICD 10" id="menu_medical_root" web_icon="icd_manager,static/description/icon.png"/>
+    <menuitem id="menu_medical_disease" action="medical_disease_action" parent="menu_medical_root"/>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+    <record id="appoint_inherit_payment_transaction_view_form" model="ir.ui.view">
+            <field name="name">payment.transaction.view.form.inherit.appoint.payment</field>
+            <field name="model">payment.transaction</field>
+            <field name="inherit_id" ref="payment.payment_transaction_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <!-- <attribute name="attrs">{'readonly': [('appointment_id','=',False)]}</attribute> -->
+                    <attribute name="clickable">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='provider_reference']" position="after">
+                    <field name="appointment_id"/>
+                </xpath>
+            </field>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+appointment_portal,portal_access_appointment,wk_appointment.model_wk_appointment,,1,1,0,0
+appointment_lines_portal,portal_access_appointment_lines,wk_appointment.model_appointment_lines,,1,1,0,0
+appointment_person_group_portal,portal_access_appointment_person_group,wk_appointment.model_appointment_person_group,,1,0,0,0
+appoint_timeslot_portal,portal_access_appoint_timeslot,wk_appointment.model_appointment_timeslot,,1,0,0,0
+product_pricelist_portal,portal_access_product_pricelist,product.model_product_pricelist,,1,0,0,0

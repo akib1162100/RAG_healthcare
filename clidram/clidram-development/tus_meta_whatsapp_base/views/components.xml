@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="components_view_form" model="ir.ui.view">
+            <field name="name">components.view.form</field>
+            <field name="model">components</field>
+            <field name="arch" type="xml">
+                <form string="Components">
+                    <sheet>
+                        <group>
+                            <field name="sequence" widget="handle" invisible="1"/>
+                            <field name="type"/>
+                            <field name="formate" attrs="{'invisible': [('type', '!=', 'header')]}"/>
+                            <field name="formate_media_type" attrs="{'invisible': ['|', ('formate','!=','media'), ('type', '!=', 'header')]}"/>
+                            <field name="media_type" attrs="{'invisible': ['|', ('formate','!=','media'), ('type', '!=', 'header')]}"/>
+                            <field name="attachment_ids" widget="many2many_binary" attrs="{'invisible': ['|','|', ('formate','!=','media'), ('formate_media_type', '!=', 'static'),('type', '!=', 'header')]}"/>
+                            <field name="text" attrs="{'invisible': ['|', '|','|', '&amp;',('type', '=', 'header'), ('formate', '=', 'media'), ('type', '=', 'buttons'),
+                                                     ('type', '=', 'interactive'),('type', '=', 'carousel')]}"/>
+                            <field name="is_expiration" attrs="{'invisible':[('type', '!=', 'limited_time_offer')]}"/>
+                            <field name="limited_offer_exp_date" attrs="{'invisible':[('type', '!=', 'limited_time_offer')]}"/>
+                            <field name="model_id" force_save="1" invisible="1"/>
+                            <field name="interactive_type" attrs="{'invisible': [('type', '!=', 'interactive')]}"/>
+                        </group>
+
+                        <group>
+                                <field name="wa_button_ids" attrs="{'invisible': [('type', '!=', 'buttons')]}">
+                                <tree string="Buttons" editable="bottom">
+                                    <field name="button_type"/>
+                                    <field name="button_text"/>
+                                    <field name="coupon_text" attrs="{'invisible': [('button_type', '!=', 'copy_code')]}"/>
+                                    <field name="url_type" attrs="{'readonly': [('button_type', '!=', 'url')]}"/>
+                                    <field name="static_website_url" attrs="{'readonly': ['|',('button_type','!=','url'), ('url_type','!=','static')]}"/>
+                                    <field name="dynamic_website_url" attrs="{'readonly': ['|',('button_type','!=','url'), ('url_type','!=','dynamic')]}"/>
+                                    <field name="phone_number" attrs="{'readonly': [('button_type', '!=', 'phone')]}"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group>
+                                <field name="wa_carousel_ids" attrs="{'invisible': [('type', '!=', 'carousel')]}">
+                                <tree string="Carousel">
+                                    <field name="header_formate"/>
+                                    <field name="attachment_ids"/>
+                                    <field name="carousel_body"/>
+                                    <field name="wa_button_ids"/>
+                                    <field name="variables_ids"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group attrs="{'invisible': ['|', ('type', '!=', 'interactive'), ('interactive_type', '!=', 'list')]}">
+                            <field name="interactive_list_ids">
+                                <tree string="List Items">
+                                    <field name="main_title"/>
+                                    <field name="title_ids"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group attrs="{'invisible': ['|', ('type', '!=', 'interactive'), ('interactive_type', '!=', 'button')]}">
+                            <field name="interactive_button_ids">
+                                <tree string="Button Items" editable="bottom">
+                                    <field name="title"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group attrs="{'invisible': ['|', ('type', '!=', 'interactive'), ('interactive_type', '!=', 'product_list')]}">
+                            <field name="catalog_id"/>
+                            <field name="interactive_product_list_ids">
+                                <tree string="Product list Items">
+                                    <field name="main_title"/>
+                                    <field name="product_list_ids"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group >
+                            <field name="catalog_id" attrs="{'invisible': ['|', ('type', '!=', 'interactive'), ('interactive_type', '!=', 'product')]}" />
+                            <field name="product_retailer_id"  attrs="{'invisible':['|',('type', '!=', 'interactive'), ('interactive_type', '!=', 'product')]}"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Variables" name="variables" attrs="{'invisible': [('type', '=', 'carousel')]}">
+                                <group>
+                                    <field name="variables_ids" context="{'default_model_id':model_id}"
+                                           attrs="{'invisible': [('formate', '=', 'media')]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="components_view_tree" model="ir.ui.view">
+            <field name="name">components.view.tree</field>
+            <field name="model">components</field>
+            <field name="arch" type="xml">
+                <tree string="Components">
+                    <field name="type"/>
+                    <field name="text"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo >
+	<!-- Set Sign form extra width -->
+	<template id="website_signup_form_width"
+			  inherit_id="web.login_layout" >
+		<xpath expr="//t[@t-call='web.frontend_layout']/div/div"
+			   position="attributes" >
+			<attribute name="style" >max-width: 720px;</attribute >
+		</xpath >
+	</template >
+	
+	<template id="website_signup_extra_fields"
+			  inherit_id="auth_signup.fields" >
+		
+		<xpath expr="//div[@class='mb-3 field-password pt-2']"
+			   position="replace" />
+		
+		<xpath expr="//div[@class='mb-3 field-confirm_password']"
+			   position="replace" />
+		
+		<xpath expr="//div[@class='mb-3 field-name']"
+			   position="after" >
+			<div class="row mt-2  pt-2" >
+				<div class="col-md-6 mb-3 field-password" >
+					<label for="password" >Password</label >
+					<input type="password"
+						   name="password"
+						   id="password"
+						   class="form-control form-control-sm"
+						   required="required"
+						   t-att-autofocus="'autofocus' if only_passwords else None" />
+				</div >
+				<div class="col-md-6 mb-3 field-confirm_password" >
+					<label for="confirm_password" >Confirm Password</label >
+					<input type="password"
+						   name="confirm_password"
+						   id="confirm_password"
+						   class="form-control form-control-sm"
+						   required="required" />
+				</div >
+			</div >
+		</xpath >
+		<xpath expr="//div[2]"
+			   position="after" >
+			<div class="row mt-2" >
+				<div class="form-group col-md-6" >
+					<label for="date_of_birth" >Date of Birth</label >
+					<input type="date"
+						   name="date_of_birth"
+						   class="form-control form-control-sm"
+						   required="required" />
+				</div >
+				<div class="form-group col-md-6" >
+					<label for="gender" >Gender</label >
+					<select name="gender"
+							class="form-control form-control-sm" >
+						<option value="male" >Male</option >
+						<option value="female" >Female</option >
+						<option value="other" >Other</option >
+					</select >
+				</div >
+			</div >
+			
+			<div class="row mt-2 " >
+				<div class="form-group col-md-6" >
+					<label for="city" >City</label >
+					<input type="text"
+						   name="city"
+						   class="form-control form-control-sm"
+						   t-att-value="city" />
+				</div >
+				<div class="form-group col-md-6" >
+					<label for="zip" >Zip Code</label >
+					<input type="text"
+						   name="zip"
+						   class="form-control form-control-sm"
+						   required="required" />
+				</div >
+			</div >
+			
+			<div class="row mt-2" >
+				<div class="form-group col-md-6" >
+					<label for="country_id" >Country</label >
+					<select name="country_id"
+							class="form-control form-control-sm" >
+						<option value="" >Select Country</option >
+						<t t-foreach="countries"
+						   t-as="country" >
+							<option t-att-value="country.id"
+									t-att-data-phone-code="country.phone_code" >
+								<t t-esc="country.name" />
+								-
+								<t t-esc="country.code" />
+							</option >
+						</t >
+					</select >
+				</div >
+				
+				<div class="form-group col-md-6" >
+					<label for="state_id" >State</label >
+					<select name="state_id"
+							class="form-control form-control-sm" >
+						<option value="" >Select State</option >
+						<t t-foreach="states"
+						   t-as="state" >
+							<option t-att-value="state.id"
+									t-att-data-country-id="state.country_id.id" >
+								<t t-esc="state.name" />
+							</option >
+						</t >
+					</select >
+				</div >
+			</div >
+			
+			<div class="row mt-2" >
+				<div class="form-group col-md-12" >
+					<label for="phone" >Mobile No (Whatsapp)</label >
+					<div class="input-group" >
+						<select name="phone_code"
+								id="phone_code_select"
+								class="form-control form-control-sm"
+								style="max-width: 120px;"
+								required="required" >
+							<option value="" >Code</option >
+							<t t-foreach="countries"
+							   t-as="country" >
+								<t t-if="country.phone_code" >
+									<option t-att-value="country.phone_code" >
+										+
+										<t t-esc="country.phone_code" />
+										(<t t-esc="country.code" />)
+									</option >
+								
+								</t >
+							</t >
+						</select >
+						<input type="text"
+							   placeholder="xx xxxx xxxx"
+							   name="phone"
+							   id="phone_number"
+							   class="form-control form-control-sm phone_input"
+							   required="required"
+							   pattern="[1-9][0-9]{7,14}"
+							   title="Phone number must not start with 0 and contain only digits"
+							   maxlength="15"
+							   inputmode="numeric" />
+					</div >
+				</div >
+			</div >
+			
+			<div class="row mt-2 " >
+				<div class="form-group col-md-12" >
+					<label for="street" >Address</label >
+					<input type="text"
+						   name="street"
+						   class="form-control form-control-sm"
+						   required="required" />
+				</div >
+			</div >
+			
+			<input type="hidden"
+				   name="partner_type"
+				   value="patient" />
+		</xpath >
+	
+	</template >
+	
+	<template id="auth_signup.signup"
+			  name="Sign up login" >
+		<t t-call="web.login_layout" >
+			<form class="oe_signup_form"
+				  role="form"
+				  method="post"
+				  t-if="not message" >
+				<input type="hidden"
+					   name="csrf_token"
+					   t-att-value="request.csrf_token()" />
+				
+				<t t-call="auth_signup.fields" >
+					<t t-set="only_passwords"
+					   t-value="bool(token and not invalid_token)" />
+				</t >
+				
+				<p class="alert alert-danger"
+				   t-if="error"
+				   role="alert" >
+					<t t-esc="error" />
+				</p >
+				
+				<input type="hidden"
+					   name="redirect"
+					   t-att-value="redirect" />
+				<input type="hidden"
+					   name="token"
+					   t-att-value="token" />
+				
+				<!-- OTP Input -->
+				<div class="form-group col-md-12"
+					 style="display: none;"
+					 id="otp_input_container" >
+					<label for="otp" >Enter OTP</label >
+					<input type="text"
+						   name="otp"
+						   id="otp_input"
+						   class="form-control form-control-sm"
+						   required="required" />
+				</div >
+				
+				<!-- Send OTP Button -->
+				<div class="form-group" >
+					<div class="mb-2" >
+						<button type="button"
+								class="btn btn-success w-100"
+								id="send_otp_btn" >Get OTP
+						</button >
+					</div >
+					<div >
+						<button type="button"
+								class="btn btn-secondary w-100"
+								id="verify_otp_btn"
+								style="display: none;" >
+							Verify OTP
+						</button >
+					</div >
+				</div >
+				
+				<script src="/extend_signup_page/static/src/js/otp_verification.js" />
+				
+				<!-- Sign Up Button (Hidden Initially) -->
+				<div class="text-center oe_login_buttons d-grid pt-3" >
+					<button type="submit"
+							class="btn btn-primary"
+							id="signup_btn"
+							style="display: none;" >Sign up
+					</button >
+					<a t-attf-href="/web/login?{{ keep_query() }}"
+					   class="btn btn-link btn-sm"
+					   role="button" >Already
+						have an account?
+					</a >
+					<div class="o_login_auth" />
+				</div >
+			</form >
+		</t >
+	</template >
+</odoo >

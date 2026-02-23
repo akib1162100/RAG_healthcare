@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- My Prescriptions Menu -->
+        <template id="portal_my_home_my_prescriptions" name="Portal My Home : my prescriptions entries"
+                  inherit_id="portal.portal_my_home" priority="50">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-if="my_prescriptions_count" t-call="portal.portal_docs_entry">
+                    <t t-set="title">Prescriptions</t>
+                    <t t-set="url" t-value="'/my/prescriptions'"/>
+                    <t t-set="placeholder_count" t-value="'my_prescriptions_count'"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="portal_my_home_menu_prescription" name="Prescription layout : prescription menu entries"
+                  inherit_id="portal.portal_breadcrumbs" priority="30">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name == 'prescription_mgmt'"
+                    t-attf-class="breadcrumb-item #{'active ' if not prescription else ''}">
+                    <a t-if="prescription" t-attf-href="/my/prescriptions?{{ keep_query() }}">Prescriptions</a>
+                    <t t-else="">Prescriptions</t>
+                </li>
+                <li t-if="prescription" class="breadcrumb-item active">
+                    <t t-esc="prescription.name"/>
+                </li>
+            </xpath>
+        </template>
+
+        <template id="portal_my_prescriptions" name="My Prescriptions">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">My Prescriptions</t>
+                </t>
+                <div class="oe_structure"/>
+                <t t-if="not prescription_obj">
+                    <p>There are currently no Prescriptions for your account.</p>
+                </t>
+                <t t-if="prescription_obj" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Prescriptions Id #</th>
+                            <th>Prescription Date</th>
+                            <th width="100">Patient</th>
+                            <th width="120">Prescribing Doctor</th>
+                            <th>Status</th>
+                            <th>Hospital</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="prescription_obj" t-as="prescription">
+                        <t t-set="status" t-value="prescription.state"/>
+                        <tr>
+                            <td>
+                                <a class="pull-right" t-att-href="'/my/prescription/%d' % prescription.id">
+                                    <t t-esc="prescription.name"/>
+                                </a>
+                            </td>
+                            <td>
+                                <t t-esc="prescription.date"/>
+                            </td>
+                            <td>
+                                <t t-esc="prescription.patient_id.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="prescription.physician_id.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="prescription.state"/>
+                            </td>
+                            <td>
+                                <t t-esc="prescription.company_id.name"/>
+                            </td>
+                            <td>
+                                <a t-att-href="'/my/prescription/%s?format=pdf' % prescription.id"
+                                   class="btn btn-sm btn-primary" target="_blank">
+                                    Download PDF
+                                </a>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

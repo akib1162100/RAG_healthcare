@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ThemeConfigurationTemplate">
+		<li class="theme_settings">
+			<a class="theme_configuration float-right" role="button" >
+				<span class="icon-theme_setting fa fa-cog"/>
+			</a> 
+		</li>
+	</t>
+</templates>

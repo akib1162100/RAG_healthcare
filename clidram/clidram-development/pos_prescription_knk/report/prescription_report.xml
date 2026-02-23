@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_external_layout_ctm">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <t t-if="company.external_report_layout_id">
+            <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_report_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
+                 t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+                 t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <div class="pt">
+                    <!-- This div ensures that the address is not cropped by the header. -->
+                    <t t-call="web.address_layout"/>
+                </div>
+                <t t-out="0"/>
+            </div>
+            <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+                <div class="text-center" style="border-top: 1px solid black;">
+<!--                    <ul class="list-inline mb4">-->
+<!--                        <div t-field="company.report_footer"/>-->
+<!--                    </ul>-->
+                    <div>
+                        <span t-field="o.physician_id.designation" />, Reg No: <span t-field="o.physician_id.reg_no" />
+                    </div>
+                </div>
+            </div>
+        </t>
+        <t t-else="else">
+            <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_report_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
+                 t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+                 t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <div class="pt">
+                    <!-- This div ensures that the address is not cropped by the header. -->
+                    <t t-call="web.address_layout"/>
+                </div>
+                <t t-out="0"/>
+            </div>
+            <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+                <div class="text-center" style="border-top: 1px solid black;">
+<!--                    <ul class="list-inline mb4">-->
+<!--                        <div t-field="company.report_footer"/>-->
+<!--                    </ul>-->
+                    <div>
+                        <span t-field="o.physician_id.designation" />, Reg No: <span t-field="o.physician_id.reg_no" />
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <data>
+        <template id="report_prescription_order_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="pos_prescription_knk.custom_external_layout_ctm">
+                        <t t-set="o" t-value="o.with_context(lang=o.patient_id.lang)" />
+                        <div class="o_clean_header">
+                            <div class="position-fixed" t-if="o.state=='draft'" style="z-index: -1; color: #EAEAEA;
+                                 font-size: 550px;
+                                  font-weight: 700px;
+                                  opacity: 0.1px;
+                                  -webkit-transform: rotate(-45deg);
+                                  margin-top:195px;
+                                  ">
+                                <span>Draft</span>
+                            </div>
+                            <div t-if="o.state!='draft'">
+                                <span></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Logo" />
+                                    <br />
+                                    <h3>
+                                        <strong>
+                                            <span t-field="o.company_id.name"/>
+                                        </strong>
+                                    </h3>
+                                    <p style="font-family:Times New Roman;font-size:21px;color:black;">
+                                        <span t-field="o.company_id.street" />
+                                        <span t-field="o.company_id.street2" /><br />
+                                        <span t-field="o.company_id.city" />
+                                        <span t-field="o.company_id.state_id" />,
+                                        <span t-field="o.company_id.country_id" />,
+                                        <span t-field="o.company_id.zip" /><br />
+                                        <span t-field="o.company_id.email" /><br />
+                                        <span t-field="o.company_id.phone" />,
+                                        <span t-field="o.company_id.mobile" /><br />
+                                        <span t-field="o.company_id.timing" /><br />
+                                    </p>
+                                </div>
+                                <div class="col-1" />
+                                <div class="col-3" />
+                                <div class="col-4">
+                                    <p style="font-family:Times New Roman;font-size:21px;color:black; padding-top: 70px">
+                                        <span t-esc="o.patient_id.name"/>
+                                        <br/>
+                                        Age :
+                                        <span t-esc="o.patient_age"/>
+                                        <br/>
+                                        Gender :
+                                        <span t-field="o.patient_id.gender"/>
+                                        <br/>
+                                        <span t-field="o.patient_id.street"/>
+                                        <span t-field="o.patient_id.street2"/>
+                                        <br/>
+                                        <span t-field="o.patient_id.city"/>
+                                        <span t-field="o.patient_id.state_id"/>,
+                                        <span t-field="o.patient_id.country_id"/>,
+                                        <span t-field="o.patient_id.zip"/>
+                                        <br/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div><br /><br />
+                        <div class="page">
+                            <div style="font-size: 21px;">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="mb-1"><strong>Prescription Order</strong></div>
+                                        <div>
+                                            <t t-esc="o.name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="mb-1"><strong>Prescribing Date</strong></div>
+                                        <div>
+                                            <t t-esc="o.date.date()" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="mb-1"><strong>Patient Id</strong></div>
+                                        <div>
+                                            <t t-out="o.patient_seq" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <table class="table table-bordered mt-4" t-if='o.vital_ids'>
+                                    <tr>
+                                        <th colspan="6" class="text-center">
+                                            Vitals
+                                        </th>
+                                    </tr>
+                                    <thead style="display: table-row-group">
+                                        <tr>
+                                            <th name="th_weight" class="text-center">Weight</th>
+                                            <th name="th_hgt" class="text-center">Height</th>
+                                            <th name="th_bmi" class="text-center">BMI</th>
+                                            <th name="th_blod" class="text-center">Blood Pressure</th>
+                                            <th name="th_pulse" class="text-center">pulse</th>
+                                            <th name="th_res" class="text-center">Respiratory Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="sorted(o.vital_ids, key=lambda x: x.sequence)" t-as="vital">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span>
+                                                        <t t-out="vital.name" />
+                                                        <t t-out="vital.w_unit.name" /></span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span>
+                                                        <t t-out="vital.height" />
+                                                        <!-- <t t-out="vital.h_unit.name" /> -->
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span>
+                                                        <span t-esc="'%.2f'%vital.bmi" />
+                                                        <!-- <t t-out="vital.bmi_unit" /> -->
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-if="vital.blood_presure and vital.blood_presure_2">
+                                                        <t t-out="vital.blood_presure +'/'" />
+                                                        <t t-out="vital.blood_presure_2" />
+                                                        <!-- <t t-out="vital.blood_unit.name" /> -->
+                                                    </span>
+                                                    <span t-elif="not vital.blood_presure">
+                                                        <t t-out="vital.blood_presure_2" />
+                                                        <!-- <t t-out="vital.blood_unit.name" /> -->
+                                                    </span>
+                                                    <span t-elif="not vital.blood_presure_2">
+                                                        <t t-out="vital.blood_presure" />
+                                                        <!-- <t t-out="vital.blood_unit.name" /> -->
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span>
+                                                        <t t-out="vital.pulse" />
+                                                        <!-- <t t-out="vital.pulse_unit.name" /> -->
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span>
+                                                        <t t-out="vital.respiratory_rate" />
+                                                        <!-- <t t-out="vital.rr_unit.name" /> -->
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered" t-if='o.complaint_id'>
+                                    <tr>
+                                        <th colspan="8" class="text-center">
+                                            Complaints
+                                        </th>
+                                    </tr>
+                                    <thead style="display: table-row-group">
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="8" class="text-left">
+                                                <t t-foreach="o.complaint_id" t-as="val">
+                                                    <t t-out="(val.complaint_list_id.name or val.name.name)"/>
+                                                    -
+                                                    <t t-out="val.period.name or ''"/>,
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered" t-if='o.diagnosis_ids'>
+                                    <tr>
+                                        <th colspan="8" class="text-center">
+                                            Diagnosis
+                                        </th>
+                                    </tr>
+                                    <thead style="display: table-row-group">
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="3" class="text-left">
+                                                <t t-foreach="o.diagnosis_ids" t-as="l">
+                                                    <t t-out="l.name.name" />,
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th colspan="8" class="text-center">
+                                            Advice
+                                        </th>
+                                    </tr>
+                                    <t t-if="o.old_prescription">
+                                        <t t-set="lines" t-value="o.order_line_ids" />
+                                    </t>
+                                    <t t-else="">
+                                        <t t-set="lines" t-value="o.order_line_new_ids" />
+                                    </t>
+                                    <thead style="display: table-row-group" t-if="lines">
+                                        <tr>
+                                            <th colspan="8" class="text-center">
+                                                Medicine/Procedure
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th name="th_name" class="text-center">Name</th>
+                                            <th name="th_composition" class="text-center">Composition</th>
+                                            <th name="th_dose" class="text-center">Dose</th>
+                                            <th name="th_route" class="text-center">Route</th>
+                                            <th name="th_rel" class="text-center">Relation with food</th>
+                                            <th name="th_frequ" class="text-center">Frequency</th>
+                                            <th name="th_taxes" class="text-center">Total Quantity/Period</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody t-if="lines">
+                                        <t t-if="o.old_prescription">
+                                            <t t-foreach="sorted(lines, key=lambda x: x.sequence)" t-as="line">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <t t-out="line.product_id.name" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.composition" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.dose" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.route" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.whn_to_take" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.frequency" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.t_qty" />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-foreach="sorted(lines, key=lambda x: x.sequence)" t-as="line">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <t t-out="line.product_id.name" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.composition_id.name" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.dose_id.name" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.route_id.name" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.whn_to_take_id.name" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.frequency_id.name" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <t t-out="line.knk_t_qty" />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                    <thead style="display: table-row-group" t-if="o.investigation_ids">
+                                        <tr>
+                                            <th colspan="8" class="text-center">
+                                                Investigation
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th name="th_invs" class="text-center" colspan="2">Test Item/Sample</th>
+                                            <th name="th_type" class="text-center" colspan="6">Type of Test</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody t-if="o.investigation_ids">
+                                        <t t-foreach="sorted(o.investigation_ids, key=lambda x: x.sequence)" t-as="m">
+                                            <tr>
+                                                <td colspan="2" class="text-center">
+                                                    <t t-out="m.investigation_list_id.name" />
+                                                </td>
+                                                <td colspan="6" class="text-left">
+                                                    <t t-foreach="m.test_type" t-as="p">
+                                                        <t t-out="p.name" />,
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <thead style="display: table-row-group" t-if='o.excercise_ids'>
+                                        <tr>
+                                            <th colspan="8" class="text-center">
+                                                Excercise
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th name="th_hd" class="text-center" colspan="3">Part/Body</th>
+                                            <th name="th_md" class="text-center" colspan="3">Move</th>
+                                            <th name="th_rep" class="text-center" colspan="2">Repitition</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody t-if='o.excercise_ids'>
+                                        <t t-foreach="sorted(o.excercise_ids, key=lambda x: x.sequence)" t-as="rec">
+                                            <tr>
+                                                <td colspan="3" class="text-center">
+                                                    <t t-out="rec.name.name" />
+                                                </td>
+                                                <td colspan="3" class="text-center">
+                                                    <t t-out="rec.move2" />
+                                                </td>
+                                                <td colspan="2" class="text-center">
+                                                    <t t-out="rec.type_of_test2" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <thead style="display: table-row-group" t-if='o.ortho_ids'>
+                                        <tr>
+                                            <th colspan="8" class="text-center">
+                                                Ortho/Prosthesis
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="1" name="th_bdy_prt" class="text-center">Item Name</th>
+                                            <th colspan="2" name="th_desc" class="text-center">Location</th>
+                                            <th colspan="1" name="th_cmnt" class="text-center">Side</th>
+                                            <th colspan="2" name="th_mtrl" class="text-center">Material</th>
+                                            <th colspan="2" name="th_inst" class="text-center">Instruction</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody t-if='o.ortho_ids'>
+                                        <t t-foreach="sorted(o.ortho_ids, key=lambda x: x.sequence)" t-as="res">
+                                            <tr>
+                                                <td colspan="1" class="text-center">
+                                                    <t t-out="res.name.name" />
+                                                </td>
+                                                <td colspan="2" class="text-center">
+                                                    <t t-out="res.location.name" />
+                                                </td>
+                                                <td colspan="1" class="text-center">
+                                                    <t t-out="res.side.name" />
+                                                </td>
+                                                <td colspan="2" class="text-center">
+                                                    <t t-out="res.material" />
+                                                </td>
+                                                <td colspan="2" class="text-center">
+                                                    <t t-out="res.comments" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <thead style="display: table-row-group" t-if='o.description'>
+                                        <tr>
+                                            <th name="th_bdy_prt" class="text-center" colspan="8">Diet</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody t-if='o.description'>
+                                        <t>
+                                            <tr>
+                                                <td class="text-center" colspan="8">
+                                                    <t t-esc="o.description" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <thead style="display: table-row-group" t-if='o.extra_notes'>
+                                        <tr>
+                                            <th colspan="8" class="text-center">
+                                                Extra Notes
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                     <tbody t-if='o.extra_notes'>
+                                        <t>
+                                            <tr>
+                                                <td class="text-center" colspan="8">
+                                                    <t t-esc="o.extra_notes" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <thead style="display: table-row-group" t-if='o.notes_line_id'>
+                                        <tr>
+                                            <th colspan="8" class="text-center">
+                                                Note
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t>
+                                            <tr>
+                                                <td colspan="8" class="text-center">
+                                                    <div t-if="o.notes_line_id.name">
+                                                        <t t-esc="o.notes_line_id.name" />
+                                                    </div>
+                                                    <div t-if="not o.notes_line_id.name">
+                                                        <div class="col-4"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div t-if="o.physician_id" class="col-8">
+                                        <div t-if="o.physician_id.physician_signature">
+                                            <div class="col-4" style="border-bottom:1px solid black"><img t-att-src="image_data_uri(o.physician_id.physician_signature)" style="max-height: 3cm; max-width: 8cm;margin:0px;" />
+                                                <div class="text-center">
+                                                    <t t-out="o.physician_id.name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div t-if="not o.physician_id.physician_signature">
+                                            <br /><br />
+                                            <div class="col-4">
+                                                <div class="col-4" style="border-bottom:1px solid black"></div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="text-left">
+                                                    <t t-out="o.physician_id.name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div t-if="o.qr_image">
+                                            <span>
+                                                <img t-att-src="image_data_uri(o.qr_image)" style="max-height: 4cm; max-width: 8cm;margin:0px;" />
+                                            </span>
+                                        </div>
+                                        <div t-elif="not o.qr_image">
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <record id="paperformat_pos_prescription" model="report.paperformat">
+            <field name="name">Custom Paper Format</field>
+            <field name="default" eval="False" />
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">15</field>
+            <field name="margin_right">15</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">45</field>
+        </record>
+        <record id="action_prescription_order_report" model="ir.actions.report">
+            <field name="name">Prescription</field>
+            <field name="model">prescription.order.knk</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_prescription_knk.report_prescription_order_document</field>
+            <field name="report_file">pos_prescription_knk.report_prescription_order_document</field>
+            <field name="print_report_name">'Prescription Order: %s' % (object.name)</field>
+            <field name="binding_model_id" ref="pos_prescription_knk.model_prescription_order_knk" />
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="pos_prescription_knk.paperformat_pos_prescription" />
+        </record>
+    </data>
+</odoo>

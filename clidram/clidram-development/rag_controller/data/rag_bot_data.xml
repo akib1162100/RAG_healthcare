@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- RAG Medical Assistant Partner Profile -->
+        <record id="partner_rag_bot" model="res.partner">
+            <field name="name">RAG Medical Assistant</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="email">rag.assistant@odoo.internal</field>
+            <field name="active" eval="True"/>
+            <field name="tz">UTC</field>
+        </record>
+
+        <!-- RAG Medical Assistant User Account (System Access) -->
+        <record id="user_rag_bot" model="res.users">
+            <field name="partner_id" ref="partner_rag_bot"/>
+            <field name="login">rag.assistant</field>
+            <field name="password">rag_bot_system_password</field>
+            <field name="signature">--
+RAG Medical Assistant</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Link configuring the bot system parameter for easy ID retrieval -->
+        <record id="rag_bot_partner_param" model="ir.config_parameter">
+            <field name="key">rag_controller.bot_partner_id</field>
+            <field name="value" eval="ref('partner_rag_bot')"/>
+        </record>
+    </data>
+</odoo>

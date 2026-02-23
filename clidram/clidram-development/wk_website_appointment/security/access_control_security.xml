@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+	<data noupdate="1">
+
+		<record id="public_read_access_to_partner_rule" model="ir.rule">
+			<field name="name"> Partner Read Access to All Users </field>
+			<field name="model_id" ref="base.model_res_partner"/>
+			<field name="domain_force">[( 1, '=', 1)]</field>
+			<field name="perm_write" eval="0"/>
+			<field name="perm_read" eval="1"/>
+			<field name="perm_create" eval="0"/>
+			<field name="perm_unlink" eval="0"/>
+			<field name="groups" eval="[(4, ref('base.group_portal')), (4, ref('base.group_public'))]"/>
+		</record>
+
+    </data>
+</odoo>

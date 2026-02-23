@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  rag-service:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://odoo:odoo@db:5432/odoo
+      - ODOO_DATABASE_URL=postgresql+asyncpg://odoo16:odoo16@host.docker.internal:5432/clidram_16
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - EMBEDDING_MODEL=emilyalsentzer/Bio_ClinicalBERT
+      - EMBEDDING_DIM=768
+      - ETL_BATCH_SIZE=32
+      - ETL_CHUNK_SIZE=800
+      - ETL_CHUNK_OVERLAP=150
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - GOOGLE_MODEL_NAME=${GOOGLE_MODEL_NAME:-gemini-1.5-flash}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - ollama
+
+  db:
+    image: ankane/pgvector:latest
+    environment:
+      - POSTGRES_DB=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./database/init_pgvector.sql:/docker-entrypoint-initdb.d/init_pgvector.sql
+      - postgres_data:/var/lib/postgresql/data
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  postgres_data:
+  ollama_data:

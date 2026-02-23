@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+
+    <!-- My Appointments Menu -->
+    <template id="portal_my_home_my_appointment" name="Portal My Home : my appointment entries"
+              inherit_id="portal.portal_my_home" priority="50">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="my_appoint_count" t-call="portal.portal_docs_entry">
+                <t t-set="title">Appointments</t>
+                <t t-set="url" t-value="'/my/appointments'"/>
+                <t t-set="placeholder_count" t-value="'my_appoint_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_appointments" name="My Appointments">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">My Appointments</t>
+            </t>
+            <div class="oe_structure"/>
+            <t t-if="not appoint_obj">
+                <p>There are currently no Appointments for your account.</p>
+            </t>
+            <t t-if="appoint_obj" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Appointment Id #</th>
+                        <th>Appointment With</th>
+                        <th width="100">Date</th>
+                        <th width="120">TimeSlot</th>
+                        <th>Create Date</th>
+                        <th>Status</th>
+                        <th>Charge</th>
+                    </tr>
+                </thead>
+                <t t-foreach="appoint_obj" t-as="appoint">
+                    <t t-set="status" t-value="appoint.appoint_state"/>
+                    <!--                    <t t-if="status != 'done'">-->
+                    <tr class='clickable-row my_appointments_row'
+                        data-href='url://my/appointments/#{appoint.id}?#{keep_query()}'>
+                        <td>
+                            <a t-attf-href="/my/appointments/#{appoint.id}?#{keep_query()}">
+                                <t t-esc="appoint.name"/>
+                            </a>
+                        </td>
+                        <td>
+                            <t t-esc="appoint.appoint_person_id.sudo().name"/>
+                            <t t-if="appoint.appoint_group_id">(<t t-esc="appoint.appoint_group_id.group_name"/>)
+                            </t>
+                        </td>
+                        <td>
+                            <span t-field="appoint.appoint_date" t-options='{"widget": "date"}'/>
+                            <!-- , "format": "dd-MM-yyyy" -->
+                        </td>
+                        <td>
+                            <t t-if="appoint.time_slot">
+                                <t t-esc="appoint.time_slot.start_time" t-options='{"widget": "float_time"}'/>
+                                -
+                                <t t-esc="appoint.time_slot.end_time" t-options='{"widget": "float_time"}'/>
+                            </t>
+                        </td>
+                        <td>
+                            <span t-field="appoint.create_date"/>
+                        </td>
+                        <td>
+                            <!-- <div class="col-md-offset-4 col-md-offset-2 pull-right" style="margin-top:7px;text-transform:capitalize;"> -->
+
+                            <div t-if="status=='new'" class="badge bg-info">
+                                <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>
+                                <span t-esc="status" style="font-size:12px;text-transform: capitalize;"/>
+                            </div>
+                            <div t-if="status=='pending'" class="badge bg-warning">
+                                <i class="fa fa-history fa-1x" style="margin-right:3px;"></i>
+                                <span t-esc="status" style="font-size:12px; text-transform: capitalize;"/>
+                            </div>
+                            <div t-if="status=='approved'" class="badge bg-success">
+                                <i class="fa fa-check fa-1x" style="margin-right:3px;"></i>
+                                <span t-esc="status" style="font-size:12px;text-transform: capitalize;"/>
+                            </div>
+                            <div t-if="status=='rejected'" class="badge bg-danger">
+                                <i class="fa fa-times fa-1x" style="margin-right:3px;"></i>
+                                <span t-esc="status" style="font-size:12px;text-transform: capitalize;"/>
+                            </div>
+
+                            <div t-if="status=='done'" class="badge bg-success">
+                                <i class="fa fa-check fa-1x" style="margin-right:3px;"></i>
+                                <span t-esc="status" style="font-size:12px;text-transform: capitalize;"/>
+                            </div>
+                        </td>
+                        <td>
+                            <t t-esc="appoint.amount_total"
+                               t-options='{"widget": "monetary", "display_currency": appoint.currency_id}'/>
+                        </td>
+                    </tr>
+                    <!--                    </t>-->
+                </t>
+            </t>
+            <div class="oe_structure"/>
+        </t>
+    </template>
+
+    <template id="portal_my_home_menu_appointments" name="Appoitment layout : appointment menu entries"
+              inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'appoint_mgmt'"
+                t-attf-class="breadcrumb-item #{'active ' if not appointment else ''}">
+                <a t-if="appointment" t-attf-href="/my/appointments?{{ keep_query() }}">Appointments</a>
+                <t t-else="">Appointments</t>
+            </li>
+            <li t-if="appointment" class="breadcrumb-item active">
+                <t t-esc="appointment.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_my_appointments_page" name="Appointment Description Page">
+        <t t-call="portal.portal_layout">
+            <div id="wrap">
+                <t t-set="o_portal_fullwidth_alert"
+                   groups="wk_appointment.appointment_manager_group,wk_appointment.appointment_officer_group">
+                    <t t-call="portal.portal_back_in_edit_mode">
+                        <t t-set="backend_url"
+                           t-value="'/web#model=%s&amp;id=%s&amp;action=%s&amp;view_type=form' % (appointment._name, appointment.id, appointment.env.ref('wk_appointment.appoint_mgmt_all_appointment_action').id)"/>
+                    </t>
+                </t>
+                <div class="card-body bg-white mb-2 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6 col-12 col-sm-9">
+                                    <h4>
+                                        <span>Appointment</span>
+                                        <b>
+                                            <span t-field="appointment.name"/>
+                                        </b>
+                                        <t t-set="status" t-value="appointment.appoint_state"/>
+                                        <t t-if="status=='new'">
+                                            <span class="badge bg-info">
+                                                <i class="fa fa-fw fa-user"/>
+                                                New
+                                            </span>
+                                        </t>
+                                        <t t-if="status=='pending'">
+                                            <span class="badge bg-warning">
+                                                <i class="fa fa-fw fa-history"/>
+                                                Pending
+                                            </span>
+                                        </t>
+                                        <t t-if="status=='approved'">
+                                            <span class="badge bg-success">
+                                                <i class="fa fa-fw fa-check"/>
+                                                Approved
+                                            </span>
+                                        </t>
+                                        <t t-if="status=='done'">
+                                            <span class="badge bg-success">
+                                                <i class="fa fa-fw fa-check"/>
+                                                Done
+                                            </span>
+                                        </t>
+                                        <t t-if="status=='rejected'">
+                                            <span class="badge bg-danger">
+                                                <i class="fa fa-fw fa-times"/>
+                                                Rejected
+                                            </span>
+                                        </t>
+                                    </h4>
+                                </div>
+                                <div class="offset-md-4 col-md-2 col-sm-2 col-12 hidden-print"
+                                     id="o_portal_appoint_actions">
+                                    <a target="_blank"
+                                       t-att-href="'/my/appointments/pdf/%s?%s' % (appointment.id, keep_query())"
+                                       class="pull-right" title="Download">
+                                        <i class="fa fa-download fa-2x" aria-hidden="false"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================= Updating Status to customers according to payment ======================== -->
+
+                        <t t-set="tx_ids"
+                           t-value="appointment.payment_tx_ids.filtered(lambda tx: tx.state in ('pending', 'authorized', 'done'))"/>
+                        <t t-set="status" t-value="appointment.appoint_state"/>
+
+                        <t t-if="payment_mode == 'after_appoint' and appointment.amount_total and status == 'pending'">
+                            <div class="alert alert-warning mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your request for appointment has been registered and is under process.
+                                    Once confirmed you will be notified.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'after_appoint' and appointment.amount_total and status == 'approved' and not tx_ids">
+                            <div class="alert alert-success mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your appointment has been confirmed.
+                                    You can pay now or pay later as per your convenience.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'after_appoint' and appointment.amount_total and tx_ids and status == 'approved'">
+                            <div class="alert alert-success mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your appointment has been confirmed.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'after_appoint' and status == 'pending' and not appointment.amount_total">
+                            <div class="alert alert-warning mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your request for appointment has been registered and is under process.
+                                    Once confirmed you will be notified.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'after_appoint' and status == 'approved' and not appointment.amount_total">
+                            <div class="alert alert-success mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your appointment has been confirmed.
+                                </div>
+                            </div>
+                        </t>
+
+
+                        <t t-if="payment_mode == 'before_appoint' and appointment.amount_total and status == 'new' and not tx_ids">
+                            <div class="alert alert-info mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your request for appointment has been registered.
+                                    Please complete the payment process to confirm booking for this appointment.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'before_appoint' and appointment.amount_total and status == 'pending' and tx_ids">
+                            <div class="alert alert-warning mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your request for appointment has been registered and is under process.
+                                    Once confirmed you will be notified.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'before_appoint' and appointment.amount_total and status == 'approved' and tx_ids">
+                            <div class="alert alert-success mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Thankyou, for the booking. Your appointment has been confirmed.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'before_appoint' and status == 'new' and not appointment.amount_total">
+                            <div class="alert alert-info mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your request for appointment has been registered and is under process.
+                                    Once confirmed you will be notified.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'before_appoint' and status == 'pending' and not appointment.amount_total">
+                            <div class="alert alert-warning mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Your request for appointment has been registered and is under process.
+                                    Once confirmed you will be notified.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="payment_mode == 'before_appoint' and status == 'approved' and not appointment.amount_total">
+                            <div class="alert alert-success mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    Thankyou, for the booking. Your appointment has been confirmed.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="status == 'rejected'">
+                            <div class="alert alert-danger mb16 ml16 mr16 mt16">
+                                <div class="panel-heading" style="font-size:15px;">
+                                    <!-- Sorry, Your appointment has been rejected  due to <t t-esc="appointment.reject_reason" />. -->
+                                    <t t-esc="appointment.reject_reason"/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="tx_ids and tx_ids[-1].provider_id.code == 'custom'">
+                            <t t-if="appointment.amount_total and status != 'rejected' and appointment.invoice_status not in ['paid','cancel']">
+                                <div t-att-class="'mb16 ml16 mr16 mt16 alert %s' % (
+                                (tx_ids[-1].state == 'pending' and 'alert-info') or
+                                (tx_ids[-1].state == 'done' and 'alert-success') or
+                                (tx_ids[-1].state == 'authorized' and 'alert-success') or
+                                'alert-danger')" t-if="tx_ids[-1].provider_id.pending_msg">
+                                    <div class="panel-heading">
+                                        <t t-raw="tx_ids[-1].provider_id.pending_msg"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        <div class="card-body">
+                            <t t-if="error or warning" t-call="wk_website_appointment.portal_appoint_error"/>
+                            <t t-if="success and (not error and not warning)"
+                               t-call="wk_website_appointment.portal_appoint_success"/>
+                            <t t-call="wk_website_appointment.portal_appointment_report"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure mb32"/>
+                <section id="comments" class="read_width">
+                    <t t-call="portal.message_thread">
+                        <t t-set="object" t-value="appointment"/>
+                    </t>
+                </section>
+                <div class="oe_structure mb32"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_appointment_report" name="Apointment Portal Report">
+        <div class="row">
+            <div class="col-md-10" name="customer_address">
+                <strong>Customer Address</strong>
+                <address t-field="appointment.customer"
+                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+            </div>
+            <div t-if="show_cancel_booking and appointment.appoint_state in ['new','pending']"
+                 class="col-md-2" name="cancel_booking_div">
+                <button type="submit" class="btn btn-danger"
+                        t-att-data-appoint_id="appointment.id"
+                        id="button_cancel_booking"
+                        style="font-weight:bold; font-size:15px;">Cancel Booking
+                </button>
+            </div>
+        </div>
+
+        <div class="row mt32 mb32">
+            <div class="col-md-2 col-12" t-if="appointment.name">
+                <strong>Description:</strong>
+                <p t-field="appointment.appoint_person_id.sudo().name" style="margin:0px;"/>
+                <p t-field="appointment.appoint_group_id.group_name"/>
+            </div>
+            <div class="col-md-2 col-12" t-if="appointment.appoint_date">
+                <strong>Appointment Date:</strong>
+                <p>
+                    <t t-esc="appointment.appoint_date" t-options='{"widget": "date"}'/>
+                </p>
+                <!-- ,"format": "dd-MM-yyyy" -->
+            </div>
+            <div class="col-md-2 col-12" t-if="appointment.create_date">
+                <strong>Created On:</strong>
+                <p>
+                    <t t-esc="appointment.create_date" t-options='{"widget": "datetime"}'/>
+                </p>
+                <!-- ,"format": "dd-MM-yyyy hh:mm a" -->
+            </div>
+            <div class="col-md-2 col-12" t-if="appointment.time_slot">
+                <strong>TimeSlot:</strong>
+                <p>
+                    <span t-field="appointment.time_slot.start_time" t-options='{"widget": "float_time"}'/>
+                    -
+                    <span t-field="appointment.time_slot.end_time" t-options='{"widget": "float_time"}'/>
+                </p>
+            </div>
+            <div class="col-md-2 col-12" t-if="appointment.invoice_id">
+                <strong>Invoice:</strong>
+                <p>
+                    <a t-attf-href="/my/invoices/#{appointment.invoice_id.id}">
+                        <t t-esc="appointment.invoice_id.ref"/>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="table-responsive ">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="text-right">Unit Price</th>
+                        <th class="text-right">Taxes</th>
+                        <th class="text-right">Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody class="o_portal_report_tbody">
+                    <tr t-foreach="appointment.appoint_lines" t-as="l">
+                        <td>
+                            <span t-field="l.name"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.price_unit"
+                                  t-options='{"widget": "monetary", "display_currency": appointment.currency_id}'/>
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.tax_id))"/>
+                        </td>
+                        <td class="text-right" id="subtotal">
+                            <span t-field="l.price_subtotal"
+                                  t-options='{"widget": "monetary", "display_currency": appointment.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr t-foreach="range(max(4-len(appointment.appoint_lines),0))" t-as="l">
+                        <td>&amp;nbsp;</td>
+                        <td/>
+                        <td/>
+                        <td/>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="total" class="row">
+            <div class="col-md-6">
+                <div>
+                    <strong>Contact</strong>
+                </div>
+                <div t-field="appointment.customer.company_id.partner_id"
+                     t-options='{"widget": "contact", "fields": ["email", "phone"]}'/>
+                <br/>
+            </div>
+            <div class="col-md-6  col-12 pull-right">
+                <table class="table table-condensed">
+                    <tr class="border-black">
+                        <td>
+                            <strong>Subtotal</strong>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="appointment.amount_untaxed"
+                                  t-options='{"widget": "monetary", "display_currency": appointment.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr t-if="appointment.amount_tax" class="border-black">
+                        <td>
+                            <strong>Taxes</strong>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="appointment.amount_tax"
+                                  t-options='{"widget": "monetary", "display_currency": appointment.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr class="border-black">
+                        <td>
+                            <strong>Total</strong>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="appointment.amount_total"
+                                  t-options='{"widget": "monetary", "display_currency": appointment.currency_id}'/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_appoint_error" name="appointment error/warning display">
+        <div class="row">
+            <div t-att-class="'col-md-12 text-center alert alert-dismissable %s' % ('alert-danger' if error else 'alert-warning')">
+
+                <t t-if="error == 'generic'" name="generic">
+                    There was an error processing this page.
+                </t>
+                <t t-else="">
+                    There was an error processing this page.
+                </t>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_appoint_success" name="appointment success display">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center alert alert-dismissable alert-success">
+                Your payment was successful.
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+            </div>
+        </div>
+    </template>
+
+</odoo>

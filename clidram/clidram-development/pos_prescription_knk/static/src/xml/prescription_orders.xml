@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="pos_patient_prescription_template" xml:space="preserve">
+    <t t-name="EnablePreOrder" owl="1">
+        <span class="control-button odoo-theme-color1" id="prescription_enable" t-on-click="() => this.trigger('click-enable-prescription')">
+            <i class="fa fa-university"></i>
+            <span>Prescription</span>
+        </span>
+    </t>
+    <t t-name="OpenPOButton" owl="1">
+        <span class="control-button import_po odoo-theme-color" t-on-click="onClick">
+            <i class="fa fa-link"></i>
+            <span>Prescription Orders</span>
+        </span>
+    </t>
+    <t t-name="PrescriptionOrders" owl="1">
+        <div class="order-row" t-att-class="{ highlight: highlighted }" t-on-click="() => this.trigger('click-showDetails',props.order)">
+            <div class="col name">
+                <div t-if="env.isMobile">Prescription Number</div>
+                <div class='order-name'>
+                    <t t-esc="name" />
+                </div>
+            </div>
+            <div class="col date">
+                <div t-if="env.isMobile">Prescription Date</div>
+                <div class='order-date'>
+                    <t t-esc="date" />
+                </div>
+            </div>
+            <div class="col patient">
+                <div t-if="env.isMobile">Patient</div>
+                <div class='order-partner'>
+                    <t t-esc="patient" />
+                </div>
+            </div>
+            <div class="col physician">
+                <div t-if="env.isMobile">Doctor</div>
+                <div class='order-dctr'>
+                    <t t-esc="physician" />
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="PODetail" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup bi-popup-width">
+                    <header class="title drag-handle">
+                        Prescription Order Details
+                    </header>
+                    <main class="body traceback" style="font-family: 'Lato-Reg';">
+                        <t t-set="order" t-value="props.order || []" />
+                        <table style='width:100%'>
+                            <tr class="popup-tr">
+                                <td style='width:20%; '><strong>Prescription #:</strong>
+                                </td>
+                                <td style='width:30%; '>
+                                    <span t-esc="order['name']" />
+                                </td>
+                                <td style='width:20%; '><strong>Prescription Date:</strong>
+                                </td>
+                                <td style='width:30%; '>
+                                    <span t-esc="order['date']" />
+                                </td>
+                            </tr>
+                            <tr class="popup-tr">
+                                <td style='width:20%; '><strong>Patient:</strong>
+                                </td>
+                                <td style='width:30%; ' t-if="order['patient_id']">
+                                    <span t-esc="order['patient_id'][1] or ''" />
+                                </td>
+                                <td style='width:20%; '><strong>Doctor:</strong>
+                                </td>
+                                <td style='width:30%;' t-if="order['physician_id']">
+                                    <span t-esc="order['physician_id'][1]" />
+                                </td>
+                            </tr>
+                            <tr class="popup-tr">
+                            </tr>
+                        </table>
+                        <br />
+                        <table style='width:100%'>
+                            <thead>
+                                <tr class="orderline-table-head">
+                                    <th style='width:33%; padding-left: 10px; '>Medicine Name</th>
+                                    <th style='width:33%; padding-left: 10px; '>Total Qty</th>
+                                    <th style='width:33%; padding-left: 10px; '>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="orderline-table" t-foreach="props.orderline || []" t-as="line1" t-key="line1.id">
+                                    <td style='width:33%; padding-left: 10px; '>
+                                        <t t-if="line1.product_id">
+                                            <span t-esc='line1.product_id[1]' />
+                                        </t>
+                                    </td>
+                                    <td style='width:33%; padding-left: 10px; '>
+                                        <span t-esc='line1.quantity' />
+                                    </td>
+                                    <td style='width:33%; padding-left: 10px; '>
+                                        <span t-esc='line1.short_comment' />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </main>
+                    <footer class="footer">
+                        <div class="button cancel" t-on-click="cancel">
+                            Close
+                        </div>
+                        <div class="button confirm odoo-theme-color" t-on-click="addProducts">
+                            Add Products
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+    <t t-name="PrescriptionOrderScreen" owl="1">
+        <div class="clientlist-screen screen">
+            <div class="screen-content orders-screen">
+                <div class="top-content">
+                    <div class="button back odoo-theme-color" t-on-click="back">
+                        <t t-if="!env.isMobile">Discard</t>
+                    </div>
+                </div>
+                <div class="orders">
+                    <div class="header-row" t-att-class="{ oe_hidden: env.isMobile }">
+                        <div class="col Number">Prescription Number</div>
+                        <div class="col Date">Prescription Date</div>
+                        <div class="col Patient">Patient</div>
+                        <div class="col Doctor">Doctor</div>
+                    </div>
+                    <div class="order-list">
+                        <t t-foreach="prescription_orders" t-as="order" t-key="order.id">
+                            <PrescriptionOrders order="order" selectedPrescriptionOrder="state.selectedPrescriptionOrder" t-on-click-order="clickPrescriptionOrder" />
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
