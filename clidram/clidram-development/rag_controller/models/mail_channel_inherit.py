@@ -117,14 +117,16 @@ class MailChannel(models.Model):
         if not prompt:
             return result
 
-        # 5. Extract patient_seq if explicitly written (e.g. "@patient: 20250600042005")
+        # 5. Extract patient_seq if explicitly written (e.g. "patient_id:20250600042005" or "patient_id: 20250600042005")
         patient_seq = None
-        if "patient_id:" in prompt.lower():
-            try:
-                patient_seq = prompt.lower().split("patient_id:")[1].strip().split()[0]
-                prompt = prompt.replace(f"patient_id: {patient_seq}", "").strip()
-            except Exception:
-                pass
+        patient_id_match = re.search(r'patient_id:\s*(\S+)', prompt, re.IGNORECASE)
+        if patient_id_match:
+            patient_seq = patient_id_match.group(1)
+            # Remove the full patient_id:xxx pattern from the prompt
+            prompt = re.sub(r'patient_id:\s*\S+', '', prompt, flags=re.IGNORECASE).strip()
+
+        # 5b. Strip the bot mention text "RAG Medical Assistant" from the prompt
+        prompt = re.sub(r'RAG\s+Medical\s+Assistant', '', prompt, flags=re.IGNORECASE).strip()
 
         # 6. Spin up a background thread to fetch the LLM response without freezing the Odoo UI
         # We pass self.id to easily reconstruct the channel in the new thread
