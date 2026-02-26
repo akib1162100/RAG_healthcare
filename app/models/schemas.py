@@ -52,6 +52,10 @@ class ChatRequest(BaseModel):
         default=False,
         description="Set to true to wipe the conversation memory for this session ID"
     )
+    chat_history: Optional[List[dict]] = Field(
+        default=None,
+        description="Optional: Previous chat messages as context. Each entry has 'role' (user/assistant) and 'content'."
+    )
 
 class PatientQueryRequest(BaseModel):
     """Request to query patient-specific medical history"""

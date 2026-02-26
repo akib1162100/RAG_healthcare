@@ -708,6 +708,17 @@ class PrescriptionOrderKnk(models.Model):
                 app.name = self.env['ir.sequence'].next_by_code(
                     'prescription.order.knk') or '/'
             app.generate_qr_code()
+            
+            # Auto-trigger RAG Syncing
+            try:
+                rag_client = self.env['rag.api.client']
+                rag_client.trigger_indexing(
+                    models_list=['prescription.order.knk'],
+                    incremental=True
+                )
+            except Exception as e:
+                import logging
+                logging.getLogger(__name__).warning("Failed to auto-trigger RAG sync: %s", str(e))
 
     def open_prescription(self):
         base_url = self.env['ir.config_parameter'].sudo(

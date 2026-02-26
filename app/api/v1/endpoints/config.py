@@ -6,6 +6,8 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional
 import logging
+import json
+import os
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/config", tags=["Configuration"])
@@ -34,8 +36,32 @@ class ConfigUpdateResponse(BaseModel):
     """Response after updating configuration"""
     status: str
     message: str
-    model_name: str
+    model_name: Optional[str] = None
 
+
+class OdooCredentialsRequest(BaseModel):
+    odooUrl: str = Field(..., description="Base URL of Odoo, e.g. http://host.docker.internal:8069")
+    apiKey: str = Field(..., description="API Key for Odoo Bearer Authentication")
+
+@router.post("/odoo-credentials", response_model=ConfigUpdateResponse)
+async def set_odoo_credentials(request: OdooCredentialsRequest):
+    """
+    Save Odoo credentials dynamically so the ETL pipeline can use them
+    instead of relying purely on environment variables.
+    """
+    try:
+        config_path = "/app/odoo_config.json"
+        with open(config_path, "w") as f:
+            json.dump(request.model_dump(), f, indent=4)
+        
+        logger.info("Odoo credentials successfully updated and saved to disk.")
+        return ConfigUpdateResponse(
+            status="success",
+            message="Odoo credentials saved successfully. Future ETL syncs will use them."
+        )
+    except Exception as e:
+        logger.error(f"Failed to save Odoo credentials: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to save config: {str(e)}")
 
 @router.post("/api-key", response_model=ConfigUpdateResponse)
 async def set_api_key(request: SetApiKeyRequest):

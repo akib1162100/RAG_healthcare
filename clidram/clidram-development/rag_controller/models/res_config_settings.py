@@ -21,3 +21,11 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='rag_controller.bot_partner_id',
         help='Select the Partner profile that will act as the RAG Assistant in Discuss.'
     )
+
+    context_message_limit = fields.Integer(
+        string='Chat History Context Limit',
+        config_parameter='rag_controller.context_message_limit',
+        default=3,
+        help='Number of previous chat messages to include as context when sending a request '
+             'to the RAG system. If set to 0, no previous context is sent. Default is 3.'
+    )

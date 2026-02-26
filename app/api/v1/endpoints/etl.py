@@ -56,6 +56,40 @@ async def index_medical(
         logger.error(f"Medical indexing error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.post("/index-medical-all", response_model=IndexMedicalResponse)
+async def index_medical_all(
+    pipeline: ETLPipeline = Depends(get_etl_pipeline)
+):
+    """
+    Force a full re-indexing of all medical models from Odoo.
+    Ignores sync flags and fetches all records.
+    """
+    try:
+        models = ['res.partner', 'medical.disease', 'wk.appointment', 'prescription.order.knk']
+        logger.info(f"Starting FULL medical data indexing for: {models}")
+        
+        results = await pipeline.run_full_indexing(
+            models=models,
+            limit=None,
+            incremental=False
+        )
+        
+        total_records = sum(r['records_indexed'] for r in results.values())
+        total_chunks = sum(r['chunks_created'] for r in results.values())
+        
+        logger.info(f"Full indexing complete: {total_records} records, {total_chunks} chunks")
+        
+        return IndexMedicalResponse(
+            status="success",
+            results=results,
+            total_records=total_records,
+            total_chunks=total_chunks
+        )
+        
+    except Exception as e:
+        logger.error(f"Full medical indexing error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post("/sync")
 async def sync_medical_data(
     background_tasks: BackgroundTasks,
@@ -73,7 +107,7 @@ async def sync_medical_data(
         background_tasks.add_task(
             pipeline.run_full_indexing,
             models=['wk.appointment', 'prescription.order.knk'],
-            incremental=False
+            incremental=True
         )
         
         return {

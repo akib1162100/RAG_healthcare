@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class RagIntegrationController(http.Controller):
 
     @http.route('/api/rag/query_patient', type='json', auth='user', methods=['POST'])
@@ -27,10 +28,10 @@ class RagIntegrationController(http.Controller):
         try:
             rag_client = request.env['rag.api.client']
             result = rag_client.query_prescriptions(
-                prompt=prompt, 
-                diagnosis_code=diagnosis_code, 
-                date_from=date_from, 
-                date_to=date_to, 
+                prompt=prompt,
+                diagnosis_code=diagnosis_code,
+                date_from=date_from,
+                date_to=date_to,
                 limit=limit
             )
             return {'status': 'success', 'data': result}
@@ -50,10 +51,10 @@ class RagIntegrationController(http.Controller):
                 auth_header = request.httprequest.headers.get('Authorization')
                 if auth_header.startswith('Bearer '):
                     api_key = auth_header.split(' ')[1]
-                    
+
             if not api_key:
                 return {'status': 'error', 'message': 'Missing API Key'}
-            
+
             # Using the key provided by the user
             expected_key = "585f944f6b85a1a9b7bf8baa81729129147d4012"
             if api_key != expected_key:
@@ -62,7 +63,7 @@ class RagIntegrationController(http.Controller):
             prescription = request.env['prescription.order.knk'].sudo().browse(int(prescription_id))
             if not prescription.exists():
                 return {'status': 'error', 'message': 'Prescription not found'}
-                
+
             result = self._prepare_prescription_data(prescription)
             return {'status': 'success', 'data': result}
         except Exception as e:
@@ -135,11 +136,11 @@ class RagIntegrationController(http.Controller):
         """Generic bulk getter (maintained for backward compatibility)"""
         auth_res = self._check_api_key(kwargs)
         if auth_res: return auth_res
-        
+
         try:
             domain = domain or []
             records = request.env[model].sudo().search(domain, limit=limit, offset=offset)
-            
+
             result_list = []
             for record in records:
                 if model == 'prescription.order.knk':
@@ -153,7 +154,7 @@ class RagIntegrationController(http.Controller):
                 else:
                     fields = request.env[model]._fields.keys()
                     result_list.append(record.read(list(fields))[0])
-            
+
             return {'status': 'success', 'data': result_list}
         except Exception as e:
             logger.error(f"Error in api_get_all_details for {model}: {str(e)}")
@@ -164,7 +165,7 @@ class RagIntegrationController(http.Controller):
         """Generic endpoint to list IDs for any model with domain filters"""
         auth_res = self._check_api_key(kwargs)
         if auth_res: return auth_res
-        
+
         try:
             domain = domain or []
             records = request.env[model].sudo().search(domain, limit=limit, offset=offset)
@@ -178,12 +179,12 @@ class RagIntegrationController(http.Controller):
         """Fetch full patient details"""
         auth_res = self._check_api_key(kwargs)
         if auth_res: return auth_res
-        
+
         try:
             patient = request.env['res.partner'].sudo().browse(int(patient_id))
             if not patient.exists():
                 return {'status': 'error', 'message': 'Patient not found'}
-                
+
             result = self._prepare_patient_data(patient)
             return {'status': 'success', 'data': result}
         except Exception as e:
@@ -195,12 +196,12 @@ class RagIntegrationController(http.Controller):
         """Fetch full appointment details"""
         auth_res = self._check_api_key(kwargs)
         if auth_res: return auth_res
-        
+
         try:
             app = request.env['wk.appointment'].sudo().browse(int(appointment_id))
             if not app.exists():
                 return {'status': 'error', 'message': 'Appointment not found'}
-                
+
             result = self._prepare_appointment_data(app)
             return {'status': 'success', 'data': result}
         except Exception as e:
@@ -212,7 +213,7 @@ class RagIntegrationController(http.Controller):
         """Batch fetch disease details for efficiency"""
         auth_res = self._check_api_key(kwargs)
         if auth_res: return auth_res
-        
+
         try:
             diseases = request.env['medical.disease'].sudo().browse(disease_ids)
             result = [self._prepare_disease_data(d) for d in diseases if d.exists()]
@@ -227,10 +228,7 @@ class RagIntegrationController(http.Controller):
             'id': prescription.id,
             'name': prescription.name,
             'patient': prescription.patient_id.name if prescription.patient_id else '',
-            'patient_res_id': prescription.patient_id.id if prescription.patient_id else None,
-            'patient_seq': prescription.patient_id.seq if prescription.patient_id else '',
             'physician': prescription.physician_id.name if prescription.physician_id else '',
-            'physician_res_id': prescription.physician_id.id if prescription.physician_id else None,
             'date': prescription.date.isoformat() if prescription.date else '',
             'state': prescription.state,
             'disease': prescription.disease,
@@ -263,13 +261,24 @@ class RagIntegrationController(http.Controller):
                 'counseling_behavioral_response': prescription.counseling_behavioral_response,
                 'side_effects': prescription.side_effects,
             },
-            'medications': [{'name': m.product_id.name, 'quantity': m.quantity, 'days': m.days, 'instruction': m.short_comment} for m in prescription.order_line_new_ids],
+            'medications': [
+                {'name': m.product_id.name, 'quantity': m.quantity, 'days': m.days, 'instruction': m.short_comment} for
+                m in prescription.order_line_new_ids],
             'diagnoses': [{'name': d.disease_id.name if d.disease_id else ''} for d in prescription.diagnosis_ids],
-            'complaints': [{'name': c.complaint_list_id.name if c.complaint_list_id else '', 'period': c.period.name if c.period else '', 'location': c.location_id.name if c.location_id else ''} for c in prescription.complaint_id],
-            'signs': [{'name': s.sign_list_id.name if hasattr(s, 'sign_list_id') and s.sign_list_id else s.name, 'location': s.location.name if hasattr(s, 'location') and s.location else ''} for s in prescription.sign_ids],
-            'investigations': [{'name': i.investigation_list_id.name if hasattr(i, 'investigation_list_id') and i.investigation_list_id else ''} for i in prescription.investigation_ids],
+            'complaints': [{'name': c.complaint_list_id.name if c.complaint_list_id else '',
+                            'period': c.period.name if c.period else '',
+                            'location': c.location_id.name if c.location_id else ''} for c in
+                           prescription.complaint_id],
+            'signs': [{'name': s.sign_list_id.name if hasattr(s, 'sign_list_id') and s.sign_list_id else s.name,
+                       'location': s.location.name if hasattr(s, 'location') and s.location else ''} for s in
+                      prescription.sign_ids],
+            'investigations': [{'name': i.investigation_list_id.name if hasattr(i,
+                                                                                'investigation_list_id') and i.investigation_list_id else ''}
+                               for i in prescription.investigation_ids],
             'investigation_result': prescription.investigation_result,
-            'procedures': [{'name': p.procedure_config_id.name if hasattr(p, 'procedure_config_id') and p.procedure_config_id else ''} for p in prescription.procedure_line_ids],
+            'procedures': [{'name': p.procedure_config_id.name if hasattr(p,
+                                                                          'procedure_config_id') and p.procedure_config_id else ''}
+                           for p in prescription.procedure_line_ids],
             'procedure_result': prescription.procedure_result,
             'physical_examinations': {
                 'general': prescription.general,
@@ -279,18 +288,39 @@ class RagIntegrationController(http.Controller):
                 'abdomen': prescription.abdomen,
                 'msk': prescription.msk,
                 'cns': prescription.cns,
-                'boards': [{'general': pe.general, 'heent': pe.heent, 'cvs': pe.cvs, 'respiratory': pe.respiratory, 'abdomen': pe.abdomen, 'msk': pe.msk, 'cns': pe.cns} for pe in prescription.physical_examination_ids]
+                'boards': [{'general': pe.general, 'heent': pe.heent, 'cvs': pe.cvs, 'respiratory': pe.respiratory,
+                            'abdomen': pe.abdomen, 'msk': pe.msk, 'cns': pe.cns} for pe in
+                           prescription.physical_examination_ids]
             },
-            'gcs_scores': [{'total': g.total_score, 'motor': g.motor_response_id.name if hasattr(g, 'motor_response_id') and g.motor_response_id else '', 'verbal': g.verbal_response_id.name if hasattr(g, 'verbal_response_id') and g.verbal_response_id else '', 'eye': g.eye_response_id.name if hasattr(g, 'eye_response_id') and g.eye_response_id else ''} for g in prescription.gcs_score_line_ids],
-            'bmi_records': [{'weight': b.v_weight, 'height': b.v_height, 'bmi': b.v_bmi} for b in prescription.bmi_line_ids],
-            'exercises': [{'name': e.name, 'location': e.part_location.name if e.part_location else '', 'move': e.move2, 'reps': e.type_of_test2} for e in prescription.excercise_ids],
-            'ortho_items': [{'name': o.name, 'side': o.side, 'location': o.location.name if o.location else ''} for o in prescription.ortho_ids],
-            'old_history': [{'name': h.history_category_id.name if h.history_category_id else '', 'period': h.history_period.name if h.history_period else '', 'progression': h.progression} for h in prescription.history_id],
-            'medical_history': [{'name': m.name, 'date': str(m.date) if m.date else '', 'medication': m.medication} for m in prescription.medical_history_ids],
-            'past_medical_history': [{'symptom': p.symptom_id.name if p.symptom_id else '', 'result': p.result_id.name if p.result_id else ''} for p in prescription.past_medical_history_line_ids],
-            'medication_history': [{'medicine': m.medicine_id.name if m.medicine_id else ''} for m in prescription.medication_history_line_ids],
-            'family_history': [{'condition': f.family_history_config_id.name if f.family_history_config_id else '', 'result': f.family_history_result_id.name if f.family_history_result_id else ''} for f in prescription.family_history_line_ids],
-            'social_history': [{'habit': s.social_history_config_id.name if s.social_history_config_id else '', 'result': s.social_history_result_id.name if s.social_history_result_id else ''} for s in prescription.social_history_line_ids],
+            'gcs_scores': [{'total': g.total_score, 'motor': g.motor_response_id.name if hasattr(g,
+                                                                                                 'motor_response_id') and g.motor_response_id else '',
+                            'verbal': g.verbal_response_id.name if hasattr(g,
+                                                                           'verbal_response_id') and g.verbal_response_id else '',
+                            'eye': g.eye_response_id.name if hasattr(g,
+                                                                     'eye_response_id') and g.eye_response_id else ''}
+                           for g in prescription.gcs_score_line_ids],
+            'bmi_records': [{'weight': b.v_weight, 'height': b.v_height, 'bmi': b.v_bmi} for b in
+                            prescription.bmi_line_ids],
+            'exercises': [{'name': e.name, 'location': e.part_location.name if e.part_location else '', 'move': e.move2,
+                           'reps': e.type_of_test2} for e in prescription.excercise_ids],
+            'ortho_items': [{'name': o.name, 'side': o.side, 'location': o.location.name if o.location else ''} for o in
+                            prescription.ortho_ids],
+            'old_history': [{'name': h.history_category_id.name if h.history_category_id else '',
+                             'period': h.history_period.name if h.history_period else '', 'progression': h.progression}
+                            for h in prescription.history_id],
+            'medical_history': [{'name': m.name, 'date': str(m.date) if m.date else '', 'medication': m.medication} for
+                                m in prescription.medical_history_ids],
+            'past_medical_history': [{'symptom': p.symptom_id.name if p.symptom_id else '',
+                                      'result': p.result_id.name if p.result_id else ''} for p in
+                                     prescription.past_medical_history_line_ids],
+            'medication_history': [{'medicine': m.medicine_id.name if m.medicine_id else ''} for m in
+                                   prescription.medication_history_line_ids],
+            'family_history': [{'condition': f.family_history_config_id.name if f.family_history_config_id else '',
+                                'result': f.family_history_result_id.name if f.family_history_result_id else ''} for f
+                               in prescription.family_history_line_ids],
+            'social_history': [{'habit': s.social_history_config_id.name if s.social_history_config_id else '',
+                                'result': s.social_history_result_id.name if s.social_history_result_id else ''} for s
+                               in prescription.social_history_line_ids],
             'patient_history': prescription.patient_history,
             'advice_notes': prescription.notes_line_id.name if prescription.notes_line_id else '',
             'patient_details': prescription.patient_details,
@@ -342,7 +372,7 @@ class RagIntegrationController(http.Controller):
         """Mark records as synced in Odoo"""
         auth_res = self._check_api_key(kwargs)
         if auth_res: return auth_res
-        
+
         try:
             records = request.env[model].sudo().browse(res_ids)
             if hasattr(request.env[model], 'is_rag_synced'):
@@ -361,10 +391,10 @@ class RagIntegrationController(http.Controller):
             auth_header = request.httprequest.headers.get('Authorization')
             if auth_header.startswith('Bearer '):
                 api_key = auth_header.split(' ')[1]
-                
+
         if not api_key:
             return {'status': 'error', 'message': 'Missing API Key'}
-        
+
         if api_key != "585f944f6b85a1a9b7bf8baa81729129147d4012":
             return {'status': 'error', 'message': 'Invalid API Key'}
         return None
@@ -377,12 +407,12 @@ class RagIntegrationController(http.Controller):
         # Ensure user is admin to run this
         if not request.env.user.has_group('base.group_erp_manager'):
             return {'status': 'error', 'message': 'Access Denied: Only Administrator can trigger indexing'}
-            
+
         try:
             rag_client = request.env['rag.api.client']
             result = rag_client.trigger_indexing(
-                models_list=models_list, 
-                incremental=incremental, 
+                models_list=models_list,
+                incremental=incremental,
                 limit=limit
             )
             return {'status': 'success', 'data': result}
@@ -404,7 +434,7 @@ class RagIntegrationController(http.Controller):
             return {'status': 'error', 'message': str(e)}
 
     @http.route('/api/rag/chat', type='json', auth='user', methods=['POST'])
-    def api_chat(self, prompt, session_id, patient_seq=None, reset=False, **kwargs):
+    def api_chat(self, prompt, session_id, patient_seq=None, reset=False, chat_history=None, **kwargs):
         """
         JSON-RPC endpoint to handle Conversation RAG directly
         """
@@ -414,7 +444,8 @@ class RagIntegrationController(http.Controller):
                 prompt=prompt,
                 session_id=session_id,
                 patient_seq=patient_seq,
-                reset=reset
+                reset=reset,
+                chat_history=chat_history,
             )
             return {'status': 'success', 'data': result}
         except Exception as e:

@@ -81,6 +81,56 @@ class MedicalDataTransformer:
         }
         
         return text, self._sanitize_for_json(metadata)
+
+    def flatten_patient(self, patient: Dict) -> Tuple[str, Dict]:
+        """
+        Convert patient data to natural language text
+        """
+        parts = []
+        parts.append(f"Patient Profile: {patient.get('name', 'Unknown')}")
+        if patient.get('patient_seq'):
+            parts.append(f"Seq ID: {patient['patient_seq']}")
+        if patient.get('gender'):
+            parts.append(f"Gender: {patient['gender']}")
+        if patient.get('age'):
+            parts.append(f"Age: {patient['age']}")
+        if patient.get('city'):
+            parts.append(f"Location: {patient['city']}")
+        if patient.get('phone'):
+            parts.append(f"Phone: {patient['phone']}")
+            
+        text = " ".join(parts)
+        
+        metadata = {
+            'odoo_model': 'res.partner',
+            'odoo_res_id': patient['id'],
+            'patient_seq': patient.get('patient_seq'),
+            'indexed_at': datetime.now().isoformat()
+        }
+        
+        return text, self._sanitize_for_json(metadata)
+
+    def flatten_disease(self, disease: Dict) -> Tuple[str, Dict]:
+        """
+        Convert disease data to natural language text
+        """
+        parts = []
+        parts.append(f"Disease/Condition: {disease.get('name', 'Unknown')}")
+        if disease.get('code'):
+            parts.append(f"ICD Code: {disease['code']}")
+        if disease.get('long_name'):
+            parts.append(f"Full Description: {disease['long_name']}")
+            
+        text = " ".join(parts)
+        
+        metadata = {
+            'odoo_model': 'medical.disease',
+            'odoo_res_id': disease['id'],
+            'disease_code': disease.get('code'),
+            'indexed_at': datetime.now().isoformat()
+        }
+        
+        return text, self._sanitize_for_json(metadata)
     
     def flatten_prescription(self, prescription: Dict) -> List[Tuple[str, Dict]]:
         """
@@ -101,9 +151,9 @@ class MedicalDataTransformer:
             'odoo_model': 'prescription.order.knk',
             'odoo_res_id': prescription['id'],
             'patient_id': prescription.get('patient_res_id'),
-            'patient_seq': prescription.get('patient_id'),
+            'patient_seq': prescription.get('patient_seq'),
             'physician_id': prescription.get('physician_res_id'),
-            'prescription_date': str(prescription['prescription_date']),
+            'prescription_date': str(prescription.get('prescription_date') or prescription.get('date') or 'Unknown'),
             'state': prescription.get('state'),
             'disease': prescription.get('disease'),
             'description': prescription.get('description'),
@@ -190,8 +240,9 @@ class MedicalDataTransformer:
         # Patient information
         if prescription.get('patient_name'):
             parts.append(f"\nPatient: {prescription['patient_name']}")
-            if prescription.get('patient_id'):
-                parts.append(f"(ID: {prescription['patient_id']})")
+            current_patient_seq = prescription.get('patient_seq') or prescription.get('patient_id')
+            if current_patient_seq:
+                parts.append(f"(ID: {current_patient_seq})")
             if prescription.get('patient_age'):
                 parts.append(f", {prescription['patient_age']} years old")
             gender = prescription.get('patient_sex') or prescription.get('patient_gender')
@@ -272,10 +323,18 @@ class MedicalDataTransformer:
             parts.append(f"\n\nInvestigation Results:\n{prescription['investigation_result']}")
         
         # Vital Signs
-        if prescription.get('vitals') or prescription.get('bmi_records') or any(['temperature' in prescription, 'spo2' in prescription, 'rbs' in prescription]):
+        vitals_data = prescription.get('vitals')
+        if vitals_data or prescription.get('bmi_records') or any(['temperature' in prescription, 'spo2' in prescription, 'rbs' in prescription]):
             parts.append("\n\nVital Signs:")
-            # Extract standard vitals if available
-            for vital in prescription.get('vitals', []):
+            
+            # Extract vitals if available (handle both dict and list)
+            vitals_list = []
+            if isinstance(vitals_data, dict):
+                vitals_list = [vitals_data]
+            elif isinstance(vitals_data, list):
+                vitals_list = vitals_data
+            
+            for vital in vitals_list:
                 if vital.get('weight'):
                     parts.append(f"\n- Weight: {vital['weight']} {vital.get('weight_unit', '')}")
                 if vital.get('height'):
@@ -285,6 +344,8 @@ class MedicalDataTransformer:
                     if vital.get('bp_diastolic'):
                         bp += f"/{vital['bp_diastolic']}"
                     parts.append(f"\n- Blood Pressure: {bp} {vital.get('bp_unit', 'mmHg')}")
+                elif vital.get('blood_pressure'):
+                    parts.append(f"\n- Blood Pressure: {vital['blood_pressure']}")
                 if vital.get('pulse'):
                     parts.append(f"\n- Pulse: {vital['pulse']} {vital.get('pulse_unit', 'bpm')}")
                 if vital.get('respiratory_rate'):
@@ -356,12 +417,23 @@ class MedicalDataTransformer:
                 parts.append(f"\n- Glasgow Coma Scale (Scalar): {prescription['glassgow_coma_scale']}")
 
         # Physical Examinations
-        if prescription.get('physical_examinations') or any([prescription.get('general'), prescription.get('abdomen'), prescription.get('respiratory')]):
+        pe_data = prescription.get('physical_examinations')
+        if pe_data or any([prescription.get('general'), prescription.get('abdomen'), prescription.get('respiratory')]):
             parts.append("\n\nPhysical Examinations:")
             
+            # Handle list vs dict (Odoo controller returns a dict with 'boards' list)
+            pe_list = []
+            if isinstance(pe_data, list):
+                pe_list = pe_data
+            elif isinstance(pe_data, dict):
+                if pe_data.get('boards'):
+                    pe_list = pe_data['boards']
+                else:
+                    pe_list = [pe_data]
+            
             # Array relations
-            for exam in prescription.get('physical_examinations', []):
-                parts.append(f"\n- Physical Board #{exam.get('sequence', 'N/A')}:")
+            for exam in pe_list:
+                parts.append(f"\n- Physical Board Result:")
                 if exam.get('general'): parts.append(f"\n  * General: {exam['general']}")
                 if exam.get('heent'): parts.append(f"\n  * HEENT: {exam['heent']}")
                 if exam.get('cvs'): parts.append(f"\n  * CVS: {exam['cvs']}")
@@ -370,8 +442,18 @@ class MedicalDataTransformer:
                 if exam.get('msk'): parts.append(f"\n  * Musculoskeletal: {exam['msk']}")
                 if exam.get('cns'): parts.append(f"\n  * CNS Screens: {exam['cns']}")
                 
-            # Scalar relations fallback
-            if not prescription.get('physical_examinations'):
+            # Scalar relations fallback / Main Dict values
+            if isinstance(pe_data, dict) and not pe_list:
+                if pe_data.get('general'): parts.append(f"\n- General: {pe_data['general']}")
+                if pe_data.get('heent'): parts.append(f"\n- HEENT: {pe_data['heent']}")
+                if pe_data.get('cvs'): parts.append(f"\n- CVS: {pe_data['cvs']}")
+                if pe_data.get('respiratory'): parts.append(f"\n- Respiratory: {pe_data['respiratory']}")
+                if pe_data.get('abdomen'): parts.append(f"\n- Abdomen: {pe_data['abdomen']}")
+                if pe_data.get('msk'): parts.append(f"\n- Musculoskeletal: {pe_data['msk']}")
+                if pe_data.get('cns'): parts.append(f"\n- CNS Screens: {pe_data['cns']}")
+            
+            # Final fallback to root prescription scalars
+            if not pe_data:
                 if prescription.get('general'): parts.append(f"\n- General: {prescription['general']}")
                 if prescription.get('heent'): parts.append(f"\n- HEENT: {prescription['heent']}")
                 if prescription.get('cvs'): parts.append(f"\n- CVS: {prescription['cvs']}")
@@ -512,11 +594,17 @@ class MedicalDataTransformer:
                 parts.append(f"\n- Recall Timeframe: {prescription['next_visit_days']} days")
         
         # Advice Notes
-        if prescription.get('advice_notes'):
+        advice = prescription.get('advice_notes')
+        if advice:
             parts.append("\n\nAdvice/Notes:")
-            for note in prescription['advice_notes']:
-                if note.get('notes_text'):
-                    parts.append(f"\n- {note['notes_text']}")
+            if isinstance(advice, list):
+                for note in advice:
+                    if isinstance(note, dict) and note.get('notes_text'):
+                        parts.append(f"\n- {note['notes_text']}")
+                    elif isinstance(note, str):
+                        parts.append(f"\n- {note}")
+            elif isinstance(advice, str):
+                parts.append(f"\n- {advice}")
 
         # Additional Comments & Details
         if prescription.get('additional_comments'):

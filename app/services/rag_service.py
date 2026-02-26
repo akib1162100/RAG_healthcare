@@ -104,7 +104,8 @@ class RAGService:
         reset: bool = False,
         limit: int = 5,
         metadata_filter: Optional[Dict[str, Any]] = None,
-        system_instruction: Optional[str] = None
+        system_instruction: Optional[str] = None,
+        chat_history: Optional[List[Dict[str, str]]] = None
     ) -> Dict[str, Any]:
         """
         Execute Conversational RAG query: embed question, retrieve context, append to session history
@@ -117,11 +118,14 @@ class RAGService:
             limit: Number of similar documents to retrieve
             metadata_filter: Optional filters for retrieval
             system_instruction: Optional system instruction for LLM
+            chat_history: Optional list of previous messages [{"role": "user"/"assistant", "content": "..."}]
             
         Returns:
             Dict with response, sources, and metadata
         """
         logger.info(f"RAG chat (session {session_id}): {prompt[:100]}...")
+        if chat_history:
+            logger.info(f"Received {len(chat_history)} messages as chat history context")
         
         # --- SESSION PERSISTENCE LOGIC ---
         current_patient_seq = metadata_filter.get('patient_seq') if metadata_filter else None
@@ -162,7 +166,7 @@ class RAGService:
             return {
                 'response': "Conversation history cleared successfully.",
                 'sources': [],
-                'metadata': {'num_sources': 0, 'session_id': session_id, 'reset': True}
+                'metadata': {'num_sources': 0, 'session_id': session_id, 'reset': True, 'context_preserved': False, 'message_count': 0}
             }
         
         # Step 1: Generate embedding for the new user message
@@ -180,16 +184,22 @@ class RAGService:
         context = self._build_context(similar_docs)
         
         # Step 4: Inject into LLM Chat Session
+        context_preserved = False
+        message_count = 1
         try:
-            answer = await self.llm_service.generate_chat_answer(
+            chat_result = await self.llm_service.generate_chat_answer(
                 session_id=session_id,
                 prompt=prompt,
                 context=context,
                 system_instruction=system_instruction,
                 reset=reset,
-                patient_seq=current_patient_seq
+                patient_seq=current_patient_seq,
+                chat_history=chat_history,
             )
-            logger.info(f"Chat answer generated successfully for session {session_id}")
+            answer = chat_result['text']
+            context_preserved = chat_result.get('context_preserved', False)
+            message_count = chat_result.get('message_count', 1)
+            logger.info(f"Chat answer generated successfully for session {session_id} (context_preserved={context_preserved}, msg#{message_count})")
         except Exception as llm_error:
             logger.warning(f"LLM chat generation failed: {llm_error}")
             answer = (
@@ -215,7 +225,10 @@ class RAGService:
                 'num_sources': len(similar_docs),
                 'filters_applied': metadata_filter or {},
                 'session_id': session_id,
-                'reset_applied': reset
+                'reset_applied': reset,
+                'context_preserved': context_preserved,
+                'message_count': message_count,
+                'chat_history_length': len(chat_history) if chat_history else 0
             }
         }
     

@@ -12,6 +12,7 @@ It adds API endpoints and configuration settings for seamless query execution an
     'author': 'Clidram',
     'depends': ['base', 'web', 'mail', 'tus_meta_whatsapp_base', 'pos_prescription_knk','wk_appointment'],
     'data': [
+        'security/ir.model.access.csv',
         'data/rag_bot_data.xml',
         'views/res_config_settings_views.xml',
         'views/res_partner_inherit_views.xml',

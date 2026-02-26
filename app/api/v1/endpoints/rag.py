@@ -111,7 +111,8 @@ async def chat_rag(
             reset=request.reset,
             limit=5,
             metadata_filter=metadata_filter if metadata_filter else None,
-            system_instruction=system_instruction
+            system_instruction=system_instruction,
+            chat_history=request.chat_history,
         )
         
         return RAGQueryResponse(**result)

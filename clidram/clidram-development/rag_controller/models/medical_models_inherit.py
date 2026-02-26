@@ -7,6 +7,9 @@ class WkAppointment(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            if 'is_rag_synced' not in vals:
+                vals['is_rag_synced'] = False
         records = super(WkAppointment, self).create(vals_list)
         return records
 
@@ -24,6 +27,9 @@ class PrescriptionOrderKnk(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            if 'is_rag_synced' not in vals:
+                vals['is_rag_synced'] = False
         records = super(PrescriptionOrderKnk, self).create(vals_list)
         return records
 

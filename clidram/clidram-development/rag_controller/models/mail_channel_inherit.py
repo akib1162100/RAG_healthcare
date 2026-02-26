@@ -117,16 +117,14 @@ class MailChannel(models.Model):
         if not prompt:
             return result
 
-        # 5. Extract patient_seq if explicitly written (e.g. "patient_id:20250600042005" or "patient_id: 20250600042005")
+        # 5. Extract patient_seq if explicitly written (e.g. "@patient: 20250600042005")
         patient_seq = None
-        patient_id_match = re.search(r'patient_id:\s*(\S+)', prompt, re.IGNORECASE)
-        if patient_id_match:
-            patient_seq = patient_id_match.group(1)
-            # Remove the full patient_id:xxx pattern from the prompt
-            prompt = re.sub(r'patient_id:\s*\S+', '', prompt, flags=re.IGNORECASE).strip()
-
-        # 5b. Strip the bot mention text "RAG Medical Assistant" from the prompt
-        prompt = re.sub(r'RAG\s+Medical\s+Assistant', '', prompt, flags=re.IGNORECASE).strip()
+        if "patient_id:" in prompt.lower():
+            try:
+                patient_seq = prompt.lower().split("patient_id:")[1].strip().split()[0]
+                prompt = prompt.replace(f"patient_id: {patient_seq}", "").strip()
+            except Exception:
+                pass
 
         # 6. Spin up a background thread to fetch the LLM response without freezing the Odoo UI
         # We pass self.id to easily reconstruct the channel in the new thread
@@ -141,6 +139,7 @@ class MailChannel(models.Model):
     def _async_call_rag_api(self, prompt, channel_id, patient_seq=None):
         """
         Background thread execution with retry logic for database concurrency.
+        Now includes chat history persistence and configurable context.
         """
         max_retries = 3
         for attempt in range(max_retries):
@@ -150,31 +149,88 @@ class MailChannel(models.Model):
                     env = api.Environment(cr, self.env.uid, self.env.context)
                     rag_client = env['rag.api.client']
                     channel = env['mail.channel'].browse(channel_id)
+                    ChatMessage = env['rag.chat.message']
                     
                     # The session_id maps cleanly to the unique channel ID for context tracking
                     session_id = f"odoo_channel_{channel_id}"
                     
-                    # Proxy the request to the FastAPI application
+                    # --- Read configurable context limit (default 3) ---
+                    context_limit = int(
+                        env['ir.config_parameter'].sudo().get_param(
+                            'rag_controller.context_message_limit', '3'
+                        ) or '3'
+                    )
+                    
+                    # --- Save the user's message ---
+                    ChatMessage.sudo().create({
+                        'channel_id': channel_id,
+                        'session_id': session_id,
+                        'role': 'user',
+                        'content': prompt,
+                        'patient_seq': patient_seq or '',
+                    })
+                    
+                    # --- Build chat_history from last N messages ---
+                    chat_history = []
+                    if context_limit > 0:
+                        # Fetch the last N messages BEFORE the current one
+                        # (the current user message is already saved, so we skip it)
+                        previous_messages = ChatMessage.sudo().search(
+                            [('session_id', '=', session_id)],
+                            order='create_date desc',
+                            limit=context_limit + 1,  # +1 because the current msg is included
+                        )
+                        # Reverse to chronological order, skip the most recent (current user msg)
+                        previous_messages = list(reversed(previous_messages))
+                        # Exclude the last one (the message we just saved above)
+                        if previous_messages and previous_messages[-1].role == 'user' and previous_messages[-1].content == prompt:
+                            previous_messages = previous_messages[:-1]
+                        
+                        # Only keep the last context_limit messages
+                        previous_messages = previous_messages[-context_limit:]
+                        
+                        chat_history = [
+                            {'role': msg.role, 'content': msg.content}
+                            for msg in previous_messages
+                        ]
+                        
+                        if chat_history:
+                            _logger.info(
+                                f"Including {len(chat_history)} previous messages as context "
+                                f"for session {session_id} (limit={context_limit})"
+                            )
+                    
+                    # --- Proxy the request to the FastAPI application ---
                     result = rag_client.chat(
                         prompt=prompt,
                         session_id=session_id,
-                        patient_seq=patient_seq
+                        patient_seq=patient_seq,
+                        chat_history=chat_history if chat_history else None,
                     )
                     
                     # The FastAPI backend directly returns the RAGQueryResponse dictionary
+                    response_text = None
                     if result and 'response' in result:
                         response_text = result.get('response', '')
-                        clean_text = channel._clean_markdown(response_text)
-                        formatted_response = channel._format_llm_text_to_html(clean_text)
-                        channel._post_rag_response(formatted_response)
                     elif result and result.get('status') == 'success':
                         # Fallback for nested payloads if legacy routing was involved
                         response_text = result['data'].get('response', '')
+                    
+                    if response_text:
+                        # --- Save the assistant's response ---
+                        ChatMessage.sudo().create({
+                            'channel_id': channel_id,
+                            'session_id': session_id,
+                            'role': 'assistant',
+                            'content': response_text,
+                            'patient_seq': patient_seq or '',
+                        })
+                        
                         clean_text = channel._clean_markdown(response_text)
                         formatted_response = channel._format_llm_text_to_html(clean_text)
                         channel._post_rag_response(formatted_response)
                     else:
-                        error_msg = result.get('message', 'Unknown error connecting to RAG system.')
+                        error_msg = result.get('message', 'Unknown error connecting to RAG system.') if result else 'No response from RAG system.'
                         channel._post_rag_response(f"API Error: {error_msg}", is_error=True)
                     
                     env.cr.commit()  # Ensure the background thread saves the message_post to the DB!

@@ -43,6 +43,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="rag_context_limit_config">
+                            <div class="o_setting_right_pane">
+                                <label string="Chat History Context Limit" for="context_message_limit"/>
+                                <div class="text-muted">
+                                    Number of previous chat messages to include as context when sending
+                                    a request to the RAG system. Set to 0 for no context. Default is 3.
+                                </div>
+                                <div class="mt8">
+                                    <field name="context_message_limit" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </xpath>

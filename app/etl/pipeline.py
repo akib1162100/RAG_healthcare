@@ -29,8 +29,8 @@ class ETLPipeline:
     def __init__(self):
         # Initialize components
         self.engine = create_async_engine(settings.DATABASE_URL, echo=False)
-        self.odoo_engine = create_async_engine(settings.ODOO_DATABASE_URL, echo=False)
-        self.extractor = OdooDataExtractor(self.odoo_engine, self.engine)
+        
+        self.extractor = OdooDataExtractor(None, self.engine)
         self.transformer = MedicalDataTransformer(
             chunk_size=int(os.getenv('ETL_CHUNK_SIZE', '800')),
             chunk_overlap=int(os.getenv('ETL_CHUNK_OVERLAP', '150'))
@@ -64,30 +64,56 @@ class ETLPipeline:
             logger.info("No appointments to index")
             return {'records_indexed': 0, 'chunks_created': 0, 'data': []}
         
-        # Transform and embed
-        vectors_to_load = []
+        # Transform
+        record_data = []
         for appointment in appointments:
             text, metadata = self.transformer.flatten_appointment(appointment)
+            record_data.append((appointment['id'], text, metadata))
             
-            # Generate embedding
-            embedding = self.embedding_generator.generate_single_embedding(text)
-            
-            # Prepare for loading
+        # Generate embeddings in batches
+        texts = [data[1] for data in record_data]
+        embeddings = self.embedding_generator.generate_embeddings(
+            texts,
+            batch_size=int(os.getenv('ETL_BATCH_SIZE', '32'))
+        )
+        
+        # Prepare for loading
+        vectors_to_load = []
+        for (res_id, text, metadata), embedding in zip(record_data, embeddings):
             vectors_to_load.append((
                 'wk.appointment',
-                appointment['id'],
-                0,  # chunk_index (appointments are single chunk)
+                res_id,
+                0,
                 text,
                 metadata,
                 embedding
             ))
         
-        # Load vectors
-        chunks_created = await self.loader.load_vectors(vectors_to_load)
+        # Load vectors in batches
+        batch_size = 100
+        chunks_created = 0
+        for i in range(0, len(vectors_to_load), batch_size):
+            batch = vectors_to_load[i:i+batch_size]
+            chunks_created += await self.loader.load_vectors(batch)
         
         # Update ETL metadata
         if appointments:
-            last_write_date = max(a['write_date'] for a in appointments)
+            # Parse write_date strings if they aren't already datetime objects
+            processed_dates = []
+            for a in appointments:
+                wd = a.get('write_date')
+                if isinstance(wd, str):
+                    try:
+                        processed_dates.append(datetime.fromisoformat(wd.replace('Z', '+00:00')))
+                    except ValueError:
+                        processed_dates.append(datetime.now())
+                elif isinstance(wd, datetime):
+                    processed_dates.append(wd)
+                else:
+                    processed_dates.append(datetime.now())
+            
+            last_write_date = max(processed_dates) if processed_dates else datetime.now()
+            
             await self.extractor.update_etl_metadata(
                 'wk.appointment',
                 last_write_date,
@@ -104,6 +130,146 @@ class ETLPipeline:
             'records_indexed': len(appointments), 
             'chunks_created': chunks_created,
             'data': appointments
+        }
+
+    async def run_patient_indexing(
+        self,
+        limit: Optional[int] = None,
+        incremental: bool = False
+    ) -> dict:
+        """Index patient data"""
+        logger.info("Starting patient indexing...")
+        
+        patients = await self.extractor.extract_patients(
+            limit=limit,
+            incremental=incremental
+        )
+        
+        if not patients:
+            logger.info("No patients to index")
+            return {'records_indexed': 0, 'chunks_created': 0, 'data': []}
+            
+        # Transform
+        record_data = []
+        for patient in patients:
+            text, metadata = self.transformer.flatten_patient(patient)
+            record_data.append((patient['id'], text, metadata))
+            
+        # Generate embeddings in batches
+        texts = [data[1] for data in record_data]
+        embeddings = self.embedding_generator.generate_embeddings(
+            texts,
+            batch_size=int(os.getenv('ETL_BATCH_SIZE', '32'))
+        )
+        
+        # Prepare for loading
+        vectors_to_load = []
+        for (res_id, text, metadata), embedding in zip(record_data, embeddings):
+            vectors_to_load.append((
+                'res.partner',
+                res_id,
+                0,
+                text,
+                metadata,
+                embedding
+            ))
+            
+        # Load vectors in batches
+        batch_size = 100
+        chunks_created = 0
+        for i in range(0, len(vectors_to_load), batch_size):
+            batch = vectors_to_load[i:i+batch_size]
+            chunks_created += await self.loader.load_vectors(batch)
+        
+        if patients:
+            # Parse write_date strings
+            processed_dates = []
+            for p in patients:
+                wd = p.get('write_date')
+                if isinstance(wd, str):
+                    try:
+                        processed_dates.append(datetime.fromisoformat(wd.replace('Z', '+00:00')))
+                    except ValueError:
+                        processed_dates.append(datetime.now())
+                elif isinstance(wd, datetime):
+                    processed_dates.append(wd)
+                else:
+                    processed_dates.append(datetime.now())
+            
+            last_write_date = max(processed_dates) if processed_dates else datetime.now()
+            
+            await self.extractor.update_etl_metadata(
+                'res.partner',
+                last_write_date,
+                len(patients),
+                chunks_created
+            )
+            
+            record_ids = [p['id'] for p in patients]
+            await self.extractor.mark_records_as_synced('res.partner', record_ids)
+            
+        logger.info(f"Indexed {len(patients)} patients")
+        return {
+            'records_indexed': len(patients),
+            'chunks_created': chunks_created,
+            'data': patients
+        }
+
+    async def run_disease_indexing(
+        self,
+        limit: Optional[int] = None
+    ) -> dict:
+        """Index disease data"""
+        logger.info("Starting disease indexing...")
+        
+        # Diseases are usually full sync
+        diseases = await self.extractor.extract_diseases(limit=limit)
+        
+        if not diseases:
+            logger.info("No diseases to index")
+            return {'records_indexed': 0, 'chunks_created': 0, 'data': []}
+            
+        # Transform
+        record_data = []
+        for disease in diseases:
+            text, metadata = self.transformer.flatten_disease(disease)
+            record_data.append((disease['id'], text, metadata))
+            
+        # Generate embeddings in batches
+        # For very large datasets like diseases, we do this in bigger batches
+        logger.info(f"Generating embeddings for {len(diseases)} diseases...")
+        texts = [data[1] for data in record_data]
+        embeddings = self.embedding_generator.generate_embeddings(
+            texts,
+            batch_size=128 # Higher batch size for simpler texts
+        )
+        
+        # Prepare for loading
+        vectors_to_load = []
+        for (res_id, text, metadata), embedding in zip(record_data, embeddings):
+            vectors_to_load.append((
+                'medical.disease',
+                res_id,
+                0,
+                text,
+                metadata,
+                embedding
+            ))
+            
+        # Load vectors in batches
+        batch_size = 500
+        chunks_created = 0
+        for i in range(0, len(vectors_to_load), batch_size):
+            batch = vectors_to_load[i:i+batch_size]
+            chunks_created += await self.loader.load_vectors(batch)
+            if (i // batch_size) % 10 == 0:
+                logger.info(f"Loaded {i + len(batch)}/{len(vectors_to_load)} diseases...")
+        
+        logger.info(f"Indexed {len(diseases)} diseases")
+        return {
+            'records_indexed': len(diseases),
+            'chunks_created': chunks_created,
+            'data': diseases
         }
     
     async def run_prescription_indexing(
@@ -168,7 +334,22 @@ class ETLPipeline:
         
         # Update ETL metadata
         if prescriptions:
-            last_write_date = max(p['write_date'] for p in prescriptions)
+            # Parse write_date strings
+            processed_dates = []
+            for p in prescriptions:
+                wd = p.get('write_date')
+                if isinstance(wd, str):
+                    try:
+                        processed_dates.append(datetime.fromisoformat(wd.replace('Z', '+00:00')))
+                    except ValueError:
+                        processed_dates.append(datetime.now())
+                elif isinstance(wd, datetime):
+                    processed_dates.append(wd)
+                else:
+                    processed_dates.append(datetime.now())
+            
+            last_write_date = max(processed_dates) if processed_dates else datetime.now()
+
             await self.extractor.update_etl_metadata(
                 'prescription.order.knk',
                 last_write_date,
@@ -204,6 +385,10 @@ class ETLPipeline:
                 results[model] = await self.run_appointment_indexing(limit, incremental)
             elif model == 'prescription.order.knk':
                 results[model] = await self.run_prescription_indexing(limit, incremental)
+            elif model == 'res.partner':
+                results[model] = await self.run_patient_indexing(limit, incremental)
+            elif model == 'medical.disease':
+                results[model] = await self.run_disease_indexing(limit)
             else:
                 logger.warning(f"Unknown model: {model}")
         
@@ -237,7 +422,6 @@ class ETLPipeline:
     async def close(self):
         """Close database connections"""
         await self.engine.dispose()
-        await self.odoo_engine.dispose()
 
 
 async def main():

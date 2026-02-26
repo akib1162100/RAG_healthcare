@@ -95,8 +95,8 @@ class RagApiClient(models.AbstractModel):
         """Get ETL index status"""
         return self._make_request('/api/v1/etl/index-status', method='GET')
     @api.model
-    def chat(self, prompt, session_id, patient_seq=None, reset=False):
-        """Conversational chat endpoint"""
+    def chat(self, prompt, session_id, patient_seq=None, reset=False, chat_history=None):
+        """Conversational chat endpoint with optional chat history context"""
         payload = {
             "prompt": prompt,
             "session_id": session_id,
@@ -104,5 +104,7 @@ class RagApiClient(models.AbstractModel):
         }
         if patient_seq:
             payload["patient_seq"] = patient_seq
+        if chat_history:
+            payload["chat_history"] = chat_history
             
         return self._make_request('/api/v1/rag/chat', payload=payload)

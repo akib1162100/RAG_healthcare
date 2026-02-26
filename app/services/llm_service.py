@@ -21,7 +21,7 @@ class LLMService:
         # Chat session management
         self.chat_sessions: Dict[str, Any] = {}
         # Default TTL of 4 minutes in seconds
-        self.session_ttl_seconds = int(os.getenv('CHAT_SESSION_TTL_MINUTES', 4)) * 60
+        self.session_ttl_seconds = int(os.getenv('CHAT_SESSION_TTL_MINUTES', 5)) * 60
         
     async def initialize(self):
         """Initialize Google Gemma API (tolerates missing key for later configuration)"""
@@ -203,8 +203,9 @@ class LLMService:
         context: Optional[str] = None,
         system_instruction: Optional[str] = None,
         reset: bool = False,
-        patient_seq: Optional[str] = None
-    ) -> str:
+        patient_seq: Optional[str] = None,
+        chat_history: Optional[list] = None
+    ) -> dict:
         """
         Generate an answer using Google Gemma with conversation history tracking
         
@@ -214,9 +215,12 @@ class LLMService:
             context: Retrieved context from vector database
             system_instruction: Optional system instruction for the model
             reset: If True, wipe the conversation history for this session
+            patient_seq: Optional patient sequence for context filtering
+            chat_history: Optional list of previous messages from Odoo DB
+                         [{"role": "user"/"assistant", "content": "..."}]
             
         Returns:
-            Generated answer as string
+            Dict with 'text', 'context_preserved', and 'message_count'
         """
         if not self.model:
             raise RuntimeError("LLM model not initialized. Call initialize() first.")
@@ -224,8 +228,10 @@ class LLMService:
         # Clean up stale sessions occasionally
         self._cleanup_sessions()
         
-        # Build the message content (context + prompt)
-        full_prompt = self._build_prompt(prompt, context, system_instruction)
+        is_existing_session = (not reset) and (session_id in self.chat_sessions)
+        
+        # Determine if we have Odoo-provided chat history
+        has_odoo_history = bool(chat_history and len(chat_history) > 0)
         
         # Reset or initialize session
         if reset or session_id not in self.chat_sessions:
@@ -238,24 +244,90 @@ class LLMService:
             self.chat_sessions[session_id] = {
                 'chat': chat_session,
                 'last_accessed': time.time(),
-                'patient_seq': patient_seq
+                'patient_seq': patient_seq,
+                'message_count': 0
             }
         elif patient_seq:
             # Update patient_seq if newly provided to an existing session
             self.chat_sessions[session_id]['patient_seq'] = patient_seq
+        
+        # Build the message to send
+        if has_odoo_history:
+            # --- Odoo-managed chat history mode ---
+            # Prepend the conversation history from Odoo DB as structured context
+            parts = []
+            
+            # System instruction
+            if system_instruction:
+                parts.append(f"System: {system_instruction}\n")
+            else:
+                parts.append(
+                    "System: You are a medical AI assistant. Answer questions based on the provided "
+                    "medical context. Be precise, professional, and cite relevant information from the context. "
+                    "If the context doesn't contain enough information, acknowledge this limitation.\n"
+                )
+            
+            # Medical document context
+            if context and context != "No relevant context found.":
+                parts.append(f"Medical Context:\n{context}\n")
+            
+            # Previous conversation history
+            parts.append("=== Previous Conversation History ===")
+            for msg in chat_history:
+                role_label = "User" if msg.get('role') == 'user' else "Assistant"
+                parts.append(f"{role_label}: {msg.get('content', '')}")
+            parts.append("=== End of History ===\n")
+            
+            # Current question
+            parts.append(
+                "IMPORTANT: The above shows the previous conversation history. "
+                "Reference this history when answering the following new question. "
+                "The user may be referring to topics discussed in earlier messages."
+            )
+            parts.append(f"\nNew Question: {prompt}\n")
+            parts.append("Answer (referencing conversation history and medical context):")
+            
+            message_to_send = "\n".join(parts)
+            logger.debug(f"Sending message with {len(chat_history)} Odoo history entries for session {session_id}")
+            
+        elif is_existing_session:
+            # For follow-up messages (no Odoo history, but in-memory session exists),
+            # only send new context + question
+            parts = []
+            parts.append(
+                "IMPORTANT: This is a follow-up message in an ongoing conversation. "
+                "Reference our previous conversation above when answering. "
+                "The user may be referring to topics discussed in earlier messages."
+            )
+            if context and context != "No relevant context found.":
+                parts.append(f"\nAdditional Context:\n{context}\n")
+            parts.append(f"Follow-up Question: {prompt}\n")
+            parts.append("Answer (referencing our conversation history):")
+            message_to_send = "\n".join(parts)
+            logger.debug(f"Sending follow-up message to existing session {session_id}")
+        else:
+            # For new/reset sessions, send the full prompt with system instruction
+            message_to_send = self._build_prompt(prompt, context, system_instruction)
+            logger.debug(f"Sending initial message to new session {session_id}")
         
         try:
             # Retrieve active session
             session_data = self.chat_sessions[session_id]
             chat_session = session_data['chat']
             
-            # Update access time
+            # Update access time and message count
             session_data['last_accessed'] = time.time()
+            session_data['message_count'] = session_data.get('message_count', 0) + 1
             
-            # Generate response asynchronously using the chat object
-            # Note: The chat object inherently remembers previous messages
-            response = chat_session.send_message(full_prompt)
-            return response.text
+            # Generate response using the chat object
+            # The chat object inherently remembers previous messages
+            response = chat_session.send_message(message_to_send)
+            
+            return {
+                'text': response.text,
+                'context_preserved': is_existing_session or has_odoo_history,
+                'message_count': session_data['message_count']
+            }
             
         except Exception as e:
             logger.error(f"Error in chat generation for session {session_id}: {str(e)}")
@@ -282,9 +354,13 @@ class LLMService:
                         
                         # Re-run chat with new engine
                         chat_session = self.model.start_chat(history=[])
-                        self.chat_sessions[session_id] = {'chat': chat_session, 'last_accessed': time.time()}
-                        response = chat_session.send_message(full_prompt)
-                        return response.text
+                        self.chat_sessions[session_id] = {'chat': chat_session, 'last_accessed': time.time(), 'message_count': 1}
+                        response = chat_session.send_message(message_to_send)
+                        return {
+                            'text': response.text,
+                            'context_preserved': False,
+                            'message_count': 1
+                        }
                 except Exception as fallback_error:
                     logger.error(f"Fallback generation recursively failed: {fallback_error}")
             
