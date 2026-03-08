@@ -38,3 +38,21 @@ class PrescriptionOrderKnk(models.Model):
         if 'is_rag_synced' not in vals:
             vals['is_rag_synced'] = False
         return super(PrescriptionOrderKnk, self).write(vals)
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    is_rag_synced = fields.Boolean(string="Synced to RAG", default=False, copy=False)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if 'is_rag_synced' not in vals:
+                vals['is_rag_synced'] = False
+        records = super(ResPartner, self).create(vals_list)
+        return records
+
+    def write(self, vals):
+        if 'is_rag_synced' not in vals:
+            vals['is_rag_synced'] = False
+        return super(ResPartner, self).write(vals)

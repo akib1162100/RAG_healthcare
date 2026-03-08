@@ -26,6 +26,12 @@ RUN pip install --no-cache-dir \
     --retries 5 \
     -r requirements.txt
 
+# Pre-download the embedding model and tokenizer
+RUN python -c "from transformers import AutoTokenizer, AutoModel; \
+    model_name = 'emilyalsentzer/Bio_ClinicalBERT'; \
+    AutoTokenizer.from_pretrained(model_name); \
+    AutoModel.from_pretrained(model_name)"
+
 # Copy application code
 COPY ./app ./app
 COPY ./database ./database

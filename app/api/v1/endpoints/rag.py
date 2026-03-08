@@ -185,4 +185,51 @@ async def get_prescription_data(
         logger.error(f"Error fetching prescription data: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/appointments")
+async def get_appointment_data(
+    patient_seq: Optional[str] = None,
+    session: AsyncSession = Depends(get_db)
+):
+    """
+    Retrieve raw indexed appointment records.
+    If patient_seq is provided, returns appointments for that patient.
+    """
+    try:
+        from app.repositories.vector_repository import VectorRepository
+        repo = VectorRepository(session)
+        records = await repo.get_appointment_records(patient_seq)
+        message = "No appointment records found." if not records else f"Successfully retrieved {'all appointments' if not patient_seq else 'patient appointments'}"
+        return {
+            "status": "success",
+            "patient_seq": patient_seq or "ALL",
+            "message": message,
+            "total_records": len(records),
+            "data": records
+        }
+    except Exception as e:
+        logger.error(f"Error fetching appointment data: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/diseases")
+async def get_disease_data(
+    session: AsyncSession = Depends(get_db)
+):
+    """
+    Retrieve raw indexed medical disease reference records.
+    """
+    try:
+        from app.repositories.vector_repository import VectorRepository
+        repo = VectorRepository(session)
+        records = await repo.get_disease_records()
+        message = "No disease records found." if not records else "Successfully retrieved all disease records"
+        return {
+            "status": "success",
+            "message": message,
+            "total_records": len(records),
+            "data": records
+        }
+    except Exception as e:
+        logger.error(f"Error fetching disease data: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 

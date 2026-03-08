@@ -148,3 +148,16 @@ async def index_status(pipeline: ETLPipeline = Depends(get_etl_pipeline)):
     except Exception as e:
         logger.error(f"Status check error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/flush-db")
+async def flush_db(pipeline: ETLPipeline = Depends(get_etl_pipeline)):
+    """Temporary endpoint to completely wipe the RAG database tables."""
+    try:
+        from sqlalchemy import text
+        async with pipeline.engine.begin() as conn:
+            await conn.execute(text("TRUNCATE TABLE medical_rag_index;"))
+            await conn.execute(text("TRUNCATE TABLE etl_metadata;"))
+        return {"status": "success", "message": "Database tables truncated"}
+    except Exception as e:
+        logger.error(f"Flush error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))

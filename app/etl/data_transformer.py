@@ -239,15 +239,16 @@ class MedicalDataTransformer:
         
         # Patient information
         if prescription.get('patient_name'):
-            parts.append(f"\nPatient: {prescription['patient_name']}")
+            patient_info = f"\nPatient: {prescription['patient_name']}"
             current_patient_seq = prescription.get('patient_seq') or prescription.get('patient_id')
             if current_patient_seq:
-                parts.append(f"(ID: {current_patient_seq})")
+                patient_info += f" (ID: {current_patient_seq})"
             if prescription.get('patient_age'):
-                parts.append(f", {prescription['patient_age']} years old")
+                patient_info += f", {prescription['patient_age']} years old"
             gender = prescription.get('patient_sex') or prescription.get('patient_gender')
             if gender:
-                parts.append(f", {str(gender).capitalize()}")
+                patient_info += f", {str(gender).capitalize()}"
+            parts.append(patient_info)
         
         # Physician information
         if prescription.get('physician_name'):

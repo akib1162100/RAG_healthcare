@@ -150,7 +150,8 @@ class VectorRepository:
                 'content': row[1],
                 'metadata': metadata,
                 'source_model': row[3],
-                'source_id': row[4]
+                'source_id': row[4],
+                'patient_seq': metadata.get('patient_seq')
             })
             
         return results
@@ -207,11 +208,69 @@ class VectorRepository:
                 'content': row[1],
                 'metadata': metadata,
                 'source_model': row[3],
-                'source_id': row[4]
+                'source_id': row[4],
+                'patient_seq': metadata.get('patient_seq')
             })
             
         return results
-    
+
+    async def get_appointment_records(self, patient_seq: Optional[str] = None, limit: int = 1000) -> List[Dict[str, Any]]:
+        """
+        Retrieve all raw indexed appointment chunks directly from DB.
+        """
+        where_clause = "WHERE odoo_model = 'wk.appointment'"
+        params = {'limit': limit}
+        if patient_seq:
+            where_clause += " AND metadata->>'patient_seq' = :patient_seq"
+            params['patient_seq'] = patient_seq
+            
+        query = f"""
+        SELECT id, content_text, metadata, odoo_model, odoo_res_id
+        FROM {TABLE_NAME}
+        {where_clause}
+        ORDER BY created_at DESC LIMIT :limit
+        """
+        result = await self.session.execute(text(query), params)
+        rows = result.fetchall()
+        
+        results = []
+        for row in rows:
+            metadata = row[2] if row[2] else {}
+            if isinstance(metadata, str):
+                try: metadata = json.loads(metadata)
+                except: metadata = {}
+            results.append({
+                'id': row[0], 'content': row[1], 'metadata': metadata,
+                'source_model': row[3], 'source_id': row[4],
+                'patient_seq': metadata.get('patient_seq')
+            })
+        return results
+
+    async def get_disease_records(self, limit: int = 1000) -> List[Dict[str, Any]]:
+        """
+        Retrieve all raw indexed disease chunks directly from DB.
+        """
+        query = f"""
+        SELECT id, content_text, metadata, odoo_model, odoo_res_id
+        FROM {TABLE_NAME}
+        WHERE odoo_model = 'medical.disease'
+        ORDER BY created_at DESC LIMIT :limit
+        """
+        result = await self.session.execute(text(query), {'limit': limit})
+        rows = result.fetchall()
+        
+        results = []
+        for row in rows:
+            metadata = row[2] if row[2] else {}
+            if isinstance(metadata, str):
+                try: metadata = json.loads(metadata)
+                except: metadata = {}
+            results.append({
+                'id': row[0], 'content': row[1], 'metadata': metadata,
+                'source_model': row[3], 'source_id': row[4]
+            })
+        return results
+
     async def insert_embedding(
         self,
         content: str,

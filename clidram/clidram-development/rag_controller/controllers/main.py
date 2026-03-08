@@ -226,17 +226,32 @@ class RagIntegrationController(http.Controller):
     def _prepare_prescription_data(self, prescription):
         return {
             'id': prescription.id,
+            'prescription_number': prescription.name,
             'name': prescription.name,
+            # --- Patient identification (CRITICAL for RAG filtering) ---
+            'patient_name': prescription.patient_id.name if prescription.patient_id else '',
             'patient': prescription.patient_id.name if prescription.patient_id else '',
+            'patient_seq': prescription.patient_seq or (prescription.patient_id.seq if prescription.patient_id else ''),
+            'patient_res_id': prescription.patient_id.id if prescription.patient_id else None,
+            'patient_age': prescription.patient_age or '',
+            'patient_gender': prescription.patient_gender or '',
+            # --- Physician ---
+            'physician_name': prescription.physician_id.name if prescription.physician_id else '',
             'physician': prescription.physician_id.name if prescription.physician_id else '',
+            'physician_res_id': prescription.physician_id.id if prescription.physician_id else None,
+            # --- Core fields ---
+            'prescription_date': prescription.date.isoformat() if prescription.date else '',
             'date': prescription.date.isoformat() if prescription.date else '',
             'state': prescription.state,
             'disease': prescription.disease,
             'description': prescription.description,
+            # --- Vitals (structured for transformer) ---
             'vitals': {
                 'weight': prescription.v_weight,
                 'height': prescription.v_height,
                 'bmi': prescription.v_bmi,
+                'bp_systolic': prescription.blood_presure,
+                'bp_diastolic': prescription.blood_presure_2,
                 'blood_pressure': f"{prescription.blood_presure}/{prescription.blood_presure_2}" if prescription.blood_presure else "",
                 'pulse': prescription.v_pulse,
                 'respiratory_rate': prescription.v_respiratory_rate,
@@ -262,21 +277,27 @@ class RagIntegrationController(http.Controller):
                 'side_effects': prescription.side_effects,
             },
             'medications': [
-                {'name': m.product_id.name, 'quantity': m.quantity, 'days': m.days, 'instruction': m.short_comment} for
+                {'name': m.product_id.name, 'medication_name': m.product_id.name, 'quantity': m.quantity, 'days': m.days, 'instruction': m.short_comment} for
                 m in prescription.order_line_new_ids],
-            'diagnoses': [{'name': d.disease_id.name if d.disease_id else ''} for d in prescription.diagnosis_ids],
+            'diagnoses': [{'name': d.disease_id.name if d.disease_id else '', 'disease_name': d.disease_id.name if d.disease_id else '', 'disease_code': d.disease_id.code if hasattr(d, 'disease_id') and d.disease_id and hasattr(d.disease_id, 'code') else ''} for d in prescription.diagnosis_ids],
             'complaints': [{'name': c.complaint_list_id.name if c.complaint_list_id else '',
+                            'complaint': c.complaint_list_id.name if c.complaint_list_id else '',
                             'period': c.period.name if c.period else '',
                             'location': c.location_id.name if c.location_id else ''} for c in
                            prescription.complaint_id],
             'signs': [{'name': s.sign_list_id.name if hasattr(s, 'sign_list_id') and s.sign_list_id else s.name,
+                       'sign_name': s.sign_list_id.name if hasattr(s, 'sign_list_id') and s.sign_list_id else s.name,
                        'location': s.location.name if hasattr(s, 'location') and s.location else ''} for s in
                       prescription.sign_ids],
             'investigations': [{'name': i.investigation_list_id.name if hasattr(i,
+                                                                                'investigation_list_id') and i.investigation_list_id else '',
+                                'investigation_name': i.investigation_list_id.name if hasattr(i,
                                                                                 'investigation_list_id') and i.investigation_list_id else ''}
                                for i in prescription.investigation_ids],
             'investigation_result': prescription.investigation_result,
             'procedures': [{'name': p.procedure_config_id.name if hasattr(p,
+                                                                          'procedure_config_id') and p.procedure_config_id else '',
+                            'procedure_name': p.procedure_config_id.name if hasattr(p,
                                                                           'procedure_config_id') and p.procedure_config_id else ''}
                            for p in prescription.procedure_line_ids],
             'procedure_result': prescription.procedure_result,
@@ -292,23 +313,27 @@ class RagIntegrationController(http.Controller):
                             'abdomen': pe.abdomen, 'msk': pe.msk, 'cns': pe.cns} for pe in
                            prescription.physical_examination_ids]
             },
-            'gcs_scores': [{'total': g.total_score, 'motor': g.motor_response_id.name if hasattr(g,
-                                                                                                 'motor_response_id') and g.motor_response_id else '',
-                            'verbal': g.verbal_response_id.name if hasattr(g,
-                                                                           'verbal_response_id') and g.verbal_response_id else '',
-                            'eye': g.eye_response_id.name if hasattr(g,
-                                                                     'eye_response_id') and g.eye_response_id else ''}
+            'gcs_scores': [{'total': g.total_score, 'total_score': g.total_score,
+                            'motor': g.motor_response_id.name if hasattr(g, 'motor_response_id') and g.motor_response_id else '',
+                            'motor_response': g.motor_response_id.name if hasattr(g, 'motor_response_id') and g.motor_response_id else '',
+                            'verbal': g.verbal_response_id.name if hasattr(g, 'verbal_response_id') and g.verbal_response_id else '',
+                            'verbal_response': g.verbal_response_id.name if hasattr(g, 'verbal_response_id') and g.verbal_response_id else '',
+                            'eye': g.eye_response_id.name if hasattr(g, 'eye_response_id') and g.eye_response_id else '',
+                            'eye_response': g.eye_response_id.name if hasattr(g, 'eye_response_id') and g.eye_response_id else ''}
                            for g in prescription.gcs_score_line_ids],
-            'bmi_records': [{'weight': b.v_weight, 'height': b.v_height, 'bmi': b.v_bmi} for b in
+            'bmi_records': [{'weight': b.v_weight, 'height': b.v_height, 'bmi': b.v_bmi, 'bmi_value': b.v_bmi} for b in
                             prescription.bmi_line_ids],
-            'exercises': [{'name': e.name, 'location': e.part_location.name if e.part_location else '', 'move': e.move2,
-                           'reps': e.type_of_test2} for e in prescription.excercise_ids],
-            'ortho_items': [{'name': o.name, 'side': o.side, 'location': o.location.name if o.location else ''} for o in
+            'exercises': [{'name': e.name, 'exercise_name': e.name, 'location': e.part_location.name if e.part_location else '', 'part_location': e.part_location.name if e.part_location else '', 'move': e.move2,
+                           'reps': e.type_of_test2, 'repitition': e.type_of_test2} for e in prescription.excercise_ids],
+            'ortho': [{'name': o.name, 'item_name': o.name, 'side': o.side, 'location': o.location.name if o.location else ''} for o in
                             prescription.ortho_ids],
             'old_history': [{'name': h.history_category_id.name if h.history_category_id else '',
-                             'period': h.history_period.name if h.history_period else '', 'progression': h.progression}
+                             'history_name': h.history_category_id.name if h.history_category_id else '',
+                             'period': h.history_period.name if h.history_period else '',
+                             'period_name': h.history_period.name if h.history_period else '',
+                             'progression': h.progression}
                             for h in prescription.history_id],
-            'medical_history': [{'name': m.name, 'date': str(m.date) if m.date else '', 'medication': m.medication} for
+            'medical_history': [{'name': m.name, 'history_text': m.name, 'date': str(m.date) if m.date else '', 'medication': m.medication} for
                                 m in prescription.medical_history_ids],
             'past_medical_history': [{'symptom': p.symptom_id.name if p.symptom_id else '',
                                       'result': p.result_id.name if p.result_id else ''} for p in
@@ -316,15 +341,20 @@ class RagIntegrationController(http.Controller):
             'medication_history': [{'medicine': m.medicine_id.name if m.medicine_id else ''} for m in
                                    prescription.medication_history_line_ids],
             'family_history': [{'condition': f.family_history_config_id.name if f.family_history_config_id else '',
-                                'result': f.family_history_result_id.name if f.family_history_result_id else ''} for f
+                                'condition_name': f.family_history_config_id.name if f.family_history_config_id else '',
+                                'result': f.family_history_result_id.name if f.family_history_result_id else '',
+                                'result_name': f.family_history_result_id.name if f.family_history_result_id else ''} for f
                                in prescription.family_history_line_ids],
             'social_history': [{'habit': s.social_history_config_id.name if s.social_history_config_id else '',
-                                'result': s.social_history_result_id.name if s.social_history_result_id else ''} for s
+                                'habit_name': s.social_history_config_id.name if s.social_history_config_id else '',
+                                'result': s.social_history_result_id.name if s.social_history_result_id else '',
+                                'result_name': s.social_history_result_id.name if s.social_history_result_id else ''} for s
                                in prescription.social_history_line_ids],
             'patient_history': prescription.patient_history,
             'advice_notes': prescription.notes_line_id.name if prescription.notes_line_id else '',
             'patient_details': prescription.patient_details,
             'followup_notes': prescription.extra_notes,
+            'extra_notes': prescription.extra_notes,
             'additional_comments': prescription.additional_comments,
             'next_visit_days': prescription.next_visit_days,
         }
@@ -367,7 +397,28 @@ class RagIntegrationController(http.Controller):
             'long_name': d.long_name
         }
 
-    @http.route('/api/rag/mark_synced', type='json', auth='public', methods=['POST'])
+    @http.route('/api/rag/flush_sync', type='json', auth='public', methods=['POST'], csrf=False)
+    def api_flush_sync(self, **kwargs):
+        """Temporary endpoint to unmark all RAG records for testing"""
+        self._check_api_key(kwargs)
+        try:
+            apps = request.env['wk.appointment'].sudo().search([('appoint_state', '!=', 'rejected')])
+            apps.write({'is_rag_synced': False})
+            
+            pres = request.env['prescription.order.knk'].sudo().search([('state', '!=', 'cancelled')])
+            pres.write({'is_rag_synced': False})
+            
+            pats = request.env['res.partner'].sudo().search([('partner_type', '=', 'patient')])
+            pats.write({'is_rag_synced': False})
+            
+            dis = request.env['medical.disease'].sudo().search([])
+            # medical.disease has no is_rag_synced, ignoring
+            
+            return {"status": "success", "message": "All Odoo records unmarked"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    @http.route('/api/rag/mark_synced', type='json', auth='public', methods=['POST'], csrf=False)
     def api_mark_synced(self, model, res_ids, **kwargs):
         """Mark records as synced in Odoo"""
         auth_res = self._check_api_key(kwargs)
