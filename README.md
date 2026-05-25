@@ -12,12 +12,12 @@ graph TB
         OdooA[Odoo Instance A <br> Company 1 & 2]
         OdooB[Odoo Instance B <br> Company 1]
         
-        subgraph Odoo Modules
+        subgraph OdooModules [Odoo Modules]
             RAGControl[RAG Controller Module]
             Clidram[Clidram Medical Module]
         end
-        OdooA --- Odoo Modules
-        OdooB --- Odoo Modules
+        OdooA --- RAGControl
+        OdooB --- RAGControl
     end
 
     %% Network Boundary
@@ -136,41 +136,40 @@ These endpoints allow Odoo to directly query the raw embedded chunks stored in t
 
 *(All data retrieval endpoints require the `X-Odoo-Instance-ID` and `X-Odoo-Company-ID` headers to ensure strict multi-tenant data isolation.)*
 
-## ?? Onboarding a New Odoo Instance
+## 🚀 Onboarding a New Odoo Instance
 
 The backend seamlessly supports serving multiple Odoo instances from a single deployment. Follow these steps to configure and synchronize a new instance.
 
 ### 1. Update the Configuration
-The system parses the .env file to know how to connect to various Odoo instances. Open your .env file and define the ODOO_INSTANCES variable as a JSON array of configuration objects. Each object should include an instance_id, url, and an pi_key.
+The system parses the `.env` file to know how to connect to various Odoo instances. Open your `.env` file and define the `ODOO_INSTANCES` variable as a JSON array of configuration objects. Each object should include an `instance_id`, `url`, and an `api_key`.
 
-`env
+```env
 # Example multi-instance configuration in .env
 ODOO_INSTANCES='[{"instance_id": "odoo_alpha", "url": "http://alpha-clinic.local:8069", "api_key": "supersecret1"}, {"instance_id": "odoo_beta", "url": "http://beta-hospital.local:8069", "api_key": "supersecret2"}]'
-`
-*(Restart the FastAPI Docker container after updating the .env file so the new settings take effect).*
+```
+*(Restart the FastAPI Docker container after updating the `.env` file so the new settings take effect).*
 
 ### 2. Configure Odoo
-Inside the new Odoo instance (e.g., odoo_beta), configure the RAG controller settings so that it points to your centralized FastAPI backend URL. Make sure the controller is configured to attach the X-Odoo-Instance-ID: odoo_beta header to all outgoing webhook/API requests.
+Inside the new Odoo instance (e.g., `odoo_beta`), configure the RAG controller settings so that it points to your centralized FastAPI backend URL. Make sure the controller is configured to attach the `X-Odoo-Instance-ID: odoo_beta` header to all outgoing webhook/API requests.
 
 ### 3. Initial Data Sync
 Once configured, you need to pull the historical data from the new Odoo instance into the RAG backend's vector database. You can trigger this directly from the new Odoo instance's UI (if integrated), or manually hit the ETL endpoint:
 
-`ash
+```bash
 curl -X POST "http://localhost:8000/api/v1/etl/index-medical" \
      -H "Content-Type: application/json" \
      -d '{"instance_id": "odoo_beta", "models": ["prescription.order.knk", "wk.appointment", "res.partner", "medical.disease"], "incremental": false}'
-`
-*(This triggers the ETLPipeline to fetch records using the odoo_beta credentials, generate embeddings, and store them securely tagged with the instance and company IDs).*
+```
+*(This triggers the `ETLPipeline` to fetch records using the `odoo_beta` credentials, generate embeddings, and store them securely tagged with the instance and company IDs).*
 
 ### 4. Background Summaries (Optional)
 If your new instance requires pre-computed patient rolling summaries, you can trigger background generation jobs per-patient or globally using the summary regeneration endpoints. Ensure you pass the correct multi-tenant headers:
 
-`ash
+```bash
 curl -X POST "http://localhost:8000/api/v1/rag/summary/regenerate/deep" \
      -H "X-Odoo-Instance-ID: odoo_beta" \
      -H "X-Odoo-Company-ID: 1" \
      -H "Content-Type: application/json" \
      -d '{"patient_seq": "PT001"}'
-`
+```
 This forces the backend LLM (Google Gemini) to process all raw medical chunks for that patient and calculate a structured summary asynchronously in the background.
-
