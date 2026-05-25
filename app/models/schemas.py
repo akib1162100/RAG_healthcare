@@ -22,6 +22,10 @@ class IndexMedicalRequest(BaseModel):
         default=None,
         description="Only index records from last N days"
     )
+    instance_id: Optional[str] = Field(
+        default=None,
+        description="Optional Odoo instance identifier for shared multi-instance deployments"
+    )
 
 class IndexMedicalResponse(BaseModel):
     """Response from medical data indexing"""
@@ -39,6 +43,10 @@ class QueryRequest(BaseModel):
         default=None,
         description="Optional: Patient ID (seq) to filter history"
     )
+    instance_id: Optional[str] = Field(
+        default=None,
+        description="Optional Odoo instance identifier"
+    )
 
 class ChatRequest(BaseModel):
     """Conversational RAG request"""
@@ -55,6 +63,10 @@ class ChatRequest(BaseModel):
     chat_history: Optional[List[dict]] = Field(
         default=None,
         description="Optional: Previous chat messages as context. Each entry has 'role' (user/assistant) and 'content'."
+    )
+    instance_id: Optional[str] = Field(
+        default=None,
+        description="Optional Odoo instance identifier"
     )
 
 class PatientQueryRequest(BaseModel):
@@ -122,3 +134,26 @@ class IndexStatusResponse(BaseModel):
     etl_metadata: dict
     total_indexed_records: int
     total_chunks: int
+
+class SummaryRequest(BaseModel):
+    """Request to generate a structured medical summary for a patient"""
+    patient_seq: str = Field(
+        ...,
+        description="Patient ID (seq) to generate summary for"
+    )
+    partner_id: Optional[int] = Field(
+        default=None,
+        description="Odoo partner ID to push results back to"
+    )
+    instance_id: Optional[str] = Field(
+        default=None,
+        description="Optional Odoo instance identifier"
+    )
+
+class SummaryResponse(BaseModel):
+    """Response from medical summary generation"""
+    summary: str = Field(
+        description="LLM-generated structured JSON summary as a string"
+    )
+    patient_seq: str
+    num_records: int

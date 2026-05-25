@@ -102,3 +102,102 @@ class IndexStatusResponse(BaseModel):
     etl_metadata: dict
     total_indexed_records: int
     total_chunks: int
+
+
+# ========================================== #
+# 10-SECTION LAYOUT SCHEMAS FOR SINGLE PRESCRIPTIONS #
+# ========================================== #
+
+class PatientDemographicsSchema(BaseModel):
+    patient_name: str = Field(default="-")
+    date_of_birth_age: str = Field(default="-")
+    contact: str = Field(default="-")
+    presenting_doctor: str = Field(default="-")
+    past_medical_history: str = Field(default="-")
+    gender: str = Field(default="-")
+    hmo_hospital: str = Field(default="-")
+    reg_no: str = Field(default="-")
+
+class VitalSignSchema(BaseModel):
+    parameter: str = Field(default="-")
+    recorded_value: str = Field(default="-")
+    status: str = Field(default="-")
+    normal_range: str = Field(default="-")
+
+class ChiefComplaintsSchema(BaseModel):
+    primary_complaints: List[str] = Field(default_factory=list)
+    secondary_background_complaints: List[str] = Field(default_factory=list)
+
+class RedFlagIndicatorsSchema(BaseModel):
+    alert_message: Optional[str] = Field(default=None)
+    cardiology_red_flags: List[str] = Field(default_factory=list)
+    routine_red_flags: List[str] = Field(default_factory=list)
+
+class DiagnosisSchema(BaseModel):
+    diagnosis: str = Field(default="-")
+    secondary_complication: str = Field(default="-")
+    icd_10: str = Field(default="-")
+    snomed: str = Field(default="-")
+    type: str = Field(default="-")
+    specialty: str = Field(default="-")
+
+class MedicationSchema(BaseModel):
+    medication_drug_name: str = Field(default="-")
+    dose: str = Field(default="-")
+    freq: str = Field(default="-")
+    route: str = Field(default="-")
+    food: str = Field(default="-")
+    duration: str = Field(default="-")
+    qty: str = Field(default="-")
+    margin: str = Field(default="-")
+
+class MedicationsPrescribedSchema(BaseModel):
+    date: str = Field(default="-")
+    current_medications: List[MedicationSchema] = Field(default_factory=list)
+    other_historical_medications: List[str] = Field(default_factory=list)
+
+class InvestigationOrderedSchema(BaseModel):
+    category: str = Field(default="-")
+    test_panel: str = Field(default="-")
+    clinical_indication: str = Field(default="-")
+
+class ClinicalDecisionSchema(BaseModel):
+    complaint: str = Field(default="-")
+    time_course: str = Field(default="-")
+    pattern: str = Field(default="-")
+    most_likely_dx: str = Field(default="-")
+    next_action: str = Field(default="-")
+
+class AdviseCarePlanSchema(BaseModel):
+    lifestyle_diet: List[str] = Field(default_factory=list)
+    medication_instructions: List[str] = Field(default_factory=list)
+    warning_signs_seek_care: List[str] = Field(default_factory=list)
+
+class FollowUpMonitoringSchema(BaseModel):
+    next_visit: str = Field(default="-")
+    signature_status: str = Field(default="-")
+    investigations: str = Field(default="-")
+    referral: str = Field(default="-")
+
+class PrescriptionDetailsResponse(BaseModel):
+    """
+    Master schema for a single prescription containing the 10 standard layout sections.
+    """
+    allergy_alert: Optional[str] = Field(default=None)
+    patient_demographics: Optional[PatientDemographicsSchema] = Field(default_factory=PatientDemographicsSchema)
+    vitals_at_visit: List[VitalSignSchema] = Field(default_factory=list)
+    chief_complaints: Optional[ChiefComplaintsSchema] = Field(default_factory=ChiefComplaintsSchema)
+    red_flag_indicators: Optional[RedFlagIndicatorsSchema] = Field(default_factory=RedFlagIndicatorsSchema)
+    diagnoses: List[DiagnosisSchema] = Field(default_factory=list)
+    medications_prescribed: Optional[MedicationsPrescribedSchema] = Field(default_factory=MedicationsPrescribedSchema)
+    investigations_ordered: List[InvestigationOrderedSchema] = Field(default_factory=list)
+    clinical_decision_mapping: List[ClinicalDecisionSchema] = Field(default_factory=list)
+    advise_care_plan: Optional[AdviseCarePlanSchema] = Field(default_factory=AdviseCarePlanSchema)
+    follow_up_monitoring_plan: Optional[FollowUpMonitoringSchema] = Field(default_factory=FollowUpMonitoringSchema)
+
+class PatientMedicalSummaryResponse(PrescriptionDetailsResponse):
+    """
+    Master schema for the rolling / total patient medical summary.
+    Inherits identical fields from PrescriptionDetailsResponse to maintain strict UI conformity.
+    """
+    pass

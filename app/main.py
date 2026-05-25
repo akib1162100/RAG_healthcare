@@ -3,8 +3,10 @@ from app.api.v1.api import api_router
 from app.services.embedding_service import EmbeddingService
 from app.services.llm_service import LLMService
 from app.services.rag_service import RAGService
+from app.services.odoo_service import OdooService
 from app.etl.pipeline import ETLPipeline
 from app.core.config import settings
+from app.core.scheduler import start_scheduler, stop_scheduler
 import app.api.v1.endpoints.rag as rag_endpoints
 import app.api.v1.endpoints.etl as etl_endpoints
 import app.api.v1.endpoints.config as config_endpoints
@@ -47,24 +49,35 @@ async def startup_event():
     # Initialize ETL Pipeline
     etl_pipeline = ETLPipeline()
     
+    # Initialize Odoo Service (Callback pusher)
+    odoo_service = OdooService()
+    
     # Set global instances in endpoint modules
     rag_endpoints.embedding_service = embedding_service
     rag_endpoints.llm_service = llm_service
     rag_endpoints.rag_service = rag_service
+    rag_endpoints.odoo_service = odoo_service
     etl_endpoints.etl_pipeline = etl_pipeline
     config_endpoints.llm_service = llm_service
     
     logger.info("RAG Healthcare Service ready")
 
+    # Start nightly stale-summary scheduler
+    start_scheduler()
+    logger.info("Nightly scheduler started")
+
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cleanup on shutdown"""
     logger.info("Shutting down RAG Healthcare Service...")
-    
+
+    # Stop scheduler
+    stop_scheduler()
+
     # Close ETL pipeline if needed
     if etl_endpoints.etl_pipeline:
         await etl_endpoints.etl_pipeline.close()
-    
+
     logger.info("RAG Healthcare Service shutdown complete")
 
 # Include API router

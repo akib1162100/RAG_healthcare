@@ -1,5 +1,5 @@
 """
-Medical Embedding Generator using ClinicalBERT
+Medical Embedding Generator
 Generates embeddings optimized for medical/clinical text
 """
 import os
@@ -12,22 +12,28 @@ logger = logging.getLogger(__name__)
 
 
 class MedicalEmbeddingGenerator:
-    """Generate embeddings using medical-specific models"""
+    """Generate embeddings using configurable models (default: ClinicalBERT)"""
     
     def __init__(self, model_name: str = None):
         """
         Initialize embedding generator
         
         Args:
-            model_name: HuggingFace model name. Defaults to ClinicalBERT
+            model_name: HuggingFace model name. Defaults to settings.EMBEDDING_MODEL_NAME
         """
         if model_name is None:
-            model_name = os.getenv('EMBEDDING_MODEL', 'emilyalsentzer/Bio_ClinicalBERT')
+            from app.core.config import settings
+            model_name = settings.EMBEDDING_MODEL_NAME
         
         logger.info(f"Loading embedding model: {model_name}")
         
-        # Check if GPU is available
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        # Device selection from config
+        from app.core.config import settings
+        device_setting = settings.EMBEDDING_DEVICE
+        if device_setting == 'auto':
+            self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        else:
+            self.device = device_setting
         logger.info(f"Using device: {self.device}")
         
         # Load model
@@ -37,8 +43,8 @@ class MedicalEmbeddingGenerator:
         self.embedding_dim = self.model.get_sentence_embedding_dimension()
         logger.info(f"Embedding dimension: {self.embedding_dim}")
         
-        # Verify dimension matches expected (768 for ClinicalBERT)
-        expected_dim = int(os.getenv('EMBEDDING_DIM', '768'))
+        # Verify dimension matches expected
+        expected_dim = settings.VECTOR_DIMENSION
         if self.embedding_dim != expected_dim:
             logger.warning(
                 f"Embedding dimension mismatch! Model: {self.embedding_dim}, "

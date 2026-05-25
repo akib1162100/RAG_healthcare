@@ -17,18 +17,20 @@ llm_service = None
 
 
 class SetApiKeyRequest(BaseModel):
-    """Request to set the Google API key"""
+    """Request to set the Google Generative Language API key"""
     api_key: str = Field(..., description="Google Generative AI API key", min_length=10)
     model_name: Optional[str] = Field(
         default=None,
-        description="Optional: Google model name (e.g. gemini-1.5-flash, gemini-1.5-pro)"
+        description="Optional: Google model name (e.g. gemini-flash-latest, gemma-4-26b-a4b-it)"
     )
 
 
 class ConfigStatusResponse(BaseModel):
     """Current configuration status"""
+    llm_backend: str
     google_api_key_set: bool
     google_model_name: str
+    ollama_model_name: Optional[str] = None
     llm_status: str
 
 
@@ -36,7 +38,24 @@ class ConfigUpdateResponse(BaseModel):
     """Response after updating configuration"""
     status: str
     message: str
+    backend: Optional[str] = None
     model_name: Optional[str] = None
+
+
+class SetLLMConfigRequest(BaseModel):
+    """Request to update LLM backend/model selection"""
+    backend: Optional[str] = Field(
+        default=None,
+        description="Optional: auto, google, or local"
+    )
+    model_name: Optional[str] = Field(
+        default=None,
+        description="Optional: Google model name"
+    )
+    ollama_model: Optional[str] = Field(
+        default=None,
+        description="Optional: local Ollama model name"
+    )
 
 
 class OdooCredentialsRequest(BaseModel):
@@ -66,11 +85,11 @@ async def set_odoo_credentials(request: OdooCredentialsRequest):
 @router.post("/api-key", response_model=ConfigUpdateResponse)
 async def set_api_key(request: SetApiKeyRequest):
     """
-    Set or update the Google Generative AI API key at runtime.
+    Set or update the Google Generative Language API key at runtime.
     This immediately reconfigures the LLM service without requiring a restart.
     
     - **api_key**: Your Google AI API key (get one at https://aistudio.google.com/apikey)
-    - **model_name**: Optional model override (default: gemini-1.5-flash)
+    - **model_name**: Optional model override (default from GOOGLE_MODEL_NAME)
     """
     if not llm_service:
         raise HTTPException(status_code=503, detail="LLM service not initialized")
@@ -84,11 +103,49 @@ async def set_api_key(request: SetApiKeyRequest):
         return ConfigUpdateResponse(
             status="success",
             message="API key configured and LLM model reloaded successfully",
+            backend=llm_service.backend,
             model_name=model_name
         )
     except Exception as e:
         logger.error(f"Failed to update API key: {e}")
         raise HTTPException(status_code=400, detail=f"Failed to configure API key: {str(e)}")
+
+
+@router.post("/llm", response_model=ConfigUpdateResponse)
+async def set_llm_config(request: SetLLMConfigRequest):
+    """
+    Set runtime LLM configuration.
+
+    Use `.env` for persistent startup config. Use this endpoint for temporary
+    runtime changes without editing code.
+    """
+    if not llm_service:
+        raise HTTPException(status_code=503, detail="LLM service not initialized")
+
+    if request.backend and request.backend.lower() not in {"auto", "google", "gemini", "gemma", "local"}:
+        raise HTTPException(status_code=400, detail="backend must be one of: auto, google, local")
+
+    try:
+        await llm_service.update_config(
+            backend=request.backend,
+            model_name=request.model_name,
+            ollama_model=request.ollama_model,
+        )
+        return ConfigUpdateResponse(
+            status="success",
+            message="LLM configuration updated successfully",
+            backend=llm_service.configured_backend,
+            model_name=llm_service.model_name,
+        )
+    except Exception as e:
+        logger.error(f"Failed to update LLM config: {e}")
+        raise HTTPException(status_code=400, detail=f"Failed to update LLM config: {str(e)}")
+
+
+@router.post("/llm-backend", response_model=ConfigUpdateResponse)
+async def set_llm_backend_alias(request: SetLLMConfigRequest):
+    """Backward-compatible alias used by the Odoo addon settings screen."""
+    return await set_llm_config(request)
 
 
 @router.get("/status", response_model=ConfigStatusResponse)
@@ -104,8 +161,10 @@ async def get_config_status():
     model_ready = llm_service.model is not None
     
     return ConfigStatusResponse(
+        llm_backend=llm_service.configured_backend,
         google_api_key_set=has_key,
         google_model_name=llm_service.model_name,
+        ollama_model_name=llm_service.ollama_model,
         llm_status="ready" if (has_key and model_ready) else "not configured"
     )
 

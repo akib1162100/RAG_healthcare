@@ -1,5 +1,5 @@
 """
-Embedding Service - Handles ClinicalBERT embeddings generation
+Embedding Service - Handles text embeddings generation
 """
 from typing import List
 from transformers import AutoTokenizer, AutoModel
@@ -9,25 +9,42 @@ import logging
 logger = logging.getLogger(__name__)
 
 class EmbeddingService:
-    """Service for generating embeddings using ClinicalBERT (Local CPU)"""
+    """Service for generating embeddings using a configurable model (default: ClinicalBERT)"""
     
-    def __init__(self, model_name: str = "emilyalsentzer/Bio_ClinicalBERT"):
+    def __init__(self, model_name: str = None):
+        from app.core.config import settings
+        if model_name is None:
+            model_name = settings.EMBEDDING_MODEL_NAME
         self.model_name = model_name
         self.tokenizer = None
         self.model = None
-        self.dimension = 768  # ClinicalBERT embedding dimension
+        self.dimension = settings.VECTOR_DIMENSION
         
     async def initialize(self):
-        """Load ClinicalBERT model and tokenizer"""
-        logger.info(f"Loading ClinicalBERT model: {self.model_name}")
+        """Load embedding model and tokenizer"""
+        logger.info(f"Loading embedding model: {self.model_name}")
+        
+        # Device selection from config
+        from app.core.config import settings
+        device_setting = settings.EMBEDDING_DEVICE
+        if device_setting == 'auto':
+            device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        else:
+            device = device_setting
+        logger.info(f"Embedding device: {device}")
         
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.model = AutoModel.from_pretrained(self.model_name)
+        if device == 'cuda' and torch.cuda.is_available():
+            self.model = self.model.to(device)
+        self.device = device
         
         # Set to evaluation mode (no training)
         self.model.eval()
+        if hasattr(self.model, "config") and getattr(self.model.config, "hidden_size", None):
+            self.dimension = int(self.model.config.hidden_size)
         
-        logger.info("ClinicalBERT model loaded successfully")
+        logger.info(f"Embedding model loaded successfully: {self.model_name}")
     
     def _mean_pooling(self, model_output, attention_mask):
         """Mean pooling to get sentence embeddings"""
@@ -56,6 +73,8 @@ class EmbeddingService:
             max_length=512,
             return_tensors='pt'
         )
+        if getattr(self, "device", "cpu") == "cuda" and torch.cuda.is_available():
+            encoded_input = {k: v.to(self.device) for k, v in encoded_input.items()}
         
         # Generate embeddings (no gradient computation needed)
         with torch.no_grad():
@@ -65,7 +84,7 @@ class EmbeddingService:
         sentence_embeddings = self._mean_pooling(model_output, encoded_input['attention_mask'])
         
         # Convert to list
-        embedding = sentence_embeddings[0].tolist()
+        embedding = sentence_embeddings[0].detach().cpu().tolist()
         
         return embedding
     
@@ -90,6 +109,8 @@ class EmbeddingService:
             max_length=512,
             return_tensors='pt'
         )
+        if getattr(self, "device", "cpu") == "cuda" and torch.cuda.is_available():
+            encoded_input = {k: v.to(self.device) for k, v in encoded_input.items()}
         
         # Generate embeddings
         with torch.no_grad():
@@ -99,7 +120,7 @@ class EmbeddingService:
         sentence_embeddings = self._mean_pooling(model_output, encoded_input['attention_mask'])
         
         # Convert to list of lists
-        embeddings = sentence_embeddings.tolist()
+        embeddings = sentence_embeddings.detach().cpu().tolist()
         
         return embeddings
     

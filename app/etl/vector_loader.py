@@ -14,8 +14,9 @@ logger = logging.getLogger(__name__)
 class VectorLoader:
     """Load embeddings into medical_rag_index table"""
     
-    def __init__(self, engine: AsyncEngine):
+    def __init__(self, engine: AsyncEngine, instance_id: str = "default"):
         self.engine = engine
+        self.instance_id = instance_id
     
     async def load_vectors(
         self,
@@ -38,10 +39,10 @@ class VectorLoader:
         # Use upsert to handle duplicates
         query = """
         INSERT INTO medical_rag_index 
-            (odoo_model, odoo_res_id, chunk_index, content_text, metadata, embedding, created_at, updated_at)
+            (odoo_instance_id, odoo_company_id, odoo_model, odoo_res_id, chunk_index, content_text, metadata, embedding, created_at, updated_at)
         VALUES 
-            (:odoo_model, :odoo_res_id, :chunk_index, :content_text, CAST(:metadata AS jsonb), CAST(:embedding AS vector), :created_at, :updated_at)
-        ON CONFLICT (odoo_model, odoo_res_id, chunk_index)
+            (:odoo_instance_id, :odoo_company_id, :odoo_model, :odoo_res_id, :chunk_index, :content_text, CAST(:metadata AS jsonb), CAST(:embedding AS vector), :created_at, :updated_at)
+        ON CONFLICT (odoo_instance_id, odoo_company_id, odoo_model, odoo_res_id, chunk_index)
         DO UPDATE SET
             content_text = EXCLUDED.content_text,
             metadata = EXCLUDED.metadata,
@@ -62,6 +63,8 @@ class VectorLoader:
             metadata_str = json.dumps(metadata, default=str)
             
             batch_data.append({
+                'odoo_instance_id': self.instance_id,
+                'odoo_company_id': metadata.get('company_id', 1),
                 'odoo_model': odoo_model,
                 'odoo_res_id': odoo_res_id,
                 'chunk_index': chunk_index,
@@ -80,28 +83,27 @@ class VectorLoader:
         logger.info(f"Successfully loaded {len(records)} vectors")
         return len(records)
     
-    async def delete_model_vectors(self, odoo_model: str, odoo_res_id: int = None):
+    async def delete_model_vectors(self, odoo_model: str, odoo_res_id: int = None, company_id: int = None):
         """
         Delete vectors for a specific model or record
         
         Args:
             odoo_model: Odoo model name
             odoo_res_id: Optional specific record ID
+            company_id: Optional company ID filter
         """
+        params = {'odoo_instance_id': self.instance_id, 'odoo_model': odoo_model}
+        query = "DELETE FROM medical_rag_index WHERE odoo_instance_id = :odoo_instance_id AND odoo_model = :odoo_model"
+        
         if odoo_res_id:
-            query = """
-            DELETE FROM medical_rag_index 
-            WHERE odoo_model = :odoo_model AND odoo_res_id = :odoo_res_id
-            """
-            params = {'odoo_model': odoo_model, 'odoo_res_id': odoo_res_id}
-            logger.info(f"Deleting vectors for {odoo_model} ID {odoo_res_id}")
-        else:
-            query = """
-            DELETE FROM medical_rag_index 
-            WHERE odoo_model = :odoo_model
-            """
-            params = {'odoo_model': odoo_model}
-            logger.info(f"Deleting all vectors for {odoo_model}")
+            query += " AND odoo_res_id = :odoo_res_id"
+            params['odoo_res_id'] = odoo_res_id
+            
+        if company_id is not None:
+            query += " AND odoo_company_id = :odoo_company_id"
+            params['odoo_company_id'] = company_id
+            
+        logger.info(f"Deleting vectors for {odoo_model} (ID: {odoo_res_id}, Company: {company_id})")
         
         async with self.engine.begin() as conn:
             result = await conn.execute(text(query), params)
@@ -113,22 +115,29 @@ class VectorLoader:
         """Get statistics about the medical_rag_index"""
         query = """
         SELECT 
+            odoo_instance_id,
+            odoo_company_id,
             odoo_model,
             COUNT(*) as total_chunks,
             COUNT(DISTINCT odoo_res_id) as unique_records,
             MIN(created_at) as first_indexed,
             MAX(updated_at) as last_updated
         FROM medical_rag_index
-        GROUP BY odoo_model
+        WHERE odoo_instance_id = :odoo_instance_id
+        GROUP BY odoo_instance_id, odoo_company_id, odoo_model
         """
         
         async with self.engine.connect() as conn:
-            result = await conn.execute(text(query))
+            result = await conn.execute(text(query), {'odoo_instance_id': self.instance_id})
             rows = result.fetchall()
             
             stats = {}
             for row in rows:
-                stats[row.odoo_model] = {
+                key = f"{row.odoo_model}_comp{row.odoo_company_id}"
+                stats[key] = {
+                    'instance_id': row.odoo_instance_id,
+                    'company_id': row.odoo_company_id,
+                    'model': row.odoo_model,
                     'total_chunks': row.total_chunks,
                     'unique_records': row.unique_records,
                     'first_indexed': row.first_indexed.isoformat() if row.first_indexed else None,

@@ -23,20 +23,23 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+
 class ETLPipeline:
     """Main ETL pipeline orchestrator"""
     
-    def __init__(self):
+    def __init__(self, instance_config: Optional[dict] = None):
         # Initialize components
         self.engine = create_async_engine(settings.DATABASE_URL, echo=False)
-        
-        self.extractor = OdooDataExtractor(None, self.engine)
+        self.instance_config = instance_config or settings.get_default_odoo_instance()
+        self.instance_id = self.instance_config["instance_id"]
+
+        self.extractor = OdooDataExtractor(self.engine)
         self.transformer = MedicalDataTransformer(
             chunk_size=int(os.getenv('ETL_CHUNK_SIZE', '800')),
             chunk_overlap=int(os.getenv('ETL_CHUNK_OVERLAP', '150'))
         )
         self.embedding_generator = MedicalEmbeddingGenerator()
-        self.loader = VectorLoader(self.engine)
+        self.loader = VectorLoader(self.engine, instance_id=self.instance_id)
     
     async def run_appointment_indexing(
         self,
@@ -45,11 +48,13 @@ class ETLPipeline:
     ) -> dict:
         """Index appointment data"""
         logger.info("Starting appointment indexing...")
+        if not incremental:
+            await self.loader.delete_model_vectors('wk.appointment')
         
         # Get last indexed date for incremental updates
         since_date = None
         if incremental:
-            since_date = await self.extractor.get_last_indexed_date('wk.appointment')
+            since_date = await self.extractor.get_last_indexed_date('wk.appointment', self.instance_id)
             if since_date:
                 logger.info(f"Incremental update since: {since_date}")
         
@@ -118,7 +123,8 @@ class ETLPipeline:
                 'wk.appointment',
                 last_write_date,
                 len(appointments),
-                chunks_created
+                chunks_created,
+                self.instance_id,
             )
             
             # Mark synced in Odoo
@@ -139,6 +145,8 @@ class ETLPipeline:
     ) -> dict:
         """Index patient data"""
         logger.info("Starting patient indexing...")
+        if not incremental:
+            await self.loader.delete_model_vectors('res.partner')
         
         patients = await self.extractor.extract_patients(
             limit=limit,
@@ -202,7 +210,8 @@ class ETLPipeline:
                 'res.partner',
                 last_write_date,
                 len(patients),
-                chunks_created
+                chunks_created,
+                self.instance_id,
             )
             
             record_ids = [p['id'] for p in patients]
@@ -221,6 +230,7 @@ class ETLPipeline:
     ) -> dict:
         """Index disease data"""
         logger.info("Starting disease indexing...")
+        await self.loader.delete_model_vectors('medical.disease')
         
         # Diseases are usually full sync
         diseases = await self.extractor.extract_diseases(limit=limit)
@@ -279,11 +289,13 @@ class ETLPipeline:
     ) -> dict:
         """Index prescription data"""
         logger.info("Starting prescription indexing...")
+        if not incremental:
+            await self.loader.delete_model_vectors('prescription.order.knk')
         
         # Get last indexed date for incremental updates
         since_date = None
         if incremental:
-            since_date = await self.extractor.get_last_indexed_date('prescription.order.knk')
+            since_date = await self.extractor.get_last_indexed_date('prescription.order.knk', self.instance_id)
             if since_date:
                 logger.info(f"Incremental update since: {since_date}")
         
@@ -354,7 +366,8 @@ class ETLPipeline:
                 'prescription.order.knk',
                 last_write_date,
                 len(prescriptions),
-                chunks_loaded
+                chunks_loaded,
+                self.instance_id,
             )
             
             # Mark synced in Odoo
@@ -399,15 +412,17 @@ class ETLPipeline:
         stats = await self.loader.get_index_stats()
         
         # Get ETL metadata
-        query = "SELECT * FROM etl_metadata"
+        query = "SELECT * FROM etl_metadata WHERE odoo_instance_id = :instance_id"
         async with self.engine.connect() as conn:
             from sqlalchemy import text
-            result = await conn.execute(text(query))
+            result = await conn.execute(text(query), {"instance_id": self.instance_id})
             rows = result.fetchall()
             
             etl_metadata = {}
             for row in rows:
-                etl_metadata[row.odoo_model] = {
+                key = f"{row.odoo_instance_id}:{row.odoo_model}" if hasattr(row, 'odoo_instance_id') else row.odoo_model
+                etl_metadata[key] = {
+                    'instance_id': getattr(row, 'odoo_instance_id', self.instance_id),
                     'last_indexed_at': row.last_indexed_at.isoformat() if row.last_indexed_at else None,
                     'last_write_date': row.last_write_date.isoformat() if row.last_write_date else None,
                     'total_records': row.total_records,

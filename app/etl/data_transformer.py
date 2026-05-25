@@ -145,6 +145,10 @@ class MedicalDataTransformer:
         """
         # Build comprehensive prescription text
         full_text = self._build_prescription_text(prescription)
+        diagnoses = prescription.get('diagnoses', []) or []
+        vitals = prescription.get('vitals', {}) or {}
+        clinical_scores = prescription.get('clinical_scores', {}) or {}
+        status_updates = prescription.get('status_updates', {}) or {}
         
         # Create base metadata
         base_metadata = {
@@ -157,15 +161,15 @@ class MedicalDataTransformer:
             'state': prescription.get('state'),
             'disease': prescription.get('disease'),
             'description': prescription.get('description'),
-            'diagnosis_codes': [d.get('disease_code') for d in prescription.get('diagnoses', []) if d.get('disease_code')] + 
-                               [d.get('secondary_diagnosis_name') for d in prescription.get('diagnoses', []) if d.get('secondary_diagnosis_name')],
+            'diagnosis_codes': [d.get('disease_code') for d in diagnoses if d.get('disease_code')] +
+                               [d.get('secondary_diagnosis_name') for d in diagnoses if d.get('secondary_diagnosis_name')],
             
             # Insert full related data lists directly into Metadata
             'medications': prescription.get('medications', []),
-            'diagnoses': prescription.get('diagnoses', []),
+            'diagnoses': diagnoses,
             'complaints': prescription.get('complaints', []),
             'investigations': prescription.get('investigations', []),
-            'vitals': prescription.get('vitals', []),
+            'vitals': vitals,
             'signs': prescription.get('signs', []),
             'past_medical_history': prescription.get('past_medical_history', []),
             'medication_history': prescription.get('medication_history', []),
@@ -176,39 +180,50 @@ class MedicalDataTransformer:
             'old_history': prescription.get('old_history', []),
             'medical_history': prescription.get('medical_history', []),
             'advice_notes': prescription.get('advice_notes', []),
+            'patient_history': prescription.get('patient_history'),
+            'patient_details': prescription.get('patient_details'),
+            'followup_notes': prescription.get('followup_notes'),
+            'extra_notes': prescription.get('extra_notes'),
+            'additional_comments': prescription.get('additional_comments'),
+            'next_visit_days': prescription.get('next_visit_days'),
+            'date_of_next_visit': prescription.get('date_of_next_visit'),
+            'check_patient': prescription.get('check_patient'),
+            'investigation_result': prescription.get('investigation_result'),
+            'procedure_result': prescription.get('procedure_result'),
             
             # Newly added 
             'physical_examinations': prescription.get('physical_examinations', []),
             'procedures': prescription.get('procedures', []),
             'gcs_scores': prescription.get('gcs_scores', []),
             'bmi_records': prescription.get('bmi_records', []),
+            'clinical_scores': clinical_scores,
             
             # Clinical Scalars
             'clinical_scalars': {
-                'v_weight': prescription.get('v_weight'),
-                'v_height': prescription.get('v_height'),
-                'v_bmi': prescription.get('v_bmi'),
-                'blood_presure': prescription.get('blood_presure'),
-                'blood_presure_2': prescription.get('blood_presure_2'),
-                'pulse': prescription.get('v_pulse'),
-                'respiratory_rate': prescription.get('v_respiratory_rate'),
-                'temperature': prescription.get('temperature'),
-                'spo2': prescription.get('spo2'),
-                'rbs': prescription.get('rbs'),
-                'pain_score': prescription.get('pain_score'),
-                'dyspnea': prescription.get('dyspnea'),
-                'cardiac_rythm': prescription.get('cardiac_rythm'),
-                'nihss': prescription.get('nihss'),
-                'motor_power': prescription.get('motor_power'),
-                'pupil_reaction': prescription.get('pupil_reaction')
+                'v_weight': prescription.get('v_weight') or vitals.get('weight'),
+                'v_height': prescription.get('v_height') or vitals.get('height'),
+                'v_bmi': prescription.get('v_bmi') or vitals.get('bmi'),
+                'blood_presure': prescription.get('blood_presure') or vitals.get('bp_systolic'),
+                'blood_presure_2': prescription.get('blood_presure_2') or vitals.get('bp_diastolic'),
+                'pulse': prescription.get('v_pulse') or vitals.get('pulse'),
+                'respiratory_rate': prescription.get('v_respiratory_rate') or vitals.get('respiratory_rate'),
+                'temperature': prescription.get('temperature') or vitals.get('temperature'),
+                'spo2': prescription.get('spo2') or vitals.get('spo2'),
+                'rbs': prescription.get('rbs') or vitals.get('rbs'),
+                'pain_score': prescription.get('pain_score') or clinical_scores.get('pain_score'),
+                'dyspnea': prescription.get('dyspnea') or clinical_scores.get('dyspnea'),
+                'cardiac_rythm': prescription.get('cardiac_rythm') or clinical_scores.get('cardiac_rythm'),
+                'nihss': prescription.get('nihss') or clinical_scores.get('nihss'),
+                'motor_power': prescription.get('motor_power') or clinical_scores.get('motor_power'),
+                'pupil_reaction': prescription.get('pupil_reaction') or clinical_scores.get('pupil_reaction')
             },
             
             'status_updates': {
-                'symptom_status': prescription.get('symptom_status'),
-                'medication_adherence': prescription.get('medication_adherence'),
-                'performance_status_update': prescription.get('performance_status_update'),
-                'counseling_behavioral_response': prescription.get('counseling_behavioral_response'),
-                'side_effects': prescription.get('side_effects')
+                'symptom_status': prescription.get('symptom_status') or status_updates.get('symptom_status'),
+                'medication_adherence': prescription.get('medication_adherence') or status_updates.get('medication_adherence'),
+                'performance_status_update': prescription.get('performance_status_update') or status_updates.get('performance_status_update'),
+                'counseling_behavioral_response': prescription.get('counseling_behavioral_response') or status_updates.get('counseling_behavioral_response'),
+                'side_effects': prescription.get('side_effects') or status_updates.get('side_effects')
             },
             
             'indexed_at': datetime.now().isoformat()

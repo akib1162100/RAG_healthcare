@@ -27,8 +27,23 @@ class RAGService:
         session: AsyncSession,
         limit: int = 5,
         metadata_filter: Optional[Dict[str, Any]] = None,
-        system_instruction: Optional[str] = None
+        system_instruction: Optional[str] = None,
+        instance_id: str = "default",
+        company_id: int = 1,
     ) -> Dict[str, Any]:
+        """
+        Execute RAG query: embed question, retrieve context, generate answer
+        
+        Args:
+            prompt: User's question
+            session: Database session
+            limit: Number of similar documents to retrieve
+            metadata_filter: Optional filters for retrieval
+            system_instruction: Optional system instruction for LLM
+            
+        Returns:
+            Dict with response, sources, and metadata
+        """
         """
         Execute RAG query: embed question, retrieve context, generate answer
         
@@ -49,7 +64,7 @@ class RAGService:
         logger.debug(f"Generated query embedding (dim={len(query_embedding)})")
         
         # Step 2: Retrieve similar documents from vector DB
-        vector_repo = VectorRepository(session)
+        vector_repo = VectorRepository(session, instance_id=instance_id, company_id=company_id)
         similar_docs = await vector_repo.search_similar(
             query_embedding=query_embedding,
             limit=limit,
@@ -105,7 +120,9 @@ class RAGService:
         limit: int = 5,
         metadata_filter: Optional[Dict[str, Any]] = None,
         system_instruction: Optional[str] = None,
-        chat_history: Optional[List[Dict[str, str]]] = None
+        chat_history: Optional[List[Dict[str, str]]] = None,
+        instance_id: str = "default",
+        company_id: int = 1,
     ) -> Dict[str, Any]:
         """
         Execute Conversational RAG query: embed question, retrieve context, append to session history
@@ -173,7 +190,7 @@ class RAGService:
         query_embedding = await self.embedding_service.generate_embedding(prompt)
         
         # Step 2: Retrieve similar medical documents based on the new message
-        vector_repo = VectorRepository(session)
+        vector_repo = VectorRepository(session, instance_id=instance_id, company_id=company_id)
         similar_docs = await vector_repo.search_similar(
             query_embedding=query_embedding,
             limit=limit,
@@ -265,32 +282,8 @@ class RAGService:
         session: AsyncSession,
         metadata: Optional[Dict[str, Any]] = None,
         source_model: Optional[str] = None,
-        source_id: Optional[int] = None
-    ) -> int:
-        """
-        Index a single document: generate embedding and store in vector DB
-        
-        Args:
-            content: Document text
-            session: Database session
-            metadata: Document metadata
-            source_model: Odoo model name
-            source_id: Odoo record ID
-            
-        Returns:
-            ID of inserted record
-        """
-        # Generate embedding
-        embedding = await self.embedding_service.generate_embedding(content)
-        
-        # Store in vector DB
-        vector_repo = VectorRepository(session)
-        record_id = await vector_repo.insert_embedding(
-            content=content,
-            embedding=embedding,
-            metadata=metadata,
-            source_model=source_model,
-            source_id=source_id
+        source_id: Optional[int] = None,
+        instance_id: str = "default",
         )
         
         return record_id
@@ -298,7 +291,8 @@ class RAGService:
     async def index_documents_batch(
         self,
         documents: List[Dict[str, Any]],
-        session: AsyncSession
+        session: AsyncSession,
+        instance_id: str = "default",
     ) -> int:
         """
         Index multiple documents in batch
@@ -333,9 +327,10 @@ class RAGService:
             })
         
         # Insert into vector DB
-        vector_repo = VectorRepository(session)
+        vector_repo = VectorRepository(session, instance_id=instance_id)
         count = await vector_repo.insert_embeddings_batch(records)
         
         logger.info(f"Indexed {count} documents successfully")
         
         return count
+
