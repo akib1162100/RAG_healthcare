@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/app/scripts/backfill_rolling_summary_from_index.py", line 8, in <module>
+    from app.core.database import AsyncSessionLocal
+ModuleNotFoundError: No module named 'app'

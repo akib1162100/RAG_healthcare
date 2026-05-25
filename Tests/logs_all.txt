@@ -1,0 +1,1106 @@
+﻿rag-service-1  | 
+rag-service-1  | A module that was compiled using NumPy 1.x cannot be run in
+rag-service-1  | NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+rag-service-1  | versions of NumPy, modules must be compiled with NumPy 2.0.
+rag-service-1  | Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+rag-service-1  | 
+rag-service-1  | If you are a user of the module, the easiest solution will be to
+rag-service-1  | downgrade to 'numpy<2' or try to upgrade the affected module.
+rag-service-1  | We expect that some modules will need time to support NumPy 2.
+rag-service-1  | 
+rag-service-1  | Traceback (most recent call last):  File "/usr/local/bin/uvicorn", line 6, in <module>
+rag-service-1  |     sys.exit(main())
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1485, in __call__
+rag-service-1  |     return self.main(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1406, in main
+rag-service-1  |     rv = self.invoke(ctx)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1269, in invoke
+rag-service-1  |     return ctx.invoke(self.callback, **ctx.params)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 824, in invoke
+rag-service-1  |     return callback(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 418, in main
+rag-service-1  |     run(
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 587, in run
+rag-service-1  |     server.run()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+rag-service-1  |     return asyncio.run(self.serve(sockets=sockets))
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+rag-service-1  |     return runner.run(main)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+rag-service-1  |     return self._loop.run_until_complete(task)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+rag-service-1  |     self.run_forever()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+rag-service-1  |     self._run_once()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+rag-service-1  |     handle._run()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+rag-service-1  |     self._context.run(self._callback, *self._args)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+rag-service-1  |     config.load()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 458, in load
+rag-service-1  |     self.loaded_app = import_from_string(self.app)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+rag-service-1  |     module = importlib.import_module(module_str)
+rag-service-1  |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+rag-service-1  |     return _bootstrap._gcd_import(name[level:], package, level)
+rag-service-1  |   File "/app/app/main.py", line 2, in <module>
+rag-service-1  |     from app.api.v1.api import api_router
+rag-service-1  |   File "/app/app/api/v1/api.py", line 5, in <module>
+rag-service-1  |     from app.api.v1.endpoints import health, rag, etl
+rag-service-1  |   File "/app/app/api/v1/endpoints/rag.py", line 8, in <module>
+rag-service-1  |     from app.services.rag_service import RAGService
+rag-service-1  |   File "/app/app/services/rag_service.py", line 6, in <module>
+rag-service-1  |     from app.services.embedding_service import EmbeddingService
+rag-service-1  |   File "/app/app/services/embedding_service.py", line 5, in <module>
+rag-service-1  |     from transformers import AutoTokenizer, AutoModel
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/__init__.py", line 26, in <module>
+rag-service-1  |     from . import dependency_versions_check
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/dependency_versions_check.py", line 16, in <module>
+rag-service-1  |     from .utils.versions import require_version, require_version_core
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/__init__.py", line 32, in <module>
+rag-service-1  |     from .generic import (
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/generic.py", line 432, in <module>
+rag-service-1  |     import torch.utils._pytree as _torch_pytree
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 1471, in <module>
+rag-service-1  |     from .functional import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/functional.py", line 9, in <module>
+rag-service-1  |     import torch.nn.functional as F
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/__init__.py", line 1, in <module>
+rag-service-1  |     from .modules import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+rag-service-1  |     from .transformer import TransformerEncoder, TransformerDecoder, \
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+rag-service-1  |     device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | /usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+rag-service-1  |   device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | INFO:     Started server process [1]
+rag-service-1  | INFO:     Waiting for application startup.
+rag-service-1  | 2026-02-22 08:04:27,759 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:04:27,759 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:05:14,931 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:05:14,933 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:05:14,935 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:05:14,943 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:05:14,943 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:05:14,944 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:05:15,225 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:05:17,933 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:05:17,934 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:06:04,626 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk']
+rag-service-1  | 2026-02-22 08:06:04,626 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:06:04,850 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column med.duration does not exist
+rag-service-1  | [SQL: 
+rag-service-1  |         SELECT 
+rag-service-1  |             med.id,
+rag-service-1  |             prod.name AS medication_name,
+rag-service-1  |             med.quantity,
+rag-service-1  |             med.duration,
+rag-service-1  |             med.dose,
+rag-service-1  |             med.frequency,
+rag-service-1  |             med.route,
+rag-service-1  |             med.when_to_take,
+rag-service-1  |             med.special_instruction
+rag-service-1  |         FROM prescription_order_line_knk_new med
+rag-service-1  |         LEFT JOIN product_product pp ON med.product_id = pp.id
+rag-service-1  |         LEFT JOIN product_template prod ON pp.product_tmpl_id = prod.id
+rag-service-1  |         WHERE med.prescription_id = $1
+rag-service-1  |         ]
+rag-service-1  | [parameters: (24,)]
+rag-service-1  | (Background on this error at: https://sqlalche.me/e/20/f405)
+rag-service-1  | INFO:     172.21.0.1:47136 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | INFO:     Shutting down
+rag-service-1  | INFO:     Waiting for application shutdown.
+rag-service-1  | 2026-02-22 08:09:08,181 - app.main - INFO - Shutting down RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:09:08,194 - app.main - INFO - RAG Healthcare Service shutdown complete
+rag-service-1  | INFO:     Application shutdown complete.
+rag-service-1  | INFO:     Finished server process [1]
+rag-service-1  | 
+rag-service-1  | A module that was compiled using NumPy 1.x cannot be run in
+rag-service-1  | NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+rag-service-1  | versions of NumPy, modules must be compiled with NumPy 2.0.
+rag-service-1  | Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+rag-service-1  | 
+rag-service-1  | If you are a user of the module, the easiest solution will be to
+rag-service-1  | downgrade to 'numpy<2' or try to upgrade the affected module.
+rag-service-1  | We expect that some modules will need time to support NumPy 2.
+rag-service-1  | 
+rag-service-1  | Traceback (most recent call last):  File "/usr/local/bin/uvicorn", line 6, in <module>
+rag-service-1  |     sys.exit(main())
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1485, in __call__
+rag-service-1  |     return self.main(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1406, in main
+rag-service-1  |     rv = self.invoke(ctx)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1269, in invoke
+rag-service-1  |     return ctx.invoke(self.callback, **ctx.params)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 824, in invoke
+rag-service-1  |     return callback(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 418, in main
+rag-service-1  |     run(
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 587, in run
+rag-service-1  |     server.run()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+rag-service-1  |     return asyncio.run(self.serve(sockets=sockets))
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+rag-service-1  |     return runner.run(main)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+rag-service-1  |     return self._loop.run_until_complete(task)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+rag-service-1  |     self.run_forever()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+rag-service-1  |     self._run_once()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+rag-service-1  |     handle._run()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+rag-service-1  |     self._context.run(self._callback, *self._args)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+rag-service-1  |     config.load()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 458, in load
+rag-service-1  |     self.loaded_app = import_from_string(self.app)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+rag-service-1  |     module = importlib.import_module(module_str)
+rag-service-1  |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+rag-service-1  |     return _bootstrap._gcd_import(name[level:], package, level)
+rag-service-1  |   File "/app/app/main.py", line 2, in <module>
+rag-service-1  |     from app.api.v1.api import api_router
+rag-service-1  |   File "/app/app/api/v1/api.py", line 5, in <module>
+rag-service-1  |     from app.api.v1.endpoints import health, rag, etl
+rag-service-1  |   File "/app/app/api/v1/endpoints/rag.py", line 8, in <module>
+rag-service-1  |     from app.services.rag_service import RAGService
+rag-service-1  |   File "/app/app/services/rag_service.py", line 6, in <module>
+rag-service-1  |     from app.services.embedding_service import EmbeddingService
+rag-service-1  |   File "/app/app/services/embedding_service.py", line 5, in <module>
+rag-service-1  |     from transformers import AutoTokenizer, AutoModel
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/__init__.py", line 26, in <module>
+rag-service-1  |     from . import dependency_versions_check
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/dependency_versions_check.py", line 16, in <module>
+rag-service-1  |     from .utils.versions import require_version, require_version_core
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/__init__.py", line 32, in <module>
+rag-service-1  |     from .generic import (
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/generic.py", line 432, in <module>
+rag-service-1  |     import torch.utils._pytree as _torch_pytree
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 1471, in <module>
+rag-service-1  |     from .functional import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/functional.py", line 9, in <module>
+rag-service-1  |     import torch.nn.functional as F
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/__init__.py", line 1, in <module>
+rag-service-1  |     from .modules import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+rag-service-1  |     from .transformer import TransformerEncoder, TransformerDecoder, \
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+rag-service-1  |     device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | /usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+rag-service-1  |   device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | INFO:     Started server process [1]
+rag-service-1  | INFO:     Waiting for application startup.
+rag-service-1  | 2026-02-22 08:09:17,088 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:09:17,088 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:09:19,965 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:09:19,966 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:09:19,966 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:09:19,967 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:09:19,967 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:09:19,967 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:09:20,252 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:09:22,652 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:09:22,652 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:11:17,698 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk']
+rag-service-1  | 2026-02-22 08:11:17,698 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:11:18,136 - app.etl.data_extractor - INFO - Extracted 3 prescriptions
+rag-service-1  | 2026-02-22 08:11:18,137 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: unsupported operand type(s) for +=: 'NoneType' and 'str'
+rag-service-1  | INFO:     172.21.0.1:60500 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | INFO:     Shutting down
+rag-service-1  | INFO:     Waiting for application shutdown.
+rag-service-1  | 2026-02-22 08:12:40,520 - app.main - INFO - Shutting down RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:12:40,535 - app.main - INFO - RAG Healthcare Service shutdown complete
+rag-service-1  | INFO:     Application shutdown complete.
+rag-service-1  | INFO:     Finished server process [1]
+rag-service-1  | 
+rag-service-1  | A module that was compiled using NumPy 1.x cannot be run in
+rag-service-1  | NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+rag-service-1  | versions of NumPy, modules must be compiled with NumPy 2.0.
+rag-service-1  | Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+rag-service-1  | 
+rag-service-1  | If you are a user of the module, the easiest solution will be to
+rag-service-1  | downgrade to 'numpy<2' or try to upgrade the affected module.
+rag-service-1  | We expect that some modules will need time to support NumPy 2.
+rag-service-1  | 
+rag-service-1  | Traceback (most recent call last):  File "/usr/local/bin/uvicorn", line 6, in <module>
+rag-service-1  |     sys.exit(main())
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1485, in __call__
+rag-service-1  |     return self.main(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1406, in main
+rag-service-1  |     rv = self.invoke(ctx)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1269, in invoke
+rag-service-1  |     return ctx.invoke(self.callback, **ctx.params)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 824, in invoke
+rag-service-1  |     return callback(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 418, in main
+rag-service-1  |     run(
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 587, in run
+rag-service-1  |     server.run()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+rag-service-1  |     return asyncio.run(self.serve(sockets=sockets))
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+rag-service-1  |     return runner.run(main)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+rag-service-1  |     return self._loop.run_until_complete(task)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+rag-service-1  |     self.run_forever()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+rag-service-1  |     self._run_once()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+rag-service-1  |     handle._run()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+rag-service-1  |     self._context.run(self._callback, *self._args)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+rag-service-1  |     config.load()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 458, in load
+rag-service-1  |     self.loaded_app = import_from_string(self.app)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+rag-service-1  |     module = importlib.import_module(module_str)
+rag-service-1  |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+rag-service-1  |     return _bootstrap._gcd_import(name[level:], package, level)
+rag-service-1  |   File "/app/app/main.py", line 2, in <module>
+rag-service-1  |     from app.api.v1.api import api_router
+rag-service-1  |   File "/app/app/api/v1/api.py", line 5, in <module>
+rag-service-1  |     from app.api.v1.endpoints import health, rag, etl
+rag-service-1  |   File "/app/app/api/v1/endpoints/rag.py", line 8, in <module>
+rag-service-1  |     from app.services.rag_service import RAGService
+rag-service-1  |   File "/app/app/services/rag_service.py", line 6, in <module>
+rag-service-1  |     from app.services.embedding_service import EmbeddingService
+rag-service-1  |   File "/app/app/services/embedding_service.py", line 5, in <module>
+rag-service-1  |     from transformers import AutoTokenizer, AutoModel
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/__init__.py", line 26, in <module>
+rag-service-1  |     from . import dependency_versions_check
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/dependency_versions_check.py", line 16, in <module>
+rag-service-1  |     from .utils.versions import require_version, require_version_core
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/__init__.py", line 32, in <module>
+rag-service-1  |     from .generic import (
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/generic.py", line 432, in <module>
+rag-service-1  |     import torch.utils._pytree as _torch_pytree
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 1471, in <module>
+rag-service-1  |     from .functional import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/functional.py", line 9, in <module>
+rag-service-1  |     import torch.nn.functional as F
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/__init__.py", line 1, in <module>
+rag-service-1  |     from .modules import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+rag-service-1  |     from .transformer import TransformerEncoder, TransformerDecoder, \
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+rag-service-1  |     device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | /usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+rag-service-1  |   device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | INFO:     Started server process [1]
+rag-service-1  | INFO:     Waiting for application startup.
+rag-service-1  | 2026-02-22 08:12:47,019 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:12:47,019 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:12:49,750 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:12:49,750 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:12:49,750 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:12:49,751 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:12:49,752 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:12:49,752 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:12:50,042 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:12:52,335 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:12:52,335 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:16:00,035 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk', 'wk.appointment']
+rag-service-1  | 2026-02-22 08:16:00,035 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:16:00,474 - app.etl.data_extractor - INFO - Extracted 5 prescriptions
+rag-service-1  | 2026-02-22 08:16:00,475 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.06s/it]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.06s/it]
+rag-service-1  | 2026-02-22 08:16:01,552 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: Numpy is not available
+rag-service-1  | INFO:     172.21.0.1:53168 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | INFO:     Shutting down
+rag-service-1  | INFO:     Waiting for application shutdown.
+rag-service-1  | 2026-02-22 08:20:16,919 - app.main - INFO - Shutting down RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:20:16,934 - app.main - INFO - RAG Healthcare Service shutdown complete
+rag-service-1  | INFO:     Application shutdown complete.
+rag-service-1  | INFO:     Finished server process [1]
+rag-service-1  | 
+rag-service-1  | A module that was compiled using NumPy 1.x cannot be run in
+rag-service-1  | NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+rag-service-1  | versions of NumPy, modules must be compiled with NumPy 2.0.
+rag-service-1  | Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+rag-service-1  | 
+rag-service-1  | If you are a user of the module, the easiest solution will be to
+rag-service-1  | downgrade to 'numpy<2' or try to upgrade the affected module.
+rag-service-1  | We expect that some modules will need time to support NumPy 2.
+rag-service-1  | 
+rag-service-1  | Traceback (most recent call last):  File "/usr/local/bin/uvicorn", line 6, in <module>
+rag-service-1  |     sys.exit(main())
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1485, in __call__
+rag-service-1  |     return self.main(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1406, in main
+rag-service-1  |     rv = self.invoke(ctx)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1269, in invoke
+rag-service-1  |     return ctx.invoke(self.callback, **ctx.params)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 824, in invoke
+rag-service-1  |     return callback(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 418, in main
+rag-service-1  |     run(
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 587, in run
+rag-service-1  |     server.run()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+rag-service-1  |     return asyncio.run(self.serve(sockets=sockets))
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+rag-service-1  |     return runner.run(main)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+rag-service-1  |     return self._loop.run_until_complete(task)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+rag-service-1  |     self.run_forever()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+rag-service-1  |     self._run_once()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+rag-service-1  |     handle._run()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+rag-service-1  |     self._context.run(self._callback, *self._args)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+rag-service-1  |     config.load()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 458, in load
+rag-service-1  |     self.loaded_app = import_from_string(self.app)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+rag-service-1  |     module = importlib.import_module(module_str)
+rag-service-1  |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+rag-service-1  |     return _bootstrap._gcd_import(name[level:], package, level)
+rag-service-1  |   File "/app/app/main.py", line 2, in <module>
+rag-service-1  |     from app.api.v1.api import api_router
+rag-service-1  |   File "/app/app/api/v1/api.py", line 5, in <module>
+rag-service-1  |     from app.api.v1.endpoints import health, rag, etl
+rag-service-1  |   File "/app/app/api/v1/endpoints/rag.py", line 8, in <module>
+rag-service-1  |     from app.services.rag_service import RAGService
+rag-service-1  |   File "/app/app/services/rag_service.py", line 6, in <module>
+rag-service-1  |     from app.services.embedding_service import EmbeddingService
+rag-service-1  |   File "/app/app/services/embedding_service.py", line 5, in <module>
+rag-service-1  |     from transformers import AutoTokenizer, AutoModel
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/__init__.py", line 26, in <module>
+rag-service-1  |     from . import dependency_versions_check
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/dependency_versions_check.py", line 16, in <module>
+rag-service-1  |     from .utils.versions import require_version, require_version_core
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/__init__.py", line 32, in <module>
+rag-service-1  |     from .generic import (
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/generic.py", line 432, in <module>
+rag-service-1  |     import torch.utils._pytree as _torch_pytree
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 1471, in <module>
+rag-service-1  |     from .functional import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/functional.py", line 9, in <module>
+rag-service-1  |     import torch.nn.functional as F
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/__init__.py", line 1, in <module>
+rag-service-1  |     from .modules import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+rag-service-1  |     from .transformer import TransformerEncoder, TransformerDecoder, \
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+rag-service-1  |     device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | /usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+rag-service-1  |   device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | INFO:     Started server process [1]
+rag-service-1  | INFO:     Waiting for application startup.
+rag-service-1  | 2026-02-22 08:20:26,636 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:20:26,636 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:20:30,181 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:20:30,182 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:20:30,182 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:20:30,184 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:20:30,184 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:20:30,184 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:20:30,443 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:20:32,512 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:20:32,512 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:22:03,420 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk', 'wk.appointment']
+rag-service-1  | 2026-02-22 08:22:03,421 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:22:03,713 - app.etl.data_extractor - INFO - Extracted 5 prescriptions
+rag-service-1  | 2026-02-22 08:22:03,714 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.10s/it]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.10s/it]
+rag-service-1  | 2026-02-22 08:22:04,823 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:22:04,823 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 11.31it/s]
+rag-service-1  | 2026-02-22 08:22:04,914 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:22:04,914 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: unsupported operand type(s) for +=: 'NoneType' and 'str'
+rag-service-1  | INFO:     172.21.0.1:47248 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | INFO:     Shutting down
+rag-service-1  | INFO:     Waiting for application shutdown.
+rag-service-1  | 2026-02-22 08:23:22,278 - app.main - INFO - Shutting down RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:23:22,328 - app.main - INFO - RAG Healthcare Service shutdown complete
+rag-service-1  | INFO:     Application shutdown complete.
+rag-service-1  | INFO:     Finished server process [1]
+rag-service-1  | 
+rag-service-1  | A module that was compiled using NumPy 1.x cannot be run in
+rag-service-1  | NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+rag-service-1  | versions of NumPy, modules must be compiled with NumPy 2.0.
+rag-service-1  | Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+rag-service-1  | 
+rag-service-1  | If you are a user of the module, the easiest solution will be to
+rag-service-1  | downgrade to 'numpy<2' or try to upgrade the affected module.
+rag-service-1  | We expect that some modules will need time to support NumPy 2.
+rag-service-1  | 
+rag-service-1  | Traceback (most recent call last):  File "/usr/local/bin/uvicorn", line 6, in <module>
+rag-service-1  |     sys.exit(main())
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1485, in __call__
+rag-service-1  |     return self.main(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1406, in main
+rag-service-1  |     rv = self.invoke(ctx)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1269, in invoke
+rag-service-1  |     return ctx.invoke(self.callback, **ctx.params)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 824, in invoke
+rag-service-1  |     return callback(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 418, in main
+rag-service-1  |     run(
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 587, in run
+rag-service-1  |     server.run()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+rag-service-1  |     return asyncio.run(self.serve(sockets=sockets))
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+rag-service-1  |     return runner.run(main)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+rag-service-1  |     return self._loop.run_until_complete(task)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+rag-service-1  |     self.run_forever()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+rag-service-1  |     self._run_once()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+rag-service-1  |     handle._run()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+rag-service-1  |     self._context.run(self._callback, *self._args)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+rag-service-1  |     config.load()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 458, in load
+rag-service-1  |     self.loaded_app = import_from_string(self.app)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+rag-service-1  |     module = importlib.import_module(module_str)
+rag-service-1  |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+rag-service-1  |     return _bootstrap._gcd_import(name[level:], package, level)
+rag-service-1  |   File "/app/app/main.py", line 2, in <module>
+rag-service-1  |     from app.api.v1.api import api_router
+rag-service-1  |   File "/app/app/api/v1/api.py", line 5, in <module>
+rag-service-1  |     from app.api.v1.endpoints import health, rag, etl
+rag-service-1  |   File "/app/app/api/v1/endpoints/rag.py", line 8, in <module>
+rag-service-1  |     from app.services.rag_service import RAGService
+rag-service-1  |   File "/app/app/services/rag_service.py", line 6, in <module>
+rag-service-1  |     from app.services.embedding_service import EmbeddingService
+rag-service-1  |   File "/app/app/services/embedding_service.py", line 5, in <module>
+rag-service-1  |     from transformers import AutoTokenizer, AutoModel
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/__init__.py", line 26, in <module>
+rag-service-1  |     from . import dependency_versions_check
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/dependency_versions_check.py", line 16, in <module>
+rag-service-1  |     from .utils.versions import require_version, require_version_core
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/__init__.py", line 32, in <module>
+rag-service-1  |     from .generic import (
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/generic.py", line 432, in <module>
+rag-service-1  |     import torch.utils._pytree as _torch_pytree
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 1471, in <module>
+rag-service-1  |     from .functional import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/functional.py", line 9, in <module>
+rag-service-1  |     import torch.nn.functional as F
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/__init__.py", line 1, in <module>
+rag-service-1  |     from .modules import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+rag-service-1  |     from .transformer import TransformerEncoder, TransformerDecoder, \
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+rag-service-1  |     device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | /usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+rag-service-1  |   device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | INFO:     Started server process [1]
+rag-service-1  | INFO:     Waiting for application startup.
+rag-service-1  | 2026-02-22 08:23:29,186 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:23:29,186 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:23:32,144 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:23:32,144 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:23:32,144 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:23:32,145 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:23:32,145 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:23:32,145 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:23:32,402 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:23:34,733 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:23:34,733 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:25:22,622 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['wk.appointment', 'prescription.order.knk']
+rag-service-1  | 2026-02-22 08:25:22,622 - app.etl.pipeline - INFO - Starting appointment indexing...
+rag-service-1  | 2026-02-22 08:25:22,845 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column a.time_from does not exist
+rag-service-1  | HINT:  Perhaps you meant to reference the column "a.time_slot".
+rag-service-1  | [SQL: 
+rag-service-1  |         SELECT 
+rag-service-1  |             a.id,
+rag-service-1  |             a.name AS appointment_number,
+rag-service-1  |             a.appoint_date,
+rag-service-1  |             a.appoint_state,
+rag-service-1  |             a.description,
+rag-service-1  |             a.time_from,
+rag-service-1  |             a.time_to,
+rag-service-1  |             a.amount_total,
+rag-service-1  |             a.write_date,
+rag-service-1  |             -- Patient information
+rag-service-1  |             p_patient.name AS patient_name,
+rag-service-1  |             p_patient.seq AS patient_id,
+rag-service-1  |             p_patient.age AS patient_age,
+rag-service-1  |             p_patient.gender AS patient_gender,
+rag-service-1  |             p_patient.phone AS patient_phone,
+rag-service-1  |             p_patient.email AS patient_email,
+rag-service-1  |             p_patient.id AS patient_res_id,
+rag-service-1  |             -- Doctor information
+rag-service-1  |             p_doctor.name AS doctor_name,
+rag-service-1  |             p_doctor.designation AS doctor_designation,
+rag-service-1  |             p_doctor.id AS doctor_res_id
+rag-service-1  |         FROM wk_appointment a
+rag-service-1  |         LEFT JOIN res_partner p_patient ON a.customer = p_patient.id
+rag-service-1  |         LEFT JOIN res_partner p_doctor ON a.appoint_person_id = p_doctor.id
+rag-service-1  |         WHERE a.appoint_state != 'rejected'
+rag-service-1  |          ORDER BY a.write_date DESC]
+rag-service-1  | (Background on this error at: https://sqlalche.me/e/20/f405)
+rag-service-1  | INFO:     172.21.0.1:42654 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | 2026-02-22 08:25:52,952 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk', 'wk.appointment']
+rag-service-1  | 2026-02-22 08:25:52,952 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:25:53,490 - app.etl.data_extractor - INFO - Extracted 5 prescriptions
+rag-service-1  | 2026-02-22 08:25:53,501 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.24s/it]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.24s/it]
+rag-service-1  | 2026-02-22 08:25:54,755 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:54,756 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 10.92it/s]
+rag-service-1  | 2026-02-22 08:25:54,850 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:54,850 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  7.93it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  7.91it/s]
+rag-service-1  | 2026-02-22 08:25:54,979 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:54,979 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 20.43it/s]
+rag-service-1  | 2026-02-22 08:25:55,032 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:55,032 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.72it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.69it/s]
+rag-service-1  | 2026-02-22 08:25:55,138 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:55,138 - app.etl.vector_loader - INFO - Loading 5 vectors into medical_rag_index
+rag-service-1  | 2026-02-22 08:25:55,148 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.PostgresSyntaxError'>: syntax error at or near ":"
+rag-service-1  | [SQL: 
+rag-service-1  |         INSERT INTO medical_rag_index 
+rag-service-1  |             (odoo_model, odoo_res_id, chunk_index, content_text, metadata, embedding, created_at, updated_at)
+rag-service-1  |         VALUES 
+rag-service-1  |             ($1, $2, $3, $4, :metadata::jsonb, :embedding::vector, $5, $6)
+rag-service-1  |         ON CONFLICT (odoo_model, odoo_res_id, chunk_index)
+rag-service-1  |         DO UPDATE SET
+rag-service-1  |             content_text = EXCLUDED.content_text,
+rag-service-1  |             metadata = EXCLUDED.metadata,
+rag-service-1  |             embedding = EXCLUDED.embedding,
+rag-service-1  |             updated_at = EXCLUDED.updated_at
+rag-service-1  |         ]
+rag-service-1  | [parameters: ('prescription.order.knk', 72, 0, "Prescription PRE0031 Date: 2025-08-24 10:59:51 \nPatient: Ripon Hossain (ID: 20250700224002) , 32 years old , Male \nPhysician: Dr. Indrani Mukharjee ... (554 characters truncated) ... AD / Heart Attack \n- Sudden Cardiac Death \n- Hypertension \n- Diabetes \n\nSocial History: \n- Physical activity \n- Alcohol use \n- Smoking status", datetime.datetime(2026, 2, 22, 8, 25, 55, 138359), datetime.datetime(2026, 2, 22, 8, 25, 55, 138359))]
+rag-service-1  | (Background on this error at: https://sqlalche.me/e/20/f405)
+rag-service-1  | INFO:     172.21.0.1:36760 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | INFO:     Shutting down
+rag-service-1  | INFO:     Waiting for application shutdown.
+rag-service-1  | 2026-02-22 08:50:23,163 - app.main - INFO - Shutting down RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:50:23,292 - app.main - INFO - RAG Healthcare Service shutdown complete
+rag-service-1  | INFO:     Application shutdown complete.
+rag-service-1  | INFO:     Finished server process [1]
+rag-service-1  | 
+rag-service-1  | A module that was compiled using NumPy 1.x cannot be run in
+rag-service-1  | NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+rag-service-1  | versions of NumPy, modules must be compiled with NumPy 2.0.
+rag-service-1  | Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+rag-service-1  | 
+rag-service-1  | If you are a user of the module, the easiest solution will be to
+rag-service-1  | downgrade to 'numpy<2' or try to upgrade the affected module.
+rag-service-1  | We expect that some modules will need time to support NumPy 2.
+rag-service-1  | 
+rag-service-1  | Traceback (most recent call last):  File "/usr/local/bin/uvicorn", line 6, in <module>
+rag-service-1  |     sys.exit(main())
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1485, in __call__
+rag-service-1  |     return self.main(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1406, in main
+rag-service-1  |     rv = self.invoke(ctx)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1269, in invoke
+rag-service-1  |     return ctx.invoke(self.callback, **ctx.params)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 824, in invoke
+rag-service-1  |     return callback(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 418, in main
+rag-service-1  |     run(
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 587, in run
+rag-service-1  |     server.run()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+rag-service-1  |     return asyncio.run(self.serve(sockets=sockets))
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+rag-service-1  |     return runner.run(main)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+rag-service-1  |     return self._loop.run_until_complete(task)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+rag-service-1  |     self.run_forever()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+rag-service-1  |     self._run_once()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+rag-service-1  |     handle._run()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+rag-service-1  |     self._context.run(self._callback, *self._args)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+rag-service-1  |     config.load()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 458, in load
+rag-service-1  |     self.loaded_app = import_from_string(self.app)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+rag-service-1  |     module = importlib.import_module(module_str)
+rag-service-1  |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+rag-service-1  |     return _bootstrap._gcd_import(name[level:], package, level)
+rag-service-1  |   File "/app/app/main.py", line 2, in <module>
+rag-service-1  |     from app.api.v1.api import api_router
+rag-service-1  |   File "/app/app/api/v1/api.py", line 5, in <module>
+rag-service-1  |     from app.api.v1.endpoints import health, rag, etl
+rag-service-1  |   File "/app/app/api/v1/endpoints/rag.py", line 8, in <module>
+rag-service-1  |     from app.services.rag_service import RAGService
+rag-service-1  |   File "/app/app/services/rag_service.py", line 6, in <module>
+rag-service-1  |     from app.services.embedding_service import EmbeddingService
+rag-service-1  |   File "/app/app/services/embedding_service.py", line 5, in <module>
+rag-service-1  |     from transformers import AutoTokenizer, AutoModel
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/__init__.py", line 26, in <module>
+rag-service-1  |     from . import dependency_versions_check
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/dependency_versions_check.py", line 16, in <module>
+rag-service-1  |     from .utils.versions import require_version, require_version_core
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/__init__.py", line 32, in <module>
+rag-service-1  |     from .generic import (
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/generic.py", line 432, in <module>
+rag-service-1  |     import torch.utils._pytree as _torch_pytree
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 1471, in <module>
+rag-service-1  |     from .functional import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/functional.py", line 9, in <module>
+rag-service-1  |     import torch.nn.functional as F
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/__init__.py", line 1, in <module>
+rag-service-1  |     from .modules import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+rag-service-1  |     from .transformer import TransformerEncoder, TransformerDecoder, \
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+rag-service-1  |     device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | /usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+rag-service-1  |   device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | INFO:     Started server process [1]
+rag-service-1  | INFO:     Waiting for application startup.
+rag-service-1  | 2026-02-22 08:50:38,297 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:50:38,298 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:50:42,568 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:50:42,568 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:50:42,568 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:50:42,569 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:50:42,569 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:50:42,569 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:50:42,926 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:50:45,101 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:50:45,101 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:52:27,618 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk', 'wk.appointment']
+rag-service-1  | 2026-02-22 08:52:27,619 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:52:28,020 - app.etl.data_extractor - INFO - Extracted 5 prescriptions
+rag-service-1  | 2026-02-22 08:52:28,024 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:03<00:00,  3.71s/it]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:03<00:00,  3.71s/it]
+rag-service-1  | 2026-02-22 08:52:31,759 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:52:31,759 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.13it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.10it/s]
+rag-service-1  | 2026-02-22 08:52:31,872 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:52:31,872 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  5.91it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  5.90it/s]
+rag-service-1  | 2026-02-22 08:52:32,044 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:52:32,044 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 18.76it/s]
+rag-service-1  | 2026-02-22 08:52:32,100 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:52:32,100 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  8.09it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  8.07it/s]
+rag-service-1  | 2026-02-22 08:52:32,227 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:52:32,227 - app.etl.vector_loader - INFO - Loading 5 vectors into medical_rag_index
+rag-service-1  | 2026-02-22 08:52:32,397 - app.etl.vector_loader - INFO - Successfully loaded 5 vectors
+rag-service-1  | 2026-02-22 08:52:32,400 - app.etl.data_extractor - INFO - Updated ETL metadata for prescription.order.knk
+rag-service-1  | 2026-02-22 08:52:32,401 - app.etl.pipeline - INFO - Indexed 5 prescriptions, created 5 chunks
+rag-service-1  | 2026-02-22 08:52:32,401 - app.etl.pipeline - INFO - Starting appointment indexing...
+rag-service-1  | 2026-02-22 08:52:32,416 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column a.time_from does not exist
+rag-service-1  | HINT:  Perhaps you meant to reference the column "a.time_slot".
+rag-service-1  | [SQL: 
+rag-service-1  |         SELECT 
+rag-service-1  |             a.id,
+rag-service-1  |             a.name AS appointment_number,
+rag-service-1  |             a.appoint_date,
+rag-service-1  |             a.appoint_state,
+rag-service-1  |             a.description,
+rag-service-1  |             a.time_from,
+rag-service-1  |             a.time_to,
+rag-service-1  |             a.amount_total,
+rag-service-1  |             a.write_date,
+rag-service-1  |             -- Patient information
+rag-service-1  |             p_patient.name AS patient_name,
+rag-service-1  |             p_patient.seq AS patient_id,
+rag-service-1  |             p_patient.age AS patient_age,
+rag-service-1  |             p_patient.gender AS patient_gender,
+rag-service-1  |             p_patient.phone AS patient_phone,
+rag-service-1  |             p_patient.email AS patient_email,
+rag-service-1  |             p_patient.id AS patient_res_id,
+rag-service-1  |             -- Doctor information
+rag-service-1  |             p_doctor.name AS doctor_name,
+rag-service-1  |             p_doctor.designation AS doctor_designation,
+rag-service-1  |             p_doctor.id AS doctor_res_id
+rag-service-1  |         FROM wk_appointment a
+rag-service-1  |         LEFT JOIN res_partner p_patient ON a.customer = p_patient.id
+rag-service-1  |         LEFT JOIN res_partner p_doctor ON a.appoint_person_id = p_doctor.id
+rag-service-1  |         WHERE a.appoint_state != 'rejected'
+rag-service-1  |          ORDER BY a.write_date DESC LIMIT $1]
+rag-service-1  | [parameters: (5,)]
+rag-service-1  | (Background on this error at: https://sqlalche.me/e/20/f405)
+rag-service-1  | INFO:     172.21.0.1:57598 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | INFO:     Shutting down
+rag-service-1  | INFO:     Waiting for application shutdown.
+rag-service-1  | 2026-02-22 08:55:43,101 - app.main - INFO - Shutting down RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:55:43,179 - app.main - INFO - RAG Healthcare Service shutdown complete
+rag-service-1  | INFO:     Application shutdown complete.
+rag-service-1  | INFO:     Finished server process [1]
+rag-service-1  | 
+rag-service-1  | A module that was compiled using NumPy 1.x cannot be run in
+rag-service-1  | NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+rag-service-1  | versions of NumPy, modules must be compiled with NumPy 2.0.
+rag-service-1  | Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+rag-service-1  | 
+rag-service-1  | If you are a user of the module, the easiest solution will be to
+rag-service-1  | downgrade to 'numpy<2' or try to upgrade the affected module.
+rag-service-1  | We expect that some modules will need time to support NumPy 2.
+rag-service-1  | 
+rag-service-1  | Traceback (most recent call last):  File "/usr/local/bin/uvicorn", line 6, in <module>
+rag-service-1  |     sys.exit(main())
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1485, in __call__
+rag-service-1  |     return self.main(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1406, in main
+rag-service-1  |     rv = self.invoke(ctx)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 1269, in invoke
+rag-service-1  |     return ctx.invoke(self.callback, **ctx.params)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/click/core.py", line 824, in invoke
+rag-service-1  |     return callback(*args, **kwargs)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 418, in main
+rag-service-1  |     run(
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/main.py", line 587, in run
+rag-service-1  |     server.run()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+rag-service-1  |     return asyncio.run(self.serve(sockets=sockets))
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+rag-service-1  |     return runner.run(main)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+rag-service-1  |     return self._loop.run_until_complete(task)
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+rag-service-1  |     self.run_forever()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+rag-service-1  |     self._run_once()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+rag-service-1  |     handle._run()
+rag-service-1  |   File "/usr/local/lib/python3.11/asyncio/events.py", line 84, in _run
+rag-service-1  |     self._context.run(self._callback, *self._args)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 69, in serve
+rag-service-1  |     config.load()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/config.py", line 458, in load
+rag-service-1  |     self.loaded_app = import_from_string(self.app)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/uvicorn/importer.py", line 21, in import_from_string
+rag-service-1  |     module = importlib.import_module(module_str)
+rag-service-1  |   File "/usr/local/lib/python3.11/importlib/__init__.py", line 126, in import_module
+rag-service-1  |     return _bootstrap._gcd_import(name[level:], package, level)
+rag-service-1  |   File "/app/app/main.py", line 2, in <module>
+rag-service-1  |     from app.api.v1.api import api_router
+rag-service-1  |   File "/app/app/api/v1/api.py", line 5, in <module>
+rag-service-1  |     from app.api.v1.endpoints import health, rag, etl
+rag-service-1  |   File "/app/app/api/v1/endpoints/rag.py", line 8, in <module>
+rag-service-1  |     from app.services.rag_service import RAGService
+rag-service-1  |   File "/app/app/services/rag_service.py", line 6, in <module>
+rag-service-1  |     from app.services.embedding_service import EmbeddingService
+rag-service-1  |   File "/app/app/services/embedding_service.py", line 5, in <module>
+rag-service-1  |     from transformers import AutoTokenizer, AutoModel
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/__init__.py", line 26, in <module>
+rag-service-1  |     from . import dependency_versions_check
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/dependency_versions_check.py", line 16, in <module>
+rag-service-1  |     from .utils.versions import require_version, require_version_core
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/__init__.py", line 32, in <module>
+rag-service-1  |     from .generic import (
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/transformers/utils/generic.py", line 432, in <module>
+rag-service-1  |     import torch.utils._pytree as _torch_pytree
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 1471, in <module>
+rag-service-1  |     from .functional import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/functional.py", line 9, in <module>
+rag-service-1  |     import torch.nn.functional as F
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/__init__.py", line 1, in <module>
+rag-service-1  |     from .modules import *  # noqa: F403
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/__init__.py", line 35, in <module>
+rag-service-1  |     from .transformer import TransformerEncoder, TransformerDecoder, \
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py", line 20, in <module>
+rag-service-1  |     device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | /usr/local/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: _ARRAY_API not found (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+rag-service-1  |   device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),
+rag-service-1  | INFO:     Started server process [1]
+rag-service-1  | INFO:     Waiting for application startup.
+rag-service-1  | 2026-02-22 08:55:53,769 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:55:53,791 - app.core.db_init - INFO - Initializing database schema...
+rag-service-1  | 2026-02-22 08:55:53,841 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+rag-service-1  | 2026-02-22 08:55:53,842 INFO sqlalchemy.engine.Engine [raw sql] ()
+rag-service-1  | 2026-02-22 08:55:53,841 - sqlalchemy.engine.Engine - INFO - select pg_catalog.version()
+rag-service-1  | 2026-02-22 08:55:53,842 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+rag-service-1  | 2026-02-22 08:55:53,843 - sqlalchemy.engine.Engine - INFO - select current_schema()
+rag-service-1  | 2026-02-22 08:55:53,843 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+rag-service-1  | 2026-02-22 08:55:53,843 INFO sqlalchemy.engine.Engine select current_schema()
+rag-service-1  | 2026-02-22 08:55:53,843 INFO sqlalchemy.engine.Engine [raw sql] ()
+rag-service-1  | 2026-02-22 08:55:53,845 - sqlalchemy.engine.Engine - INFO - show standard_conforming_strings
+rag-service-1  | 2026-02-22 08:55:53,845 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+rag-service-1  | 2026-02-22 08:55:53,845 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+rag-service-1  | 2026-02-22 08:55:53,845 INFO sqlalchemy.engine.Engine [raw sql] ()
+rag-service-1  | 2026-02-22 08:55:53,846 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+rag-service-1  | 2026-02-22 08:55:53,846 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+rag-service-1  | 2026-02-22 08:55:53,846 - sqlalchemy.engine.Engine - INFO - CREATE EXTENSION IF NOT EXISTS vector
+rag-service-1  | 2026-02-22 08:55:53,846 - sqlalchemy.engine.Engine - INFO - [generated in 0.00011s] ()
+rag-service-1  | 2026-02-22 08:55:53,846 INFO sqlalchemy.engine.Engine CREATE EXTENSION IF NOT EXISTS vector
+rag-service-1  | 2026-02-22 08:55:53,846 INFO sqlalchemy.engine.Engine [generated in 0.00011s] ()
+rag-service-1  | 2026-02-22 08:55:53,852 - app.core.db_init - INFO - pgvector extension ready
+rag-service-1  | 2026-02-22 08:55:53,852 INFO sqlalchemy.engine.Engine 
+rag-service-1  |             CREATE TABLE IF NOT EXISTS medical_rag_index (
+rag-service-1  |                 id SERIAL PRIMARY KEY,
+rag-service-1  |                 odoo_model VARCHAR(255) NOT NULL,
+rag-service-1  |                 odoo_res_id INTEGER NOT NULL,
+rag-service-1  |                 chunk_index INTEGER NOT NULL DEFAULT 0,
+rag-service-1  |                 content_text TEXT NOT NULL,
+rag-service-1  |                 metadata JSONB DEFAULT '{}',
+rag-service-1  |                 embedding vector(768),
+rag-service-1  |                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+rag-service-1  |                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+rag-service-1  |                 UNIQUE(odoo_model, odoo_res_id, chunk_index)
+rag-service-1  |             )
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:55:53,852 INFO sqlalchemy.engine.Engine [generated in 0.00010s] ()
+rag-service-1  | 2026-02-22 08:55:53,852 - sqlalchemy.engine.Engine - INFO - 
+rag-service-1  |             CREATE TABLE IF NOT EXISTS medical_rag_index (
+rag-service-1  |                 id SERIAL PRIMARY KEY,
+rag-service-1  |                 odoo_model VARCHAR(255) NOT NULL,
+rag-service-1  |                 odoo_res_id INTEGER NOT NULL,
+rag-service-1  |                 chunk_index INTEGER NOT NULL DEFAULT 0,
+rag-service-1  |                 content_text TEXT NOT NULL,
+rag-service-1  |                 metadata JSONB DEFAULT '{}',
+rag-service-1  |                 embedding vector(768),
+rag-service-1  |                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+rag-service-1  |                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+rag-service-1  |                 UNIQUE(odoo_model, odoo_res_id, chunk_index)
+rag-service-1  |             )
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:55:53,852 - sqlalchemy.engine.Engine - INFO - [generated in 0.00010s] ()
+rag-service-1  | 2026-02-22 08:55:53,853 - app.core.db_init - INFO - medical_rag_index table ready
+rag-service-1  | 2026-02-22 08:55:53,854 - sqlalchemy.engine.Engine - INFO - SELECT COUNT(*) FROM medical_rag_index
+rag-service-1  | 2026-02-22 08:55:53,854 INFO sqlalchemy.engine.Engine SELECT COUNT(*) FROM medical_rag_index
+rag-service-1  | 2026-02-22 08:55:53,854 - sqlalchemy.engine.Engine - INFO - [generated in 0.00009s] ()
+rag-service-1  | 2026-02-22 08:55:53,854 INFO sqlalchemy.engine.Engine [generated in 0.00009s] ()
+rag-service-1  | 2026-02-22 08:55:53,871 - sqlalchemy.engine.Engine - INFO - 
+rag-service-1  |                 CREATE INDEX IF NOT EXISTS medical_rag_index_embedding_hnsw_idx
+rag-service-1  |                 ON medical_rag_index USING hnsw (embedding vector_cosine_ops)
+rag-service-1  |             
+rag-service-1  | 2026-02-22 08:55:53,871 - sqlalchemy.engine.Engine - INFO - [generated in 0.00033s] ()
+rag-service-1  | 2026-02-22 08:55:53,871 INFO sqlalchemy.engine.Engine 
+rag-service-1  |                 CREATE INDEX IF NOT EXISTS medical_rag_index_embedding_hnsw_idx
+rag-service-1  |                 ON medical_rag_index USING hnsw (embedding vector_cosine_ops)
+rag-service-1  |             
+rag-service-1  | 2026-02-22 08:55:53,871 INFO sqlalchemy.engine.Engine [generated in 0.00033s] ()
+rag-service-1  | 2026-02-22 08:55:53,886 - app.core.db_init - INFO - HNSW index ready
+rag-service-1  | 2026-02-22 08:55:53,886 INFO sqlalchemy.engine.Engine 
+rag-service-1  |             CREATE TABLE IF NOT EXISTS etl_metadata (
+rag-service-1  |                 id SERIAL PRIMARY KEY,
+rag-service-1  |                 odoo_model VARCHAR(255) UNIQUE NOT NULL,
+rag-service-1  |                 last_indexed_at TIMESTAMP,
+rag-service-1  |                 last_write_date TIMESTAMP,
+rag-service-1  |                 total_records INTEGER DEFAULT 0,
+rag-service-1  |                 total_chunks INTEGER DEFAULT 0
+rag-service-1  |             )
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:55:53,886 INFO sqlalchemy.engine.Engine [generated in 0.00011s] ()
+rag-service-1  | 2026-02-22 08:55:53,886 - sqlalchemy.engine.Engine - INFO - 
+rag-service-1  |             CREATE TABLE IF NOT EXISTS etl_metadata (
+rag-service-1  |                 id SERIAL PRIMARY KEY,
+rag-service-1  |                 odoo_model VARCHAR(255) UNIQUE NOT NULL,
+rag-service-1  |                 last_indexed_at TIMESTAMP,
+rag-service-1  |                 last_write_date TIMESTAMP,
+rag-service-1  |                 total_records INTEGER DEFAULT 0,
+rag-service-1  |                 total_chunks INTEGER DEFAULT 0
+rag-service-1  |             )
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:55:53,886 - sqlalchemy.engine.Engine - INFO - [generated in 0.00011s] ()
+rag-service-1  | 2026-02-22 08:55:53,887 - app.core.db_init - INFO - etl_metadata table ready
+rag-service-1  | 2026-02-22 08:55:53,887 - sqlalchemy.engine.Engine - INFO - COMMIT
+rag-service-1  | 2026-02-22 08:55:53,887 INFO sqlalchemy.engine.Engine COMMIT
+rag-service-1  | 2026-02-22 08:55:53,890 - app.core.db_init - INFO - Database initialization complete
+rag-service-1  | 2026-02-22 08:55:53,890 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:55:58,014 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:55:58,014 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:55:58,014 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:55:58,016 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:55:58,016 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:55:58,016 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:55:58,272 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:56:00,842 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:56:00,842 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | INFO:     172.21.0.1:35546 - "GET /api/v1/health HTTP/1.1" 200 OK
+rag-service-1  | 2026-02-22 08:57:52,001 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk', 'wk.appointment']
+rag-service-1  | 2026-02-22 08:57:52,001 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:57:52,439 - app.etl.data_extractor - INFO - Extracted 5 prescriptions
+rag-service-1  | 2026-02-22 08:57:52,440 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.19s/it]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.19s/it]
+rag-service-1  | 2026-02-22 08:57:53,639 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:57:53,639 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 10.04it/s]
+rag-service-1  | 2026-02-22 08:57:53,741 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:57:53,741 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  7.15it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  7.13it/s]
+rag-service-1  | 2026-02-22 08:57:53,884 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:57:53,884 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 18.44it/s]
+rag-service-1  | 2026-02-22 08:57:53,941 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:57:53,942 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.34it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.32it/s]
+rag-service-1  | 2026-02-22 08:57:54,051 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:57:54,051 - app.etl.vector_loader - INFO - Loading 5 vectors into medical_rag_index
+rag-service-1  | 2026-02-22 08:57:54,146 - app.etl.vector_loader - INFO - Successfully loaded 5 vectors
+rag-service-1  | 2026-02-22 08:57:54,148 - app.etl.data_extractor - INFO - Updated ETL metadata for prescription.order.knk
+rag-service-1  | 2026-02-22 08:57:54,149 - app.etl.pipeline - INFO - Indexed 5 prescriptions, created 5 chunks
+rag-service-1  | 2026-02-22 08:57:54,149 - app.etl.pipeline - INFO - Starting appointment indexing...
+rag-service-1  | 2026-02-22 08:57:54,168 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column a.time_from does not exist
+rag-service-1  | HINT:  Perhaps you meant to reference the column "a.time_slot".
+rag-service-1  | [SQL: 
+rag-service-1  |         SELECT 
+rag-service-1  |             a.id,
+rag-service-1  |             a.name AS appointment_number,
+rag-service-1  |             a.appoint_date,
+rag-service-1  |             a.appoint_state,
+rag-service-1  |             a.description,
+rag-service-1  |             a.time_from,
+rag-service-1  |             a.time_to,
+rag-service-1  |             a.amount_total,
+rag-service-1  |             a.write_date,
+rag-service-1  |             -- Patient information
+rag-service-1  |             p_patient.name AS patient_name,
+rag-service-1  |             p_patient.seq AS patient_id,
+rag-service-1  |             p_patient.age AS patient_age,
+rag-service-1  |             p_patient.gender AS patient_gender,
+rag-service-1  |             p_patient.phone AS patient_phone,
+rag-service-1  |             p_patient.email AS patient_email,
+rag-service-1  |             p_patient.id AS patient_res_id,
+rag-service-1  |             -- Doctor information
+rag-service-1  |             p_doctor.name AS doctor_name,
+rag-service-1  |             p_doctor.designation AS doctor_designation,
+rag-service-1  |             p_doctor.id AS doctor_res_id
+rag-service-1  |         FROM wk_appointment a
+rag-service-1  |         LEFT JOIN res_partner p_patient ON a.customer = p_patient.id
+rag-service-1  |         LEFT JOIN res_partner p_doctor ON a.appoint_person_id = p_doctor.id
+rag-service-1  |         WHERE a.appoint_state != 'rejected'
+rag-service-1  |          ORDER BY a.write_date DESC LIMIT $1]
+rag-service-1  | [parameters: (5,)]
+rag-service-1  | (Background on this error at: https://sqlalche.me/e/20/f405)
+rag-service-1  | INFO:     172.21.0.1:35546 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | 2026-02-22 08:57:54,216 - app.services.rag_service - INFO - RAG query: Which patients have headache complaints?...
+rag-service-1  | 2026-02-22 08:57:54,279 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+rag-service-1  | 2026-02-22 08:57:54,280 - sqlalchemy.engine.Engine - INFO - 
+rag-service-1  |         SELECT 
+rag-service-1  |             id,
+rag-service-1  |             content_text,
+rag-service-1  |             metadata,
+rag-service-1  |             odoo_model,
+rag-service-1  |             odoo_res_id,
+rag-service-1  |             1 - (embedding <=> CAST($1 AS vector)) as similarity
+rag-service-1  | 2026-02-22 08:57:54,279 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+rag-service-1  | 2026-02-22 08:57:54,280 INFO sqlalchemy.engine.Engine 
+rag-service-1  |         SELECT 
+rag-service-1  |             id,
+rag-service-1  |             content_text,
+rag-service-1  |             metadata,
+rag-service-1  |             odoo_model,
+rag-service-1  |             odoo_res_id,
+rag-service-1  |             1 - (embedding <=> CAST($1 AS vector)) as similarity
+rag-service-1  |         FROM medical_rag_index
+rag-service-1  |         
+rag-service-1  |         ORDER BY embedding <=> CAST($1 AS vector)
+rag-service-1  |         LIMIT $2
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:57:54,280 INFO sqlalchemy.engine.Engine [generated in 0.00015s] ('[0.48627936840057373,0.021126098930835724,-0.2144288271665573,0.05017123371362686,-0.17899788916110992,0.0027211345732212067,0.5385192632675171,-0.12 ... (15233 characters truncated) ... 2959595,0.05845483019948006,0.08084360510110855,0.32955777645111084,0.18612709641456604,0.14923997223377228,0.10221569240093231,-0.18834170699119568]', 5)
+rag-service-1  |         FROM medical_rag_index
+rag-service-1  |         
+rag-service-1  |         ORDER BY embedding <=> CAST($1 AS vector)
+rag-service-1  |         LIMIT $2
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:57:54,280 - sqlalchemy.engine.Engine - INFO - [generated in 0.00015s] ('[0.48627936840057373,0.021126098930835724,-0.2144288271665573,0.05017123371362686,-0.17899788916110992,0.0027211345732212067,0.5385192632675171,-0.12 ... (15233 characters truncated) ... 2959595,0.05845483019948006,0.08084360510110855,0.32955777645111084,0.18612709641456604,0.14923997223377228,0.10221569240093231,-0.18834170699119568]', 5)
+rag-service-1  | 2026-02-22 08:57:54,800 - app.services.llm_service - ERROR - Error generating answer: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+rag-service-1  | domain: "googleapis.com"
+rag-service-1  | metadata {
+rag-service-1  |   key: "service"
+rag-service-1  |   value: "generativelanguage.googleapis.com"
+rag-service-1  | }
+rag-service-1  | , locale: "en-US"
+rag-service-1  | message: "API key not valid. Please pass a valid API key."
+rag-service-1  | ]
+rag-service-1  | 2026-02-22 08:57:54,800 - app.api.v1.endpoints.rag - ERROR - Query error: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+rag-service-1  | domain: "googleapis.com"
+rag-service-1  | metadata {
+rag-service-1  |   key: "service"
+rag-service-1  |   value: "generativelanguage.googleapis.com"
+rag-service-1  | }
+rag-service-1  | , locale: "en-US"
+rag-service-1  | message: "API key not valid. Please pass a valid API key."
+rag-service-1  | ]
+rag-service-1  | 2026-02-22 08:57:54,801 INFO sqlalchemy.engine.Engine ROLLBACK
+rag-service-1  | 2026-02-22 08:57:54,801 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+rag-service-1  | INFO:     172.21.0.1:35546 - "POST /api/v1/rag/query HTTP/1.1" 500 Internal Server Error

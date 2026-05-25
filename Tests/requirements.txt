@@ -1,0 +1,27 @@
+# FastAPI and Web Server
+fastapi==0.109.2
+uvicorn==0.27.1
+
+# Database
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+sqlalchemy==2.0.27
+pgvector==0.2.4
+
+# Configuration
+python-dotenv==1.0.1
+pydantic-settings==2.1.0
+
+# Embedding & LLM Dependencies
+transformers==4.37.2
+sentence-transformers==2.3.1
+google-generativeai>=0.5.4
+numpy<2.0.0
+# HTTP Client
+aiohttp==3.9.3
+
+# PyTorch CPU-only (installed separately in Dockerfile)
+# torch will be installed via: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# Scheduler (nightly stale-summary rebuild)
+apscheduler==3.10.4

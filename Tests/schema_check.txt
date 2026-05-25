@@ -1,0 +1,87 @@
+﻿
+=== prescription_order_knk (51 cols) ===
+id, message_main_attachment_id, patient_id, company_id, physician_id, his_list, sign_list, notes_line_id, prescription_template_id, create_uid, write_uid, name, state, patient_age, disease, short_code, description, investigation_result, patient_history, check_patient, patient_details, extra_notes, old_prescription, active, date, create_date, write_date, patient_sex, patient_phone, weight, unit, height, bmi, systolic, diastolic, pulse, respiratory_rate, medicine_name, complain_list, diagnosis, old_history, wk_appointment_id, next_visit_days, symptom_status, medication_adherence, performance_status_update, date_of_next_visit, additional_comments, side_effects, priority, procedure_result
+
+=== prescription_order_line_knk_new (23 cols) ===
+id, prescription_id, temp_prescription_id, product_id, med_group_id, composition_id, dose_id, route_id, whn_to_take_id, frequency_id, sequence, create_uid, write_uid, short_comment, knk_t_qty, create_date, write_date, quantity, days, qty_per_day, subtotal, display_type, name
+
+=== diagnosis_diagnosis (10 cols) ===
+id, name, diagnosis_res_id, temp_diagnosis_res_id, company_id, disease_id, create_uid, write_uid, create_date, write_date
+
+=== complaint_record_line (14 cols) ===
+id, name, period, company_id, complain_res_id, temp_complain_res_id, sequence, location_id, create_uid, write_uid, create_date, write_date, complaint_list_id, view_all_buttons
+
+=== complaint_list (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== period_record (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== location_location (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== investigation_list_line (10 cols) ===
+id, investigation_list_id, inves_res_id, temp_inves_res_id, company_id, sequence, create_uid, write_uid, create_date, write_date
+
+=== investigation_list (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== vital_list_line (21 cols) ===
+id, name, w_unit, height, h_unit, blood_unit, pulse_unit, rr_unit, vital_list_id, company_id, sequence, create_uid, write_uid, bmi_unit, blood_presure, slash_tag, blood_presure_2, pulse, respiratory_rate, create_date, write_date
+
+=== sign_list_line (12 cols) ===
+id, name, location, intensity, sign_res_id, temp_sign_res_id, company_id, sequence, create_uid, write_uid, create_date, write_date
+
+=== intensity_intensity (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== past_medical_history (10 cols) ===
+id, prescription_id, symptom_id, result_id, company_id, create_uid, write_uid, create_date, write_date, past_med_tmpl_id
+
+=== symptom_config (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== result_config (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== medication_history (9 cols) ===
+id, prescription_id, medicine_id, medicine_group_id, create_uid, write_uid, create_date, write_date, med_tmpl_id
+
+=== medicine_group (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== family_history (10 cols) ===
+id, prescription_id, family_history_config_id, family_history_result_id, company_id, create_uid, write_uid, create_date, write_date, family_tmpl_id
+
+=== family_history_config (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== family_history_result (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== social_history (10 cols) ===
+id, prescription_id, social_history_config_id, social_history_result_id, company_id, create_uid, write_uid, create_date, write_date, social_tmpl_id
+
+=== social_history_config (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== social_history_result (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== excercise_ex_line (13 cols) ===
+id, name, part_location, excer_res_id, temp_excer_res_id, company_id, sequence, create_uid, write_uid, move2, type_of_test2, create_date, write_date
+
+=== part_location (7 cols) ===
+id, company_id, create_uid, write_uid, name, create_date, write_date
+
+=== ortho_list_line (12 cols) ===
+id, name, location, side, ortho_list_id, temp_ortho_list_id, company_id, sequence, create_uid, write_uid, create_date, write_date
+
+=== wk_appointment (45 cols) ===
+id, message_main_attachment_id, customer, appoint_group_id, appoint_person_id, time_slot, invoice_id, company_id, pricelist_id, currency_id, user_id, source, remind_time, color, app_state_id, app_country_id, create_uid, write_uid, access_token, name, appoint_state, time_slot_day, remind_in, reject_reason, app_street1, app_street2, app_city, app_zip, app_phone, app_email, appoint_date, description, amount_untaxed, amount_tax, amount_total, enable_notify_reminder, is_mail_sent, allday, app_dt_start, app_dt_stop, create_date, write_date, payment_tx_id, payment_acquirer_id, prescription_count
+
+=== medical_disease (8 cols) ===
+id, create_uid, write_uid, code, name, long_name, create_date, write_date
+
+=== res_partner (101 cols) ===
+id, company_id, create_date, name, title, parent_id, user_id, state_id, country_id, industry_id, color, commercial_partner_id, create_uid, write_uid, display_name, ref, lang, tz, vat, company_registry, website, function, type, street, street2, zip, city, email, phone, mobile, commercial_company_name, company_name, date, comment, partner_latitude, partner_longitude, active, employee, is_company, partner_share, write_date, message_main_attachment_id, message_bounce, email_normalized, signup_type, signup_expiration, signup_token, partner_gid, additional_info, phone_sanitized, website_id, is_published, supplier_rank, customer_rank, invoice_warn, invoice_warn_msg, debit_limit, last_time_entries_checked, l10n_in_gst_treatment, team_id, picking_warn, picking_warn_msg, sale_warn, sale_warn_msg, referral_partner_id, seq, partner_type, age, age_type, gender, designation, patient_medical_history, patient_details, appoint_product_id, work_exp, specialist, about_person, available_for_appoint, allow_multi_appoints, use_addr_as_appoint, appoint_person_charge, priority, website_meta_og_img, website_meta_title, website_meta_description, website_meta_keywords, seo_name, website_description, website_short_description, reg_no, calendar_last_notif_ack, is_whatsapp_number, registered_id, id_number, emergency_contact_number, emergency_contact_name, relation, date_of_birth, otp_code, otp_input, is_verified

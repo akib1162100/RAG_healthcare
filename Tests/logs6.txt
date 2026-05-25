@@ -1,0 +1,25 @@
+﻿rag-service-1  | 2026-02-22 08:20:30,182 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:20:30,184 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:20:30,184 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:20:30,184 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:20:30,443 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:20:32,512 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:20:32,512 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:22:03,420 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk', 'wk.appointment']
+rag-service-1  | 2026-02-22 08:22:03,421 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:22:03,713 - app.etl.data_extractor - INFO - Extracted 5 prescriptions
+rag-service-1  | 2026-02-22 08:22:03,714 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.10s/it]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:01<00:00,  1.10s/it]
+rag-service-1  | 2026-02-22 08:22:04,823 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:22:04,823 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 11.31it/s]
+rag-service-1  | 2026-02-22 08:22:04,914 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:22:04,914 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: unsupported operand type(s) for +=: 'NoneType' and 'str'
+rag-service-1  | INFO:     172.21.0.1:47248 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error

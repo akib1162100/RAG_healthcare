@@ -1,0 +1,93 @@
+services:
+  rag-service:
+    build: .
+    container_name: rag_healthcare-api
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - hf_cache:/root/.cache/huggingface
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-postgresql+asyncpg://odoo:odoo@db:5432/odoo}
+      - TABLE_PREFIX=${TABLE_PREFIX:-}
+      - EMBEDDING_MODEL=emilyalsentzer/Bio_ClinicalBERT
+      - EMBEDDING_DEVICE=${EMBEDDING_DEVICE:-cpu}
+      - EMBEDDING_DIM=768
+      - ETL_BATCH_SIZE=32
+      - ETL_CHUNK_SIZE=800
+      - ETL_CHUNK_OVERLAP=150
+      - ODOO_URL=http://host.docker.internal:8016
+      - ODOO_API_KEY=${ODOO_API_KEY:-2d08e96badd84f0fc0663da74eb36bab963efd3f}
+      - ODOO_DB=${ODOO_DB:-cli_stage}
+      - ODOO_USER=${ODOO_USER:-admin}
+      - ODOO_PASSWORD=${ODOO_PASSWORD:-1}
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET:-}
+      - TORCH_NUM_THREADS=4
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+
+  db:
+    image: ankane/pgvector:latest
+    container_name: rag_healthcare-db
+    environment:
+      - POSTGRES_DB=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./database/init_pgvector.sql:/docker-entrypoint-initdb.d/init_pgvector.sql
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: rag_healthcare-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - P:\OLLAMA_MODELS\.ollama:/root/.ollama
+      - ./RAG_git/RAG_healthcare/ml/GemmaMedical_4B.Modelfile:/tmp/GemmaMedical_4B.Modelfile:ro
+    environment:
+      - OLLAMA_NUM_PARALLEL=2
+      - OLLAMA_MAX_LOADED_MODELS=1
+      - OLLAMA_FLASH_ATTENTION=1
+      - OLLAMA_KV_CACHE_TYPE=q8_0
+      - OLLAMA_HOST=0.0.0.0:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  hf_cache:
+  ollama_data:

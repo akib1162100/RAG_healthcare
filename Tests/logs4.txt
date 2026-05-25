@@ -1,0 +1,20 @@
+﻿rag-service-1  | 2026-02-22 08:09:17,088 - app.main - INFO - Starting up RAG Healthcare Service...
+rag-service-1  | 2026-02-22 08:09:17,088 - app.services.embedding_service - INFO - Loading ClinicalBERT model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | /usr/local/lib/python3.11/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+rag-service-1  |   warnings.warn(
+rag-service-1  | 2026-02-22 08:09:19,965 - app.services.embedding_service - INFO - ClinicalBERT model loaded successfully
+rag-service-1  | 2026-02-22 08:09:19,966 - app.services.llm_service - INFO - Initializing Google Gemma API: gemini-1.5-flash
+rag-service-1  | 2026-02-22 08:09:19,966 - app.services.llm_service - INFO - Google Gemma API initialized successfully
+rag-service-1  | 2026-02-22 08:09:19,967 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:09:19,967 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:09:19,967 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:09:20,252 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:09:22,652 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:09:22,652 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:11:17,698 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk']
+rag-service-1  | 2026-02-22 08:11:17,698 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:11:18,136 - app.etl.data_extractor - INFO - Extracted 3 prescriptions
+rag-service-1  | 2026-02-22 08:11:18,137 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: unsupported operand type(s) for +=: 'NoneType' and 'str'
+rag-service-1  | INFO:     172.21.0.1:60500 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error

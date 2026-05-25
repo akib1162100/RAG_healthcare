@@ -1,0 +1,735 @@
+﻿
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\account_fix_discount\models\__pycache__\account_move_line.cpython-310.pyc ---
+Class/Function Name: AccountMove
+Variables (Fields/Attributes): ['_inherit', 'api', 'depends', '_compute_tax_totals']
+String Constants: ['AccountMove', 'account.move', 'invoice_line_ids.currency_rate', 'invoice_line_ids.tax_base_amount', 'invoice_line_ids.tax_line_id', 'invoice_line_ids.price_total', 'invoice_line_ids.price_subtotal', 'invoice_payment_term_id', 'partner_id', 'currency_id', 'AccountMove._compute_tax_totals']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\account_fix_discount\models\__pycache__\account_move_line.cpython-310.pyc ---
+Class/Function Name: AccountMoveLine
+Variables (Fields/Attributes): ['_inherit', 'api', 'depends', '_compute_all_tax', '_compute_totals', 'fields', 'Monetary', 'discount_fixed', 'onchange', '_onchange_discount_fixed', '_onchange_discount', '_get_discount_from_fixed_discount', '_convert_to_tax_base_line_dict']
+String Constants: ['AccountMoveLine', 'account.move.line', 'tax_ids', 'currency_id', 'partner_id', 'analytic_distribution', 'balance', 'move_id.partner_id', 'price_unit', 'AccountMoveLine._compute_all_tax', 'quantity', 'discount', 'discount_fixed', 'AccountMoveLine._compute_totals', 'Discount (Fixed)', 'Apply a fixed amount discount to this line. The amount is multiplied by the quantity of the product.', 'AccountMoveLine._onchange_discount_fixed', 'AccountMoveLine._onchange_discount', 'AccountMoveLine._get_discount_from_fixed_discount', 'AccountMoveLine._convert_to_tax_base_line_dict']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\account_fix_discount\models\__pycache__\account_tax.cpython-310.pyc ---
+Class/Function Name: AccountTax
+Variables (Fields/Attributes): ['_inherit', 'api', 'model', '_convert_to_tax_base_line_dict']
+String Constants: ['AccountTax', 'account.tax', 'AccountTax._convert_to_tax_base_line_dict']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\account_fix_discount\models\__pycache__\account_tax.cpython-310.pyc ---
+Class/Function Name: _convert_to_tax_base_line_dict
+Variables (Fields/Attributes): ['super', '_convert_to_tax_base_line_dict', '_name', 'discount_fixed', '_get_discount_from_fixed_discount']
+String Constants: ['Insert the un-rounded discount value in the resulting tax computation values.', 'account.move.line', 'discount']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\canvas_image_editor\models\__pycache__\annotated_image.cpython-310.pyc ---
+Class/Function Name: AnnotatedImage
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Binary', 'image_to_edit']
+String Constants: ['AnnotatedImage', 'annotated.image', 'Annotated Image Example', 'Name', 'Image']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\dhs_hide_menu_user\models\__pycache__\hide_user_menu.cpython-310.pyc ---
+Class/Function Name: HideUserMenu
+Variables (Fields/Attributes): ['_inherit', 'api', 'model_create_multi', 'create', 'write', '_get_is_admin', 'fields', 'Many2many', 'hide_menu_ids', 'Boolean', 'is_admin']
+String Constants: ['HideUserMenu', 'res.users', 'HideUserMenu.create', 'HideUserMenu.write', 'HideUserMenu._get_is_admin', 'ir.ui.menu', 'Menu', 'Select menu items that needs to be hidden to this user ', 'Admin']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\dhs_hide_menu_user\models\__pycache__\hide_user_menu.cpython-310.pyc ---
+Class/Function Name: RestrictMenu
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Many2many', 'restrict_user_ids']
+String Constants: ['RestrictMenu', 'ir.ui.menu', 'res.users']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\extend_signup_page\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PrescriptionOrderExt
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Many2one', 'wk_appointment_id', 'button_confirm']
+String Constants: ['PrescriptionOrderExt', 'prescription.order.knk', 'wk.appointment', 'Appointment', 'PrescriptionOrderExt.button_confirm']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\extend_signup_page\models\__pycache__\res_wk_appointment.cpython-310.pyc ---
+Class/Function Name: AppointmentExt
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Selection', 'appoint_state', 'One2many', 'wk_prescription_ids', 'Integer', 'prescription_count', 'api', 'depends', '_compute_prescription_count', 'button_in_consultation', 'button_create_prescription', 'view_prescription']
+String Constants: ['AppointmentExt', 'wk.appointment', 'prescription.order.knk', 'wk_appointment_id', '_compute_prescription_count', 'wk_prescription_ids', 'AppointmentExt._compute_prescription_count', 'AppointmentExt.button_in_consultation', 'AppointmentExt.button_create_prescription', 'AppointmentExt.view_prescription']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\google_ai_studio\models\__pycache__\google_ai_studio.cpython-310.pyc ---
+Class/Function Name: MedicalConsultation
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Text', 'user_input', 'Html', 'llm_response', 'Date', 'today', 'consultation_date', 'Binary', 'attachment', 'Char', 'attachment_filename', 'name', 'One2many', 'history_ids', 'api', 'model_create_multi', 'create', '_clean_markdown', '_format_llm_text_to_html', '_call_llm', 'process_consultation']
+String Constants: ['MedicalConsultation', 'medical.consultation', 'Medical Consultation with LLM', 'Question', 'Response', 'Consultation Date', 'Attachment', 'File Name', 'Name', 'New', 'medical.consultation.history', 'consultation_id', 'History', 'MedicalConsultation.create', 'MedicalConsultation._clean_markdown', 'MedicalConsultation._format_llm_text_to_html', 'MedicalConsultation._call_llm', 'MedicalConsultation.process_consultation']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\google_ai_studio\models\__pycache__\google_ai_studio.cpython-310.pyc ---
+Class/Function Name: MedicalConsultationHistory
+Variables (Fields/Attributes): ['_name', '_description', '_order', 'fields', 'Many2one', 'consultation_id', 'Text', 'user_input', 'Html', 'llm_response']
+String Constants: ['MedicalConsultationHistory', 'medical.consultation.history', 'Medical Consultation History', 'create_date desc', 'medical.consultation', 'Consultation', 'cascade', 'Question', 'Response']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\google_ai_studio\models\__pycache__\inherit_res_config.cpython-310.pyc ---
+Class/Function Name: ResConfigSettings
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'enable_gemini', 'Char', 'gemini_api_key', 'Integer', 'max_context_messages', 'Selection', 'gemini_model', 'Many2one', 'gemini_partner_id', 'is_gemini_response_added', 'google_ai_api_key']
+String Constants: ['ResConfigSettings', 'res.config.settings', 'Enable Gemini Integration', 'discuss_gemini_integration.enable_gemini', 'When checked, users can trigger Gemini in Discuss channels.', 'Gemini API Key', 'discuss_gemini_integration.gemini_api_key', 'Enter your API key for the Google Gemini integration.', 'Maximum Context Messages', 'discuss_gemini_integration.max_context_messages', 'Maximum number of previous messages to include as context.', 'Gemini Model', 'discuss_gemini_integration.gemini_model', 'gemini-2.0-flash', 'Select the Gemini model to use for responses.', 'res.partner', 'Gemini Partner', 'discuss_gemini_integration.gemini_partner_id', 'Select the partner that will represent Gemini in discussions.', 'Is Gemini Response Added', 'discuss_gemini_integration.is_gemini_response_added', 'Flag to indicate if the gemini response has been added to the channel.', 'Google AI API Key', 'google_ai_studio.google_ai_api_key']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\google_ai_studio\models\__pycache__\mail_channel.cpython-310.pyc ---
+Class/Function Name: MailChannel
+Variables (Fields/Attributes): ['_inherit', 'api', 'model', '_is_gemini_integration_enabled', '_get_gemini_api_key', '_get_gemini_model', '_get_max_context_messages', '_get_gemini_partner', '_is_gemini_channel', '_post_gemini_response', '_get_conversation_context', '_format_prompt_with_context', '_get_gemini_response', '_notify_thread']
+String Constants: ['MailChannel', 'mail.channel', 'MailChannel._is_gemini_integration_enabled', 'MailChannel._get_gemini_api_key', 'MailChannel._get_gemini_model', 'MailChannel._get_max_context_messages', 'MailChannel._get_gemini_partner', 'MailChannel._is_gemini_channel', 'MailChannel._post_gemini_response', 'MailChannel._get_conversation_context', 'MailChannel._format_prompt_with_context', 'MailChannel._get_gemini_response', 'MailChannel._notify_thread']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\helathcare_invoice\models\__pycache__\account_move.cpython-310.pyc ---
+Class/Function Name: InvoiceCategory
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name']
+String Constants: ['InvoiceCategory', 'invoice.category', 'Invoice Category', 'Name']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\helathcare_invoice\models\__pycache__\account_move.cpython-310.pyc ---
+Class/Function Name: AccountMove
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Many2one', 'invoice_category_id', 'Char', 'discount_authorized_person', 'payment_methods', '_compute_payment_methods', 'button_print_invoice', 'button_print_invoice_with_header_footer']
+String Constants: ['AccountMove', 'account.move', 'invoice.category', 'Invoice Category', 'Discount Authorized Person', 'Payment Methods', '_compute_payment_methods', 'AccountMove._compute_payment_methods', 'AccountMove.button_print_invoice', 'AccountMove.button_print_invoice_with_header_footer']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\helathcare_invoice\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PrescriptionOrder
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Selection', 'patient_sex', 'Char', 'patient_phone', 'weight', 'unit', 'height', 'bmi', 'systolic', 'diastolic', 'pulse', 'respiratory_rate', 'medicine_name', 'complain_list', 'diagnosis', 'old_history', 'api', 'depends', '_compute_old_history', '_compute_weight', '_compute_unit', '_compute_height', '_compute_bmi', '_compute_systolic_pressure', '_compute_diastolic_pressure', '_compute_pulse', '_compute_respiratory_rate', '_compute_medicine_name', '_compute_complain_list', '_compute_diagnosis']
+String Constants: ['PrescriptionOrder', 'prescription.order.knk', 'patient_id.gender', 'Patient Sex', 'patient_id.mobile', 'Patient Phone', '_compute_weight', 'Weight', '_compute_unit', 'Unit', '_compute_height', 'Height', '_compute_bmi', 'BMI', '_compute_systolic_pressure', 'Systolic Pressure', '_compute_diastolic_pressure', 'Diastolic Pressure', '_compute_pulse', 'Pulse', '_compute_respiratory_rate', 'Respiratory Rate', '_compute_medicine_name', 'Medicine Name', '_compute_complain_list', 'Complain List', '_compute_diagnosis', 'Diagnosis', '_compute_old_history', 'Old History', 'medical_history_ids', 'PrescriptionOrder._compute_old_history', 'vital_ids.name', 'PrescriptionOrder._compute_weight', 'vital_ids.w_unit', 'PrescriptionOrder._compute_unit', 'vital_ids.height', 'PrescriptionOrder._compute_height', 'vital_ids.bmi', 'PrescriptionOrder._compute_bmi', 'vital_ids.blood_presure', 'PrescriptionOrder._compute_systolic_pressure', 'vital_ids.blood_presure_2', 'PrescriptionOrder._compute_diastolic_pressure', 'vital_ids.pulse', 'PrescriptionOrder._compute_pulse', 'vital_ids.respiratory_rate', 'PrescriptionOrder._compute_respiratory_rate', 'order_line_new_ids.product_id', 'PrescriptionOrder._compute_medicine_name', 'complaint_id.name', 'PrescriptionOrder._compute_complain_list', 'diagnosis_ids.name', 'PrescriptionOrder._compute_diagnosis']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\helathcare_invoice\models\__pycache__\res_company.cpython-310.pyc ---
+Class/Function Name: ResCompany
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Binary', 'invoice_header', 'invoice_footer']
+String Constants: ['ResCompany', 'res.company', 'Invoice Header', 'Invoice Footer']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\helathcare_invoice\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ResPartner
+Variables (Fields/Attributes): ['_inherit']
+String Constants: ['ResPartner', 'res.partner']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\hide_odoo\models\__pycache__\mail_mail.cpython-310.pyc ---
+Class/Function Name: MailMail
+Variables (Fields/Attributes): ['_inherit', '_send_prepare_body']
+String Constants: ['MailMail', 'mail.mail', 'MailMail._send_prepare_body']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\hide_odoo\models\__pycache__\mail_render_mixin.cpython-310.pyc ---
+Class/Function Name: MailRenderMixin
+Variables (Fields/Attributes): ['_inherit', 'remove_href_odoo', 'api', 'model', '_render_template', '_replace_local_links']
+String Constants: ['MailRenderMixin', 'mail.render.mixin', 'MailRenderMixin.remove_href_odoo', 'inline_template', 'MailRenderMixin._render_template', 'MailRenderMixin._replace_local_links']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\ica_web_responsive\models\__pycache__\ir_ui_menu.cpython-310.pyc ---
+Class/Function Name: IrUiMenu
+Variables (Fields/Attributes): ['_inherit', 'load_web_menus']
+String Constants: ['IrUiMenu', 'ir.ui.menu', 'IrUiMenu.load_web_menus']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\ica_web_responsive\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ResPartner
+Variables (Fields/Attributes): ['_inherit', '_build_vcard', '_get_vcard_file']
+String Constants: ['ResPartner', 'res.partner', 'ResPartner._build_vcard', 'ResPartner._get_vcard_file']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\icd_manager\models\__pycache__\medical_disease.cpython-310.pyc ---
+Class/Function Name: MedicalDisease
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'code', 'name', 'long_name', 'api', 'model', 'name_search']
+String Constants: ['MedicalDisease', 'medical.disease', 'Medical disease', 'Code', 'Short name', 'Long name', 'ilike', 'MedicalDisease.name_search']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\odoo_google_meet_integration\models\__pycache__\calendar_event.cpython-310.pyc ---
+Class/Function Name: CalendarEvent
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'is_google_meet', 'Char', 'google_meet_url', 'google_meet_code', 'google_event_id', 'action_google_meet_url', 'api', 'model_create_multi', 'create', 'write', '_create_google_meet', 'onchange', '_delete_google_meet']
+String Constants: ['CalendarEvent', 'calendar.event', 'Google Meet', 'Google Meet URL', 'Joinging Meeting URL', 'Google Meet Code', 'Joining Meeting Code', 'Google Event ID', 'Event ID of the google meet', 'CalendarEvent.action_google_meet_url', 'CalendarEvent.create', 'CalendarEvent.write', 'CalendarEvent._create_google_meet', 'is_google_meet', 'CalendarEvent._delete_google_meet']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\odoo_google_meet_integration\models\__pycache__\res_company.cpython-310.pyc ---
+Class/Function Name: ResCompany
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Char', 'hangout_client_id', 'hangout_client_secret', 'hangout_redirect_uri', 'hangout_company_access_token', 'Datetime', 'hangout_company_access_token_expiry', 'hangout_company_refresh_token', 'hangout_company_authorization_code', 'google_meet_company_authenticate', 'google_meet_company_refresh_token']
+String Constants: ['ResCompany', 'res.company', 'Client Id', 'Google Developer Console Client ID', 'Client Secret', 'Google Developer Console Client Secret', 'Authorized redirect URIs', 'http://localhost:8016/google_meet_authentication', 'GoogleAuthorized redirect URIs', 'Access Token', 'Token expiry', 'Refresh Token', 'Authorization Code', 'ResCompany.google_meet_company_authenticate', 'ResCompany.google_meet_company_refresh_token']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\account_move.cpython-310.pyc ---
+Class/Function Name: AccountMove
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Many2one', 'referral_partner_id', 'source_doctor_id', 'Char', 'accession_no', 'age', 'Selection', 'gender', 'patient_type_id', 'patient_type_name', 'kmc_num', 'bed_num', 'ward_num', 'Boolean', 'radiology_created', 'radiology_id', 'move_type', 'api', 'onchange', '_onchange_partner_id_ref', '_compute_radiology_created', 'action_view_radiology', 'action_create_radiology_req', 'pricelist_id', 'constrains', '_check_currency', 'depends', '_compute_pricelist_id', '_compute_currency_id', 'button_update_prices_from_pricelist']
+String Constants: ['AccountMove', 'account.move', 'referral.partner', 'res.partner', "[('partner_type','=','physician')]", 'partner_id.age', 'partner_id.gender', 'patient.type', 'patient_type_id.name', '_compute_radiology_created', 'radiology.request', 'Type', 'entry', 'partner_id', 'AccountMove._onchange_partner_id_ref', 'AccountMove._compute_radiology_created', 'AccountMove.action_view_radiology', 'AccountMove.action_create_radiology_req', 'product.pricelist', 'Category', 'draft', '_compute_pricelist_id', 'pricelist_id', 'currency_id', 'AccountMove._check_currency', 'company_id', 'AccountMove._compute_pricelist_id', 'AccountMove._compute_currency_id', 'AccountMove.button_update_prices_from_pricelist']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\account_move.cpython-310.pyc ---
+Class/Function Name: AccountMoveLine
+Variables (Fields/Attributes): ['_inherit', 'api', 'onchange', '_onchange_product_id_domain', 'depends', '_compute_price_unit', '_calculate_discount', '_get_price_with_pricelist']
+String Constants: ['AccountMoveLine', 'account.move.line', 'product_id', 'AccountMoveLine._onchange_product_id_domain', 'quantity', 'AccountMoveLine._compute_price_unit', 'AccountMoveLine._calculate_discount', 'AccountMoveLine._get_price_with_pricelist']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\account_move.cpython-310.pyc ---
+Class/Function Name: AccountInvoiceReport
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Many2one', 'referral_partner_id', 'source_doctor_id', 'api', 'model', '_select']
+String Constants: ['AccountInvoiceReport', 'account.invoice.report', 'referral.partner', 'res.partner', 'AccountInvoiceReport._select']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\appointment_schedule.cpython-310.pyc ---
+Class/Function Name: Appointmentschedule
+Variables (Fields/Attributes): ['_name', '_description', '_get_default_schedule_lines', 'fields', 'Char', 'name', 'Many2one', 'company_id', 'One2many', 'schedule_lines', 'Selection', '_tz_get', 'appointment_tz', 'department_id', 'physician_id', 'Boolean', 'active']
+String Constants: ['Appointmentschedule', 'appointment.schedule', 'Appointment schedule', 'Appointmentschedule._get_default_schedule_lines', 'res.company', 'Company', 'Appointmentschedule.<lambda>', 'appointment.schedule.lines', 'schedule_id', 'schedule Lines', 'Timezone', 'Timezone where appointment take place', 'hr.department', 'res.partner', "[('partner_type','=','physician')]", 'Physician', 'Active']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\appointment_schedule.cpython-310.pyc ---
+Class/Function Name: AppointmentscheduleLines
+Variables (Fields/Attributes): ['_name', '_description', '_order', 'fields', 'Char', 'name', 'Selection', 'dayofweek', 'Float', 'hour_from', 'hour_to', 'day_period', 'Many2one', 'schedule_id']
+String Constants: ['AppointmentscheduleLines', 'appointment.schedule.lines', 'Appointment schedule Lines', 'dayofweek, hour_from', 'Day of Week', '0', 'Work from', 'Start and End time of working.', 'Work to', 'morning', 'appointment.schedule', 'Appointment schedule', 'cascade']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\appointment_schedule.cpython-310.pyc ---
+Class/Function Name: AppointmentscheduleSlot
+Variables (Fields/Attributes): ['_name', '_description', '_rec_name', 'fields', 'Date', 'slot_date', 'Selection', '_tz_get', 'appointment_tz', 'One2many', 'slot_ids', 'Many2one', 'department_id', 'physician_id', 'schedule_id', '_sql_constraints', '_create_slot_interval', 'api', 'model', 'create_appointment_slot', 'weekly_slot_create_cron']
+String Constants: ['AppointmentscheduleSlot', 'appointment.schedule.slot', 'Appointment Schedule Slot', 'slot_date', 'Slot Date', 'Timezone', 'AppointmentscheduleSlot.<lambda>', 'Timezone where appointment take place', 'appointment.schedule.slot.lines', 'slot_id', 'Slot Lines', 'hr.department', 'res.partner', "[('partner_type','=','physician')]", 'Physician', 'appointment.schedule', 'Appointment schedule', 'cascade', 'AppointmentscheduleSlot._create_slot_interval', 'AppointmentscheduleSlot.create_appointment_slot', 'AppointmentscheduleSlot.weekly_slot_create_cron']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\appointment_schedule.cpython-310.pyc ---
+Class/Function Name: AppointmentscheduleSlotLines
+Variables (Fields/Attributes): ['_name', '_description', '_order', 'api', 'depends', '_get_slot_name', 'fields', 'Char', 'name', 'Datetime', 'from_slot', 'to_slot', 'Many2one', 'slot_id', 'Boolean', 'is_booked']
+String Constants: ['AppointmentscheduleSlotLines', 'appointment.schedule.slot.lines', 'Appointment schedule Slot Lines', 'from_slot', 'to_slot', 'AppointmentscheduleSlotLines._get_slot_name', 'name', '_get_slot_name', 'Starting Slot', 'End Slot', 'appointment.schedule.slot', 'Slot', 'cascade', 'Booked']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: SymptomConfig
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2many', 'result_ids', 'Many2one', 'company_id']
+String Constants: ['SymptomConfig', 'symptom.config', 'Symptom Configuration', 'Symptom', 'result.config', 'Result', "[('company_id', '=', company_id)]", 'res.company', 'Company', 'SymptomConfig.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: ResultConfig
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['ResultConfig', 'result.config', 'Result Configuration', 'Result', 'res.company', 'Company', 'ResultConfig.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: FamilyHistoryConfig
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2many', 'result_ids', 'Many2one', 'company_id']
+String Constants: ['FamilyHistoryConfig', 'family.history.config', 'Family History Configuration', 'Family History', 'family.history.result', 'Result', "[('company_id', '=', company_id)]", 'res.company', 'Company', 'FamilyHistoryConfig.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: FamilyHistoryResult
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['FamilyHistoryResult', 'family.history.result', 'Family History Result', 'Result', 'res.company', 'Company', 'FamilyHistoryResult.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: SocialHistoryConfig
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2many', 'result_ids', 'Many2one', 'company_id']
+String Constants: ['SocialHistoryConfig', 'social.history.config', 'Social History Configuration', 'Social History', 'social.history.result', 'Result', "[('company_id', '=', company_id)]", 'res.company', 'Company', 'SocialHistoryConfig.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: SocialHistoryResult
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['SocialHistoryResult', 'social.history.result', 'Social History Result', 'Result', 'res.company', 'Company', 'SocialHistoryResult.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: ProcedureConfig
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['ProcedureConfig', 'procedure.config', 'Procedure Configuration', 'Procedure', 'res.company', 'Company', 'ProcedureConfig.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\configurations.cpython-310.pyc ---
+Class/Function Name: HistoryCategory
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['HistoryCategory', 'history.category', 'History Category', 'Category', 'res.company', 'Company', 'HistoryCategory.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_appointment.cpython-310.pyc ---
+Class/Function Name: PrescriptionAppointment
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'patient_id', 'physician_id', 'patient_age', 'patient_phone', 'patient_mail', 'Date', 'today', 'appointment_date', 'company_id', 'Selection', 'appointment_status', 'patient_ident_nu', 'Integer', 'weight', 'w_unit', 'height', 'Float', 'bmi', 'blood_presure', 'blood_presure_2', 'pulse', 'respiratory_rate', 'Text', 'medical_history', 'Boolean', 'prescription_created', 'prescription_id', 'partner_type', 'schedule_id', 'api', 'onchange', '_onchange_schedule_id', 'model_create_multi', 'create', 'action_confirm', 'start_appointment', '_get_qty', 'depends', '_compute_bmi', 'finish_appointment_create_prescription', 'view_prescription', 'cancel_appointment']
+String Constants: ['PrescriptionAppointment', 'pres.appointment', 'Patient Appointment', 'Appointment Number', 'PrescriptionAppointment.<lambda>', 'res.partner', 'restrict', 'Patient', "[('partner_type','=','patient')]", 'Prescribing Doctor', "[('partner_type','=','physician')]", 'patient_id.age', 'Age', 'patient_id.mobile', 'Phone', 'patient_id.email', 'Email', 'Appointment Date', 'Hospital', 'res.company', 'Appointment Status', 'draft', 'patient_id.seq', 'Patient Identity Number', 'Weight', 'uom.uom', 'Unit', 'Height', 'BMI', '_compute_bmi', 'Systolic Pressure', 'Diastolic Pressure', 'Pulse', 'Respiratory Rate', 'patient_id.patient_medical_history', 'Medical History', 'Prescription id', 'prescription.order.knk', 'patient_id.partner_type', 'appointment.schedule.slot.lines', 'schedule_id', 'appointment_date', 'physician_id', 'PrescriptionAppointment._onchange_schedule_id', 'PrescriptionAppointment.create', 'PrescriptionAppointment.action_confirm', 'PrescriptionAppointment.start_appointment', 'UP', 'PrescriptionAppointment._get_qty', 'weight', 'w_unit', 'height', 'PrescriptionAppointment._compute_bmi', 'PrescriptionAppointment.finish_appointment_create_prescription', 'PrescriptionAppointment.view_prescription', 'PrescriptionAppointment.cancel_appointment']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PrescriptionOrderKnk
+Variables (Fields/Attributes): ['_name', '_description', '_inherit', '_order', 'READONLY_STATES', 'fields', 'Char', 'name', 'Selection', 'priority', 'Many2one', 'patient_id', 'patient_seq', 'One2many', 'order_line_ids', 'order_line_new_ids', 'company_id', 'Datetime', 'now', 'date', 'physician_id', 'state', 'patient_age', 'Boolean', 'old_prescription', 'patient_gender', 'Many2many', 'product_ids', 'Float', 'amount_total', 'Text', 'description', 'Binary', 'qr_image', 'complaint_id', 'history_id', 'sign_ids', 'investigation_ids', 'excercise_ids', 'ortho_ids', 'vital_ids', 'his_list', 'sign_list', 'diagnosis_ids', 'prescription_template_ids', 'notes_line_id', 'investigation_result', 'procedure_result', 'patient_history', 'patient_medical_history', 'active', 'medical_history_ids', 'check_patient', 'patient_details', 'extra_notes', 'disease', 'short_code', 'prescription_template_id', 'prescription_attachment', 'past_medical_history_line_ids', 'medication_history_line_ids', 'family_history_line_ids', 'social_history_line_ids', 'symptom_status', 'medication_adherence', 'performance_status_update', 'additional_comments', 'side_effects', 'Integer', 'next_visit_days', 'Date', 'date_of_next_visit', 'procedure_line_ids', 'send_whatsapp_message', 'button_print_prescription', 'api', 'depends', '_compute_date_of_next_visit', '_compute_disease', '_compute_short_code', '_get_old_history', 'onchange', '_onchange_history', 'generate_qr_code', '_compute_amount_total', '_onchange_product_ids', 'unlink', 'button_reset', 'button_confirm', 'open_prescription', '_prepare_diet_line_values', '_onchange_sale_order_template_id']
+String Constants: ['PrescriptionOrderKnk', 'prescription.order.knk', 'Prescription Order Knk', 'mail.thread', 'mail.activity.mixin', 'priority desc, id desc', 'Prescription Number', '0', 'Favorite', 'res.partner', 'restrict', 'Patient', "[('partner_type','=','patient')]", 'patient_id.seq', 'Patient Id', 'prescription.order.line.knk', 'prescription_id', 'Prescription line', 'prescription.order.line.knk.new', 'res.company', 'cascade', 'Hospital', 'PrescriptionOrderKnk.<lambda>', 'Prescription Date', 'Prescribing Doctor', "[('partner_type','=','physician')]", 'State', 'draft', 'patient_id.age', 'Age', 'patient_id.gender', 'product.product', "[('is_medication_knk','=',True)]", '_compute_amount_total', 'Description', 'QR Code', 'complaint.record.line', 'complain_res_id', 'history.list.line', 'history_res_id', 'sign.list.line', 'sign_res_id', 'investigation.list.line', 'inves_res_id', 'excercise.ex.line', 'excer_res_id', 'ortho.list.line', 'ortho_list_id', 'vital.list.line', 'vital_list_id', 'history.list', 'sign.list', 'diagnosis.diagnosis', 'diagnosis_res_id', 'prescription.template', 'note.note', 'Investigation Result', 'Procedure Result', 'Patient History', 'patient_id.patient_medical_history', 'Medical History', 'Active', 'patient.history.line', 'pat_medical_his_id', '_compute_disease', 'Disease', '_compute_short_code', 'Short Code', 'Prescription Template', "[('company_id', '=', company_id)]", 'prescription_template_id.attachment', 'Attachment', 'past.medical.history', 'Past Medical History', 'medication.history', 'Medication History', 'family.history', 'Family History', 'social.history', 'Social History', 'Symptom Status', 'Medication Adherence', 'Performance Status Update', 'Additional Comments', 'Side Effects / Toxicities', 'Days of Next Visit', 'Date of Next Visit', '_compute_date_of_next_visit', 'procedure.history', 'Procedure', 'PrescriptionOrderKnk.send_whatsapp_message', 'PrescriptionOrderKnk.button_print_prescription', 'date', 'next_visit_days', 'PrescriptionOrderKnk._compute_date_of_next_visit', 'diagnosis_ids.disease_id.name', 'PrescriptionOrderKnk._compute_disease', 'diagnosis_ids.disease_short_code_id', 'PrescriptionOrderKnk._compute_short_code', 'PrescriptionOrderKnk._get_old_history', 'patient_id', 'PrescriptionOrderKnk._onchange_history', 'PrescriptionOrderKnk.generate_qr_code', 'order_line_new_ids', 'PrescriptionOrderKnk._compute_amount_total', 'PrescriptionOrderKnk._onchange_product_ids', 'PrescriptionOrderKnk.unlink', 'PrescriptionOrderKnk.button_reset', 'PrescriptionOrderKnk.button_confirm', 'PrescriptionOrderKnk.open_prescription', 'PrescriptionOrderKnk._prepare_diet_line_values', 'prescription_template_id', 'PrescriptionOrderKnk._onchange_sale_order_template_id']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: send_whatsapp_message
+Variables (Fields/Attributes): ['ensure_one', 'env', 'company', 'whatsapp_template_id', 'UserError', '_', 'patient_id', 'id', '_name', 'with_context', 'sudo', 'create', '_render_field', 'body', 'send_whatsapp_message']
+String Constants: ['Please configure Whatsapp Template in Company Settings', 'pos_prescription_knk.action_prescription_order_report', 'wa.compose.message', 'body_html']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: MedicalHistoryLine
+Variables (Fields/Attributes): ['_name', 'fields', 'Text', 'name', 'Date', 'context_today', 'date', 'Many2one', 'patient_id', 'pat_medical_his_id', 'medication', 'investigation']
+String Constants: ['MedicalHistoryLine', 'patient.history.line', 'Medical History', 'Date', 'res.partner', 'Patient id', 'prescription.order.knk', 'Medication', 'Investigation']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: NotesRecord
+Variables (Fields/Attributes): ['_name', 'fields', 'Text', 'name', 'Many2one', 'company_id']
+String Constants: ['NotesRecord', 'note.note', 'Notes', 'res.company', 'Company', 'NotesRecord.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: DiagnosislistRecord
+Variables (Fields/Attributes): ['_name', 'fields', 'Text', 'name', 'Many2one', 'company_id']
+String Constants: ['DiagnosislistRecord', 'diagnosis.diagnosis.list', 'Diagnosis', 'res.company', 'Company', 'DiagnosislistRecord.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: DiagnosisRecord
+Variables (Fields/Attributes): ['_name', 'fields', 'Many2one', 'name', 'diagnosis_res_id', 'temp_diagnosis_res_id', 'company_id', 'disease_id', 'Char', 'disease_short_code_id', '_prepare_diagnosis_line_values']
+String Constants: ['DiagnosisRecord', 'diagnosis.diagnosis', 'diagnosis.diagnosis.list', 'Diagnosis', 'prescription.order.knk', 'prescription.template', 'res.company', 'Company', 'DiagnosisRecord.<lambda>', 'medical.disease', 'Disease Name', 'disease_id.code', 'Disease Short Code', 'DiagnosisRecord._prepare_diagnosis_line_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: Complaintlist
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2many', 'period_ids', 'Many2one', 'company_id', 'One2many', 'complain_image_line_ids']
+String Constants: ['Complaintlist', 'complaint.list', 'Show List of Complaints ', 'Complaint', 'period.record', 'Period', "[('company_id', '=', company_id)]", 'res.company', 'Company', 'Complaintlist.<lambda>', 'complain.image.line', 'complain_id']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: ComplainImageLine
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Binary', 'image', 'Many2one', 'company_id', 'complain_id']
+String Constants: ['ComplainImageLine', 'complain.image.line', 'Complain Image Line', 'Name', 'Image', 'res.company', 'Company', 'ComplainImageLine.<lambda>', 'complaint.list', 'cascade']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: complaintPeriodRecord
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['complaintPeriodRecord', 'period.record', 'Display period records', 'Periods', 'res.company', 'Company', 'complaintPeriodRecord.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: ComplaintRecordline
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'name', 'complaint_list_id', 'period', 'company_id', 'patient_id', 'complain_res_id', 'temp_complain_res_id', 'Integer', 'sequence', 'location_id', 'Many2many', 'period_domain_ids', 'Binary', 'image', 'Boolean', 'view_all_buttons', 'api', 'depends', '_compute_period_domain_ids', 'action_select_image', '_prepare_complain_line_values']
+String Constants: ['ComplaintRecordline', 'complaint.record.line', 'Complaint Line Records', 'complaint.list', 'Complaint List', 'period.record', 'Period', 'res.company', 'cascade', 'Hospital', 'ComplaintRecordline.<lambda>', 'res.partner', 'restrict', 'complain_res_id.patient_id', 'prescription.order.knk', 'prescription.template', 'Sequence', 'location.location', 'Anatomy', '_compute_period_domain_ids', 'Selected Image', 'View All Buttons', 'complaint_list_id', 'ComplaintRecordline._compute_period_domain_ids', 'ComplaintRecordline.action_select_image', 'ComplaintRecordline._prepare_complain_line_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: ComplaintImageSelectWizard
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'complaint_record_id', 'complaint_id', 'One2many', 'image_line_ids', 'api', 'model', 'default_get', 'action_confirm']
+String Constants: ['ComplaintImageSelectWizard', 'complaint.image.select.wizard', 'Complaint Image Selection Wizard', 'complaint.record.line', 'complaint.list', 'complaint.image.select.wizard.line', 'wizard_id', 'Images', 'ComplaintImageSelectWizard.default_get', 'ComplaintImageSelectWizard.action_confirm']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: ComplaintImageSelectWizardLine
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'wizard_id', 'image_id', 'Binary', 'image', 'Boolean', 'is_selected']
+String Constants: ['ComplaintImageSelectWizardLine', 'complaint.image.select.wizard.line', 'Complaint Image Selection Wizard Line', 'complaint.image.select.wizard', 'complain.image.line', 'Image', 'Select']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: historyList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2many', 'period_ids', 'Many2one', 'history_category_id', 'company_id']
+String Constants: ['historyList', 'history.list', 'Patient History', 'History', 'period.record', 'Period', "[('company_id', '=', company_id)]", 'history.category', 'Category', 'res.company', 'Company', 'historyList.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: historyListLine
+Variables (Fields/Attributes): ['_name', '_description', '_order', 'fields', 'Many2one', 'history_res_id', 'name', 'history_period', 'history_category_id', 'patient_id', 'temp_history_res_id', 'company_id', 'Integer', 'sequence', 'api', 'onchange', '_onchange_name', '_onchange_history_category_id']
+String Constants: ['historyListLine', 'history.list.line', 'Patient History Line', 'sequence', 'prescription.order.knk', 'history.list', 'History List', 'period.record', 'Factors', 'history.category', 'Category', 'res.partner', 'restrict', 'history_res_id.patient_id', 'prescription.template', 'res.company', 'cascade', 'Hospital', 'historyListLine.<lambda>', 'Sequence', 'name', 'historyListLine._onchange_name', 'history_category_id', 'historyListLine._onchange_history_category_id']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: signList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2many', 'intensity_ids', 'Many2one', 'company_id']
+String Constants: ['signList', 'sign.list', 'Show Signs', 'Examination', 'intensity.intensity', 'Intensity', "[('company_id', '=', company_id)]", 'res.company', 'Company', 'signList.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: Location
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['Location', 'location.location', 'Shows Location', 'Anatomy', 'res.company', 'Company', 'Location.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: InstensityInstensity
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['InstensityInstensity', 'intensity.intensity', 'Display Intensity', 'Intensity', 'res.company', 'Company', 'InstensityInstensity.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: signListLine
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'name', 'location', 'intensity', 'sign_res_id', 'patient_id', 'temp_sign_res_id', 'company_id', 'Integer', 'sequence', 'api', 'onchange', '_onchange_name', '_prepare_sign_line_values']
+String Constants: ['signListLine', 'sign.list.line', 'Display Sign Line', 'sign.list', 'Examination List', 'location.location', 'Anatomy', 'intensity.intensity', 'Intensity', 'prescription.order.knk', 'res.partner', 'restrict', 'sign_res_id.patient_id', 'prescription.template', 'res.company', 'cascade', 'Hospital', 'signListLine.<lambda>', 'Sequence', 'name', 'signListLine._onchange_name', 'signListLine._prepare_sign_line_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: TestType
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['TestType', 'test.type', 'res.company', 'Company', 'TestType.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: InvestigationList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2many', 'test_type', 'Many2one', 'company_id']
+String Constants: ['InvestigationList', 'investigation.list', 'Investigation List', 'Test Item/Sample', 'test.type', 'res.company', 'Company', 'InvestigationList.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: InvestigationListline
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'investigation_list_id', 'Many2many', 'test_type', 'inves_res_id', 'temp_inves_res_id', 'company_id', 'Integer', 'sequence', 'api', 'onchange', 'get_test_type', '_prepare_invs_line_values']
+String Constants: ['InvestigationListline', 'investigation.list.line', 'Investigation Lines', 'investigation.list', 'test.type', 'Test Type', 'prescription.order.knk', 'prescription.template', 'res.company', 'cascade', 'Hospital', 'InvestigationListline.<lambda>', 'Sequence', 'investigation_list_id', 'test_type', 'InvestigationListline.get_test_type', 'InvestigationListline._prepare_invs_line_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PartLocation
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['PartLocation', 'part.location', 'Part Location', 'res.company', 'Company', 'PartLocation.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: ExcerciseEx
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'part_location', 'move2', 'type_of_test2', 'company_id']
+String Constants: ['ExcerciseEx', 'excercise.excercise', 'Patient Excercise', 'Part/Body', 'part.location', 'Part Location', 'Move', 'Repitition', 'res.company', 'Company', 'ExcerciseEx.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: ExcerciseExLine
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'name', 'part_location', 'Char', 'move2', 'type_of_test2', 'excer_res_id', 'temp_excer_res_id', 'company_id', 'Integer', 'sequence', 'api', 'onchange', 'get_part_location', 'get_move_test_type', '_prepare_excer_line_values']
+String Constants: ['ExcerciseExLine', 'excercise.ex.line', 'Patient Excercise Line', 'excercise.excercise', 'Part/Body', 'part.location', 'Part Location', 'Move', 'Repitition', 'prescription.order.knk', 'prescription.template', 'res.company', 'cascade', 'Hospital', 'ExcerciseExLine.<lambda>', 'Sequence', 'name', 'ExcerciseExLine.get_part_location', 'part_location', 'ExcerciseExLine.get_move_test_type', 'ExcerciseExLine._prepare_excer_line_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: orthoList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['orthoList', 'ortho.list', 'Side', 'res.company', 'Company', 'orthoList.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: itemList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'material', 'Text', 'comments', 'Many2one', 'company_id']
+String Constants: ['itemList', 'item.item', 'Ortho Items', 'Item Name', 'Material', 'Instruction', 'res.company', 'Company', 'itemList.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: orthoListLine
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'name', 'location', 'side', 'Char', 'material', 'Text', 'comments', 'ortho_list_id', 'temp_ortho_list_id', 'company_id', 'Integer', 'sequence', '_prepare_ortho_line_values']
+String Constants: ['orthoListLine', 'ortho.list.line', 'Ortho List', 'item.item', 'Item Name', 'location.location', 'Anatomy', 'ortho.list', 'side', 'name.material', 'Material', 'name.comments', 'Instruction', 'prescription.order.knk', 'prescription.template', 'res.company', 'cascade', 'Hospital', 'orthoListLine.<lambda>', 'Sequence', 'orthoListLine._prepare_ortho_line_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: VitalUnit
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['VitalUnit', 'vital.uom', 'Unit', 'res.company', 'Company', 'VitalUnit.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: vitalListLine
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Integer', 'name', 'Many2one', 'w_unit', 'height', 'h_unit', 'Float', 'bmi', 'Char', 'bmi_unit', 'blood_presure', 'slash_tag', 'blood_presure_2', 'blood_unit', 'pulse', 'pulse_unit', 'respiratory_rate', 'rr_unit', 'vital_list_id', 'company_id', 'sequence', '_get_qty', 'api', 'depends', '_compute_bmi']
+String Constants: ['vitalListLine', 'vital.list.line', 'Vital Signs', 'Weight', 'uom.uom', 'Unit', 'height', 'BMI', '_compute_bmi', 'Systolic Pressure', '/', 'Diastolic Pressure', 'Pulse', 'Respiratory Rate', 'prescription.order.knk', 'res.company', 'Company', 'vitalListLine.<lambda>', 'Sequence', 'UP', 'vitalListLine._get_qty', 'name', 'w_unit', 'vitalListLine._compute_bmi']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PrescriptionOrderLineKnkNew
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'prescription_id', 'temp_prescription_id', 'product_id', 'Float', 'quantity', 'Char', 'short_comment', 'company_id', 'qty_available', 'days', 'qty_per_day', 'unit_price', 'subtotal', 'med_group_id', 'composition_id', 'dose_id', 'route_id', 'whn_to_take_id', 'frequency_id', 'knk_t_qty', 'Integer', 'sequence', 'Selection', 'display_type', 'Text', 'name', 'api', 'onchange', '_onchange_subtotal', '_get_total_qty', '_prepare_prescription_line_values', 'get_product_type', '_onchange_med_group_id']
+String Constants: ['PrescriptionOrderLineKnkNew', 'prescription.order.line.knk.new', 'Prescription Order Line Knk New', 'prescription.order.knk', 'cascade', 'Prescription', 'prescription.template', 'product.product', 'Name', "[('is_medication_knk','=',True)]", 'Units', 'Number of units of the medicament. Example : 30 capsules of amoxicillin', 'Comment', 'Short comment on the specific drug', 'res.company', 'Hospital', 'prescription_id.company_id', 'product_id.qty_available', 'Available Qty', 'Days', 'Qty Per Day', 'Unit Price', 'product_id.lst_price', 'Sub Total', 'medicine.group', 'Medicine Group', 'medicine.composition', 'Composition', 'medicine.dose', 'Dose', 'medicine.route', 'Route', 'medicine.food', 'Relation With Food', 'med.frequency', 'Frequency', 'Total Quantity', 'Sequence', 'unit_price', 'quantity', 'PrescriptionOrderLineKnkNew._onchange_subtotal', 'qty_per_day', 'days', 'PrescriptionOrderLineKnkNew._get_total_qty', 'PrescriptionOrderLineKnkNew._prepare_prescription_line_values', 'product_id', 'PrescriptionOrderLineKnkNew.get_product_type', 'med_group_id', 'PrescriptionOrderLineKnkNew._onchange_med_group_id']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PrescriptionOrderLineKnk
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'prescription_id', 'temp_prescription_id', 'product_id', 'Float', 'quantity', 'Char', 'short_comment', 'company_id', 'qty_available', 'days', 'qty_per_day', 'unit_price', 'subtotal', 'med_group', 'composition', 'dose', 'route', 'whn_to_take', 'frequency', 't_qty', 'Integer', 'sequence', 'api', 'onchange', '_onchange_subtotal', '_get_total_qty', '_prepare_prescription_line_values']
+String Constants: ['PrescriptionOrderLineKnk', 'prescription.order.line.knk', 'Prescription Order Line Knk', 'prescription.order.knk', 'cascade', 'Prescription', 'prescription.template', 'product.product', 'Name', "[('is_medication_knk','=',True)]", 'Units', 'Number of units of the medicament. Example : 30 capsules of amoxicillin', 'Comment', 'Short comment on the specific drug', 'res.company', 'Hospital', 'prescription_id.company_id', 'product_id.qty_available', 'Available Qty', 'Days', 'Qty Per Day', 'Unit Price', 'product_id.lst_price', 'Sub Total', 'Med Group', 'product_id.med_group', 'Composition', 'product_id.composition', 'Dose', 'product_id.dose', 'Route', 'product_id.route', 'Relation With Food', 'product_id.whn_to_take', 'Frequency', 'product_id.frequency', 'Total Quantity', 'product_id.t_qty', 'Sequence', 'unit_price', 'quantity', 'PrescriptionOrderLineKnk._onchange_subtotal', 'qty_per_day', 'days', 'PrescriptionOrderLineKnk._get_total_qty', 'PrescriptionOrderLineKnk._prepare_prescription_line_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PosConfig
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'check_prescription_knk', 'Selection', 'pos_prescription_knk']
+String Constants: ['PosConfig', 'pos.config', 'Import Prescription']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: PastMedicalHistory
+Variables (Fields/Attributes): ['_name', 'fields', 'Many2one', 'prescription_id', 'symptom_id', 'result_id', 'company_id', 'past_med_tmpl_id', 'Many2many', 'result_domain_ids', 'api', 'depends', '_compute_result_domain_ids']
+String Constants: ['PastMedicalHistory', 'past.medical.history', 'prescription.order.knk', 'cascade', 'symptom.config', 'Symptoms', "[('company_id', '=', company_id)]", 'result.config', 'Result', 'res.company', 'Company', 'PastMedicalHistory.<lambda>', 'prescription.template', 'Template', '_compute_result_domain_ids', 'symptom_id', 'PastMedicalHistory._compute_result_domain_ids']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: MedicationHistory
+Variables (Fields/Attributes): ['_name', 'fields', 'Many2one', 'prescription_id', 'medicine_id', 'medicine_group_id', 'med_tmpl_id']
+String Constants: ['MedicationHistory', 'medication.history', 'prescription.order.knk', 'cascade', 'product.product', 'Medicine', "[('is_medication_knk', '=', True)]", 'medicine.group', 'Medicine Group', 'medicine_id.med_group_id', 'prescription.template', 'Template']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: FamilyHistory
+Variables (Fields/Attributes): ['_name', 'fields', 'Many2one', 'prescription_id', 'family_history_config_id', 'family_history_result_id', 'company_id', 'family_tmpl_id', 'Many2many', 'result_domain_ids', 'api', 'depends', '_compute_result_domain_ids']
+String Constants: ['FamilyHistory', 'family.history', 'prescription.order.knk', 'cascade', 'family.history.config', 'Family History', "[('company_id', '=', company_id)]", 'family.history.result', 'Family History Result', 'res.company', 'Company', 'FamilyHistory.<lambda>', 'prescription.template', 'Template', '_compute_result_domain_ids', 'family_history_config_id', 'FamilyHistory._compute_result_domain_ids']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: SocialHistory
+Variables (Fields/Attributes): ['_name', 'fields', 'Many2one', 'prescription_id', 'social_history_config_id', 'social_history_result_id', 'company_id', 'social_tmpl_id', 'Many2many', 'result_domain_ids', 'api', 'depends', '_compute_result_domain_ids']
+String Constants: ['SocialHistory', 'social.history', 'prescription.order.knk', 'cascade', 'social.history.config', 'Social History', "[('company_id', '=', company_id)]", 'social.history.result', 'Result', 'res.company', 'Company', 'SocialHistory.<lambda>', 'prescription.template', 'Template', '_compute_result_domain_ids', 'social_history_config_id', 'SocialHistory._compute_result_domain_ids']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: ProcedureHistory
+Variables (Fields/Attributes): ['_name', 'fields', 'Many2one', 'prescription_id', 'Many2many', 'procedure_config_ids', 'company_id']
+String Constants: ['ProcedureHistory', 'procedure.history', 'prescription.order.knk', 'cascade', 'procedure.config', 'Procedure', "[('company_id', '=', company_id)]", 'res.company', 'Company', 'ProcedureHistory.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_knk.cpython-310.pyc ---
+Class/Function Name: WaCompose
+Variables (Fields/Attributes): ['_inherit', 'api', 'model', 'default_get']
+String Constants: ['WaCompose', 'wa.compose.message', 'WaCompose.default_get']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\prescription_order_template.cpython-310.pyc ---
+Class/Function Name: PrescriptionTemplate
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id', 'Text', 'description', 'One2many', 'complaint_res_ids', 'history_res_ids', 'sign_res_ids', 'inves_res_ids', 'excer_res_ids', 'ortho_list_ids', 'diagnosis_res_ids', 'prescription_ids', 'prescription_new_ids', 'Boolean', 'old_temp', 'template_note_ids', 'Binary', 'attachment', 'past_medical_history_line_ids', 'medication_history_line_ids', 'family_history_line_ids', 'social_history_line_ids']
+String Constants: ['PrescriptionTemplate', 'prescription.template', 'Prescription Template', 'res.company', 'PrescriptionTemplate.<lambda>', 'Diet', 'complaint.record.line', 'temp_complain_res_id', 'history.list.line', 'temp_history_res_id', 'sign.list.line', 'temp_sign_res_id', 'investigation.list.line', 'temp_inves_res_id', 'excercise.ex.line', 'temp_excer_res_id', 'ortho.list.line', 'temp_ortho_list_id', 'diagnosis.diagnosis', 'temp_diagnosis_res_id', 'prescription.order.line.knk', 'temp_prescription_id', 'prescription.order.line.knk.new', 'note.note', 'Notes', 'Attachment', 'past.medical.history', 'past_med_tmpl_id', 'Past Medical History', 'medication.history', 'med_tmpl_id', 'Medication History', 'family.history', 'family_tmpl_id', 'Family History', 'social.history', 'social_tmpl_id', 'Social History']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\radiology_request.cpython-310.pyc ---
+Class/Function Name: RadiologyRequest
+Variables (Fields/Attributes): ['_name', '_inherit', '_description', 'fields', 'Char', 'name', 'Datetime', 'now', 'date', 'Many2one', 'patient_id', 'physician_id', 'patient_age', 'invoice_id', 'One2many', 'line_ids', 'company_id', 'Selection', 'status', 'pacs_url', 'Html', 'technique', 'findings', 'impression', 'Binary', 'signature', 'procedure_physician_id', 'procedure_product_id', 'demo_html', 'action_print_with_header', 'action_print_without_header', 'action_view_study', 'api', 'model_create_multi', 'create']
+String Constants: ['RadiologyRequest', 'radiology.request', 'mail.thread', 'mail.activity.mixin', 'Radiology Request', 'Request Number', 'Date', 'res.partner', 'restrict', 'Patient', "[('partner_type','=','patient')]", 'Prescribing Doctor', "[('partner_type','=','physician')]", 'Age', 'Computed patient age at the moment of the evaluation', 'patient_id.age', 'account.move', 'Invoice', 'radiology.request.line', 'radiology_request_id', 'Radiology Test Line', 'res.company', 'RadiologyRequest.<lambda>', 'scheduled', 'URL', 'product.product', 'Procedure name', 'RadiologyRequest.action_print_with_header', 'RadiologyRequest.action_print_without_header', 'RadiologyRequest.action_view_study', 'RadiologyRequest.create']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\radiology_request.cpython-310.pyc ---
+Class/Function Name: RadiologyRequestLine
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'radiology_request_id', 'Char', 'test', 'product_id', 'special_instruction', 'Float', 'sale_price']
+String Constants: ['RadiologyRequestLine', 'radiology.request.line', 'Radiology Request Line', 'radiology.request', 'Lines', 'cascade', 'product.product', 'Test', 'product_id.lst_price']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\referral_partner.cpython-310.pyc ---
+Class/Function Name: ReferralPartner
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'email', 'phone', 'Binary', 'image_1920', 'age', 'Selection', 'gender', 'street', 'street2', 'zip', 'city', 'Many2one', 'state_id', 'country_id', 'company_id']
+String Constants: ['ReferralPartner', 'referral.partner', 'res.country.state', 'State', 'restrict', "[('country_id', '=?', country_id)]", 'res.country', 'Country', 'res.company', 'Company', 'ReferralPartner.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_config_setting.cpython-310.pyc ---
+Class/Function Name: ResCompany
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Integer', 'allowed_booking_online_days', 'booking_slot_time', 'allowed_booking_per_slot', 'Boolean', 'allowed_booking_payment', 'Char', 'timing', 'Text', 'company_note', 'Binary', 'ctm_logo', 'company_footer', 'Many2one', 'whatsapp_template_id', 'whatsapp_otp_template_id']
+String Constants: ['ResCompany', 'res.company', 'Allowed Advance Booking Days', 'No of days for which advance booking is allowed', 'Minutes in each slot', 'Configure your slot length, 15-30min.', 'Allowed Booking per Slot', 'No of allowed booking per slot.', 'Allowed Advance Booking Payment', 'Allow user to do online Payment', 'wa.template', 'WhatsApp Template', 'WhatsApp OTP Template']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_config_setting.cpython-310.pyc ---
+Class/Function Name: ResConfigSettings
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Integer', 'allowed_booking_online_days', 'booking_slot_time', 'allowed_booking_per_slot', 'Boolean', 'allowed_booking_payment', 'Many2one', 'whatsapp_template_id', 'whatsapp_otp_template_id']
+String Constants: ['ResConfigSettings', 'res.config.settings', 'company_id.allowed_booking_online_days', 'Allowed Advance Booking Days', 'company_id.booking_slot_time', 'Minutes in each slot', 'company_id.allowed_booking_per_slot', 'Allowed Booking per Slot', 'company_id.allowed_booking_payment', 'Allowed Advance Booking Payment', 'wa.template', 'company_id.whatsapp_template_id', 'WhatsApp Template', 'company_id.whatsapp_otp_template_id', 'WhatsApp OTP Template']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_config_setting.cpython-310.pyc ---
+Class/Function Name: PatientType
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['PatientType', 'patient.type', 'res.company', 'Company', 'PatientType.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ProductTemplate
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'is_medication_knk', 'Many2one', 'med_group_id', 'composition_id', 'dose_id', 'route_id', 'whn_to_take_id', 'frequency_id', 'Char', 'knk_t_qty', 'med_group', 'composition', 'dose', 'route', 'whn_to_take', 'frequency', 't_qty', 'marketer_id', 'medicine_type_id', 'Text', 'introduction', 'benefits', 'med_description', 'how_to_use', 'safety_advice', 'if_miss', 'med_product_type_id', 'prescription_required', 'fact_box', 'primary_use', 'storage', 'use_off_label', 'common_side_effects', 'country_of_origin_id', 'how_it_works', 'reference', 'alcohol_interaction_id', 'pregnancy_interaction_id', 'lactation_interaction_id', 'driving_interaction_id', 'kidney_interaction_id', 'liver_interaction_id']
+String Constants: ['ProductTemplate', 'product.template', 'medicine.group', 'Medicine Group', 'medicine.composition', 'Composition', 'medicine.dose', 'Dose', 'medicine.route', 'Route', 'medicine.food', 'Relation With Food', 'med.frequency', 'Frequency', 'Total Quantity', 'Med Group Old', 'Composition Old', 'Dose Old', 'Route Old', 'When to take Old', 'Frequency Old', 'T Qty old', 'res.partner', 'Marketer/Manufacturer', 'medicine.type', 'Medicine Type', 'Introduction', 'Benefits', 'Description', 'How to Use', 'Safety Advice', 'If Missed', 'product.type', 'Product Type', 'Prescription Required', 'Fact Box', 'Primary Use', 'Storage', 'Use Off', 'Common Side Effects', 'res.country', 'Country of Origin', 'How It Works', 'Reference', 'interaction.interaction', 'Alcohol Interaction', 'Pregnancy Interaction', 'Lactation Interaction', 'Driving Interaction', 'Kidney Interaction', 'Liver Interaction']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ProductProduct
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'is_medication_knk']
+String Constants: ['ProductProduct', 'product.product']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicineDose
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['MedicineDose', 'medicine.dose', 'Dose', 'res.company', 'Company', 'MedicineDose.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicineGroup
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['MedicineGroup', 'medicine.group', 'Medicine Group', 'res.company', 'Company', 'MedicineGroup.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicineComposition
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['MedicineComposition', 'medicine.composition', 'Composition', 'res.company', 'Company', 'MedicineComposition.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicineRoute
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['MedicineRoute', 'medicine.route', 'Route', 'res.company', 'Company', 'MedicineRoute.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicineFood
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['MedicineFood', 'medicine.food', 'Relation With Food', 'res.company', 'Company', 'MedicineFood.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicineFrequency
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['MedicineFrequency', 'med.frequency', 'Frequency', 'res.company', 'Company', 'MedicineFrequency.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicineType
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['MedicineType', 'medicine.type', 'Type', 'res.company', 'Company', 'MedicineType.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ProductType
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['ProductType', 'product.type', 'Type', 'res.company', 'Company', 'ProductType.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: Interaction
+Variables (Fields/Attributes): ['_name', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['Interaction', 'interaction.interaction', 'res.company', 'Company', 'Interaction.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ResPartner
+Variables (Fields/Attributes): ['_inherit', '_order', 'fields', 'Char', 'seq', 'Date', 'date_of_birth', 'Selection', 'partner_type', 'age', 'age_type', 'gender', 'Integer', 'prescription_count', 'Binary', 'physician_signature', 'Many2one', 'company_id', 'country_id', 'zip', 'city', 'state_id', 'Text', 'patient_medical_history', 'pat_prescription_count', 'phy_prescription_count', 'patient_details', 'One2many', 'patient_history_ids', 'referral_partner_id', 'Boolean', 'is_referral_editable', 'designation', 'priority', 'reg_no', 'registered_id', 'id_number', 'emergency_contact_number', 'emergency_contact_name', 'relation', 'otp_code', 'otp_input', 'is_verified', 'action_send_otp', 'action_open_otp_wizard', 'api', 'depends', '_compute_age', '_compute_is_referral_editable', 'write', 'model_create_multi', 'create', '_compute_prescription_order', 'action_view_patient_prescription_order', '_compute_patient_prescription_count', 'view_appointment', '_compute_patient_prescription_count_for_physcian', 'view_appointment_physician']
+String Constants: ['ResPartner', 'res.partner', 'priority desc, display_name ASC, id DESC', 'Patient Id', 'ResPartner.<lambda>', 'Date of Birth', 'Age', '_compute_age', 'year', '_compute_prescription_order', 'Signature', 'res.company', 'Company', 'res.country', 'Country', 'res.country.state', 'State', 'restrict', "[('country_id', '=?', country_id)]", 'Medical History', 'Prescriptions', '_compute_patient_prescription_count', '_compute_patient_prescription_count_for_physcian', 'Patient Details', 'patient.history', 'knk_patient_id', 'referral.partner', '_compute_is_referral_editable', '0', 'Favorite', 'Registration Number', 'Registered ID', 'ID Number', 'Emergency Contact Number', 'Emergency Contact Name', 'Relation', 'OTP Code', 'Enter OTP', 'Verified', 'ResPartner.action_send_otp', 'ResPartner.action_open_otp_wizard', 'date_of_birth', 'ResPartner._compute_age', 'ResPartner._compute_is_referral_editable', 'ResPartner.write', 'ResPartner.create', 'ResPartner._compute_prescription_order', 'ResPartner.action_view_patient_prescription_order', 'ResPartner._compute_patient_prescription_count', 'ResPartner.view_appointment', 'ResPartner._compute_patient_prescription_count_for_physcian', 'ResPartner.view_appointment_physician']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: action_send_otp
+Variables (Fields/Attributes): ['ensure_one', 'mobile', 'UserError', '_', 'str', 'random', 'randint', 'otp_code', 'is_verified', 'env', 'company', 'whatsapp_otp_template_id', 'id', '_name', 'with_context', 'sudo', 'create', '_render_field', 'body', 'send_whatsapp_message']
+String Constants: ['Partner must have a mobile/WhatsApp number.', 'Please configure WhatsApp Template in Company Settings.', 'wa.compose.message', 'body_html']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: WAComposerInherit
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'is_otp_message', 'Char', 'otp_code']
+String Constants: ['WAComposerInherit', 'wa.compose.message', 'Is OTP Message', 'OTP']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: MedicalHistory
+Variables (Fields/Attributes): ['_name', 'fields', 'Text', 'name', 'Date', 'context_today', 'date', 'Many2one', 'knk_patient_id']
+String Constants: ['MedicalHistory', 'patient.history', 'Medical History', 'Date', 'res.partner']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: PosOrder
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'is_prescription_enable', 'prescription_order', 'Char', 'pres_id', 'api', 'model', '_order_fields', '_export_for_ui', 'create_precription_order', 'model_create_multi', 'create']
+String Constants: ['PosOrder', 'pos.order', 'PosOrder._order_fields', 'PosOrder._export_for_ui', 'PosOrder.create_precription_order', 'PosOrder.create']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ResPartnerOtpWizard
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'partner_id', 'Char', 'otp_input', 'action_verify_otp']
+String Constants: ['ResPartnerOtpWizard', 'res.partner.otp.wizard', 'Verify OTP for Patient', 'res.partner', 'Patient', 'Enter OTP', 'ResPartnerOtpWizard.action_verify_otp']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\report\__pycache__\prescription_order_report.cpython-310.pyc ---
+Class/Function Name: PrescriptionReport
+Variables (Fields/Attributes): ['_name', '_auto', '_description', 'fields', 'Many2one', 'patient_id', 'complaint', 'history', 'symtoms', 'init']
+String Constants: ['PrescriptionReport', 'prescription.order.report', 'Show the Pivot Report', 'res.partner', 'Patient', 'complaint.record.line', 'Complaint', 'history.list.line', 'History', 'sign.list.line', 'Examination', 'PrescriptionReport.init']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\wizard\__pycache__\import_patient.cpython-310.pyc ---
+Class/Function Name: PatientImport
+Variables (Fields/Attributes): ['_name', 'fields', 'Binary', 'patient_file', 'import_patient']
+String Constants: ['PatientImport', 'patient.import', 'import Excel Files', 'PatientImport.import_patient']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\pos_prescription_knk\wizard\__pycache__\schedule_wizard.cpython-310.pyc ---
+Class/Function Name: AppointmentSchedulerWizard
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Many2one', 'schedule_id', 'Date', 'today', 'start_date', 'end_date', 'api', 'constrains', '_check_dates', 'appointment_slot_create_wizard']
+String Constants: ['AppointmentSchedulerWizard', 'appointment.scheduler.wizard', 'Appointment Scheduler Wiz', 'appointment.schedule', 'Appointment schedule', 'cascade', 'Start Date', 'End Date', 'start_date', 'end_date', 'AppointmentSchedulerWizard._check_dates', 'AppointmentSchedulerWizard.appointment_slot_create_wizard']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\channel_provider_line.cpython-310.pyc ---
+Class/Function Name: ChannelProviderLine
+Variables (Fields/Attributes): ['_description', '_name', 'fields', 'Many2one', 'channel_id', 'provider_id', 'partner_id']
+String Constants: ['ChannelProviderLine', 'Channel Provider Line', 'channel.provider.line', 'mail.channel', 'Channel', 'provider', 'Provider', 'res.partner', 'Partner']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\components.cpython-310.pyc ---
+Class/Function Name: Components
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Integer', 'sequence', 'Selection', 'type', 'formate', 'formate_media_type', 'media_type', 'Many2many', 'attachment_ids', 'Text', 'text', 'One2many', 'variables_ids', 'Many2one', 'wa_template_id', 'model_id', 'wa_button_ids', 'wa_carousel_ids', 'Char', 'footer_text', 'interactive_type', 'interactive_list_ids', 'interactive_button_ids', 'interactive_product_list_ids', 'catalog_id', 'product_retailer_id', 'Boolean', 'is_expiration', 'Datetime', 'limited_offer_exp_date', 'api', 'onchange', 'onchange_text', 'constrains', '_constrain_text_length', 'onchange_check_attachment']
+String Constants: ['Components', 'components', 'Whatsapp Components', 'Sequence', 'Type', 'header', 'Formate', 'text', 'Format Media Type', 'dynamic', 'Media Type', 'document', 'ir.attachment', 'Attach Document', 'Text', 'variables', 'component_id', 'Variables', 'wa.template', 'ir.model', 'wa_template_id.model_id', 'wa.button.component', 'components_id', 'Buttons', 'wa.carousel.component', 'Carousel Components', 'Footer Text', 'Not interested? Tap Stop promotions', 'Interactive Message Type', 'button', 'interactive.list.title', 'List Items', 'interactive.button', 'Button Items', 'interactive.product.list', 'Product List Items', 'Catalog ID', 'Product Retailer ID', 'Is Expiration', 'Offer Expiry Date', 'Components.onchange_text', 'type', 'formate', 'Components._constrain_text_length', 'attachment_ids', 'Components.onchange_check_attachment']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\interactive_button.cpython-310.pyc ---
+Class/Function Name: ButtonList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'title', 'Many2one', 'component_id']
+String Constants: ['ButtonList', 'interactive.button', 'Button for interactive components', 'Title', 'components']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\interactive_list.cpython-310.pyc ---
+Class/Function Name: InteractiveList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'title', 'description', 'Many2one', 'interactive_list_title_id']
+String Constants: ['InteractiveList', 'interactive.list', 'List for interactive', 'Title', 'Description', 'interactive.list.title']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\interactive_list.cpython-310.pyc ---
+Class/Function Name: InteractiveListTitle
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'main_title', 'Many2one', 'component_id', 'One2many', 'title_ids']
+String Constants: ['InteractiveListTitle', 'interactive.list.title', 'List title', 'Title', 'components', 'interactive.list', 'interactive_list_title_id', 'List']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\ir_actions.cpython-310.pyc ---
+Class/Function Name: ServerActions
+Variables (Fields/Attributes): ['_name', '_inherit', 'fields', 'Selection', 'state', 'Many2one', 'wa_template_id', '_run_action_whatsapp_multi']
+String Constants: ['ServerActions', ' Add SMS option in server actions. ', 'ir.actions.server', 'whatsapp', 'cascade', 'wa.template', 'WA Template', 'set null', "[('model_id', '=', model_id)]", 'ServerActions._run_action_whatsapp_multi']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\ir_actions.cpython-310.pyc ---
+Class/Function Name: _run_action_whatsapp_multi
+Variables (Fields/Attributes): ['wa_template_id', '_is_recompute', 'get', '_name', 'env', 'with_context', 'id', 'create', 'send_whatsapp_message', 'ref', 'sudo', '_render_qweb_pdf', 'base64', 'b64encode', 'name', 'partner_id']
+String Constants: ['records', 'record', 'res.partner', 'wa.compose.message', 'pos.order', 'point_of_sale.pos_invoice_report', 'ir.attachment', 'Invoice-%s.pdf', 'binary', 'wa.msgs']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\ir_attachment.cpython-310.pyc ---
+Class/Function Name: IrAttachment
+Variables (Fields/Attributes): ['_inherit', 'api', 'model', 'check']
+String Constants: ['IrAttachment', 'ir.attachment', 'IrAttachment.check']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\ir_http.cpython-310.pyc ---
+Class/Function Name: IrBinaryInherit
+Variables (Fields/Attributes): ['_inherit', '_record_to_stream']
+String Constants: ['IrBinaryInherit', 'ir.binary', 'IrBinaryInherit._record_to_stream']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\ir_http.cpython-310.pyc ---
+Class/Function Name: IrHttpInherit
+Variables (Fields/Attributes): ['_inherit', '_get_record_and_check']
+String Constants: ['IrHttpInherit', 'ir.http', 'datas', 'IrHttpInherit._get_record_and_check']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\mail_channel.cpython-310.pyc ---
+Class/Function Name: Channel
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'whatsapp_channel', 'api', 'constrains', '_constraint_partners_chat']
+String Constants: ['Channel', 'mail.channel', 'Whatsapp Channel', 'channel_member_ids', 'channel_partner_ids', 'Channel._constraint_partners_chat']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\mail_message.cpython-310.pyc ---
+Class/Function Name: Message
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Selection', 'message_type', 'Boolean', 'isWaMsgs', 'Char', 'wa_message_id', 'Many2one', 'company_id', 'chatter_wa_model', 'Many2oneReference', 'chatter_wa_res_id', 'Integer', 'chatter_wa_message_id', 'wa_delivery_status', 'wa_error_message', 'isWaMsgsRead', 'wp_status', 'api', 'model_create_multi', 'create', '_get_message_format_fields']
+String Constants: ['Message', ' Messages model: system notification (replacing res.log notifications),\n        comments (OpenChatter discussion) and incoming emails. ', 'mail.message', 'wa_msgs', 'Message.<lambda>', 'WA msgs', 'Whatsapp Message ID', 'res.company', 'Company', 'Chatter Wa Message Model', 'Chatter Wa Res Id', 'chatter_wa_model', 'Chatter Wa Message Id', 'Whatsapp Delivery Status', 'Whatsapp Error', 'WA msgs Read', 'Message.create', 'Message._get_message_format_fields']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\product_list.cpython-310.pyc ---
+Class/Function Name: ProductList
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'product_retailer_id', 'Many2one', 'interactive_product_list_id']
+String Constants: ['ProductList', 'product.list', 'Product for interactive', 'Product Retailer', 'interactive.product.list']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\product_list.cpython-310.pyc ---
+Class/Function Name: ProductListTitle
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'main_title', 'Many2one', 'component_id', 'One2many', 'product_list_ids']
+String Constants: ['ProductListTitle', 'interactive.product.list', 'Product list', 'Title', 'components', 'product.list', 'interactive_product_list_id', 'Product Items']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\provider_base.cpython-310.pyc ---
+Class/Function Name: Provider
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Selection', 'provider', 'state', 'Many2one', 'company_id', 'Many2many', 'user_ids', 'Text', 'about', 'business_address', 'business_description', 'business_email', 'Image', 'business_profile_picture', 'business_website', 'business_vertical', 'verified_name', 'code_verification_status', 'display_phone_number', 'quality_rating', 'platform_type', 'throughput_level', 'webhook_configuration', 'direct_send_message', 'direct_send_file', 'send_message', 'send_file', 'check_phone', 'add_template', 'resubmit_template', 'remove_template', 'direct_send_template', 'send_template', 'get_whatsapp_template', 'send_mpm_template', 'direct_send_mpm_template', 'graph_api_direct_send_mpm_template', 'graph_api_send_mpm_template', 'get_docs_parameters', 'get_channel_whatsapp', '_add_multi_agents', '_get_interactive_template_params', '_get_remove_unwanted_mail_message']
+String Constants: ['Provider', 'provider', 'Add Provider to configure the whatsapp', 'Name', 'none', 'State', 'enabled', 'Company', 'res.company', 'Provider.<lambda>', 'res.users', 'Operators', 'About', 'Address', 'Description', 'Email', 'Profile Picture', 'Website', 'Vertical', 'Verified Name', 'Code Verification Status', 'Display Phone Number', 'Quality Rating', 'Platform Type', 'Throughput Level', 'Webhook Configuration', 'Provider.direct_send_message', 'Provider.direct_send_file', 'Provider.send_message', 'Provider.send_file', 'Provider.check_phone', 'Provider.add_template', 'Provider.resubmit_template', 'Provider.remove_template', 'Provider.direct_send_template', 'Provider.send_template', 'Provider.get_whatsapp_template', 'Provider.send_mpm_template', 'Provider.direct_send_mpm_template', 'Provider.graph_api_direct_send_mpm_template', 'Provider.graph_api_send_mpm_template', 'Provider.get_docs_parameters', 'Provider.get_channel_whatsapp', 'Provider._add_multi_agents', 'Provider._get_interactive_template_params', 'Provider._get_remove_unwanted_mail_message']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\provider_meta.cpython-310.pyc ---
+Class/Function Name: Provider
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Selection', 'provider', 'Char', 'graph_api_url', 'graph_api_instance_id', 'graph_api_business_id', 'graph_api_token', 'graph_api_authentication', 'Boolean', 'graph_api_authenticated', 'graph_api_app_id', 'Many2one', 'user_id', 'is_token_generated', 'Html', 'call_back_url', 'GenerateVerifyToken', 'meta_error_message_display', 'reload_with_get_status', 'get_whatsapp_business_details', 'get_phone_number_by_id', 'update_business_details', 'get_url', 'graph_api_upload_demo_document', 'graph_api_get_whatsapp_template', 'graph_api_direct_send_message', 'graph_api_send_message', 'graph_api_direct_send_image', 'graph_api_send_image', 'direct_get_image_by_id', 'get_image_by_id', 'graph_api_check_phone', 'send_image', 'graph_api_add_template', 'graph_api_resubmit_template', 'graph_api_direct_send_template', 'graph_api_send_template', 'graph_api_remove_template', 'graph_api_wamsg_mark_as_read']
+String Constants: ['Provider', 'provider', 'graph_api', 'set default', 'API URL', 'https://graph.facebook.com/v16.0/', 'Instance ID', 'WhatsApp Business Account ID', 'Token', 'bearer_token', 'Authentication', 'Authenticated', 'App ID', 'User', 'res.users', 'Provider.<lambda>', 'Is Token Generated', 'Call Back URL & Verify Token', 'Provider.GenerateVerifyToken', 'Provider.meta_error_message_display', 'Provider.reload_with_get_status', 'Provider.get_whatsapp_business_details', 'Provider.get_phone_number_by_id', 'Provider.update_business_details', 'Provider.get_url', 'Provider.graph_api_upload_demo_document', 'Provider.graph_api_get_whatsapp_template', 'Provider.graph_api_direct_send_message', 'Provider.graph_api_send_message', 'Provider.graph_api_direct_send_image', 'Provider.graph_api_send_image', 'Provider.direct_get_image_by_id', 'Provider.get_image_by_id', 'Provider.graph_api_check_phone', 'Provider.send_image', 'Provider.graph_api_add_template', 'Provider.graph_api_resubmit_template', 'Provider.graph_api_direct_send_template', 'Provider.graph_api_send_template', 'Provider.graph_api_remove_template', 'Provider.graph_api_wamsg_mark_as_read']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\res_config_settings.cpython-310.pyc ---
+Class/Function Name: ResConfigSettings
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'module_tus_meta_wa_sale', 'module_tus_meta_wa_purchase', 'module_tus_meta_wa_invoice', 'module_tus_meta_wa_stock_picking', 'module_tus_meta_wa_sale_in_discuss', 'module_tus_meta_wa_helpdesk_in_discuss', 'module_tus_meta_wa_helpdesk', 'module_tus_meta_wa_follow_up_report', 'module_tus_meta_wa_discuss', 'module_tus_meta_wa_crm_in_discuss', 'module_tus_meta_wa_crm', 'module_tus_meta_wa_invoice_in_discuss', 'module_tus_meta_wa_marketing', 'module_tus_meta_wa_purchase_in_discuss', 'module_tus_meta_wa_pos', 'api', 'onchange', 'on_module_tus_meta_wa_purchase_in_discuss', 'on_module_tus_meta_wa_marketing', 'on_module_tus_meta_wa_invoice_in_discuss', 'on_module_tus_meta_wa_crm', 'on_module_tus_meta_wa_discuss', 'on_module_tus_meta_wa_crm_in_discuss', 'on_module_tus_meta_wa_helpdesk_in_discuss', 'on_module_tus_meta_wa_helpdesk', 'on_module_tus_meta_wa_sale_in_discuss', 'on_module_tus_meta_wa_follow_up_report', 'on_module_tus_meta_wa_sale', 'on_module_tus_meta_wa_purchase', 'on_module_tus_meta_wa_invoice', 'on_module_tus_meta_wa_pos_in_discuss', 'on_module_tus_meta_wa_stock_picking']
+String Constants: ['ResConfigSettings', 'res.config.settings', 'Tus Whatsapp Sales', 'Tus Whatsapp Purchase', 'Tus Whatsapp Invoice', 'Tus Whatsapp Stock Picking', 'Tus Whatsapp Sale In Discuss', 'Tus Whatsapp Helpdesk In Discuss', 'Tus Whatsapp Helpdesk', 'Tus Whatsapp Follow Up Report', 'Tus Whatsapp Discuss', 'Tus Whatsapp CRM In Discuss', 'Tus Whatsapp CRM', 'Tus Whatsapp Invoice In Discuss', 'Tus Whatsapp Marketing', 'Tus Whatsapp Purchase In Discuss', 'Tus Whatsapp POS', 'module_tus_meta_wa_purchase_in_discuss', 'ResConfigSettings.on_module_tus_meta_wa_purchase_in_discuss', 'module_tus_meta_wa_marketing', 'ResConfigSettings.on_module_tus_meta_wa_marketing', 'module_tus_meta_wa_invoice_in_discuss', 'ResConfigSettings.on_module_tus_meta_wa_invoice_in_discuss', 'module_tus_meta_wa_crm', 'ResConfigSettings.on_module_tus_meta_wa_crm', 'module_tus_meta_wa_discuss', 'ResConfigSettings.on_module_tus_meta_wa_discuss', 'module_tus_meta_wa_crm_in_discuss', 'ResConfigSettings.on_module_tus_meta_wa_crm_in_discuss', 'module_tus_meta_wa_helpdesk_in_discuss', 'ResConfigSettings.on_module_tus_meta_wa_helpdesk_in_discuss', 'module_tus_meta_wa_helpdesk', 'ResConfigSettings.on_module_tus_meta_wa_helpdesk', 'module_tus_meta_wa_sale_in_discuss', 'ResConfigSettings.on_module_tus_meta_wa_sale_in_discuss', 'module_tus_meta_wa_follow_up_report', 'ResConfigSettings.on_module_tus_meta_wa_follow_up_report', 'module_tus_meta_wa_sale', 'ResConfigSettings.on_module_tus_meta_wa_sale', 'module_tus_meta_wa_purchase', 'ResConfigSettings.on_module_tus_meta_wa_purchase', 'module_tus_meta_wa_invoice', 'ResConfigSettings.on_module_tus_meta_wa_invoice', 'module_tus_meta_wa_pos', 'ResConfigSettings.on_module_tus_meta_wa_pos_in_discuss', 'module_tus_meta_wa_stock_picking', 'ResConfigSettings.on_module_tus_meta_wa_stock_picking']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ResPartner
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'is_whatsapp_number', 'One2many', 'channel_provider_line_ids', 'check_whatsapp_history', 'api', 'model', 'im_search', 'model_create_multi', 'create', 'write']
+String Constants: ['ResPartner', 'res.partner', 'Is Whatsapp Number', 'channel.provider.line', 'partner_id', 'Channel Provider Line', 'ResPartner.check_whatsapp_history', 'ResPartner.im_search', 'ResPartner.create', 'ResPartner.write']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\res_users.cpython-310.pyc ---
+Class/Function Name: ResUsers
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Many2one', 'provider_id', 'Many2many', 'provider_ids', 'write']
+String Constants: ['ResUsers', 'res.users', 'provider', 'Provider', "[('company_id', 'in', company_ids)]", 'provider_rel_wa', 'provider_id', 'pid', 'Providers', 'ResUsers.write']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\variables.cpython-310.pyc ---
+Class/Function Name: Variables
+Variables (Fields/Attributes): ['_name', '_description', '_get_model_fields', 'fields', 'Many2one', 'field_id', 'Char', 'free_text', 'component_id', 'Selection', 'component_type', 'model_id', 'Integer', 'sequence', 'carousel_id', 'api', 'depends', 'get_seq']
+String Constants: ['Variables', 'variables', 'Whatsapp Variables', 'Variables._get_model_fields', 'ir.model.fields', 'Field', 'Free Text', 'Sample Text', 'components', 'ir.model', 'component_id.model_id', 'Sequence', 'get_seq', 'wa.carousel.component', 'component_id.variables_ids', 'carousel_id.variables_ids', 'Variables.get_seq']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\wa_button_component.cpython-310.pyc ---
+Class/Function Name: WaButtonComponent
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Selection', 'button_type', 'Char', 'button_text', 'coupon_text', 'url_type', 'static_website_url', 'dynamic_website_url', 'phone_number', 'Many2one', 'components_id', 'carousel_id']
+String Constants: ['WaButtonComponent', 'wa.button.component', 'Whatsapp buttons components to send quick reply and call to action buttons', 'Button Type', 'Button Text', 'Coupon Text', 'URL Type', 'Website URL', 'Dynamic URL', 'Phone Number', 'components', 'wa.carousel.component']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\wa_carousel_componets.cpython-310.pyc ---
+Class/Function Name: WaCarouselComponent
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Selection', 'header_formate', 'Many2many', 'attachment_ids', 'Text', 'carousel_body', 'One2many', 'wa_button_ids', 'Many2one', 'component_id', 'variables_ids', 'model_id', 'api', 'onchange', 'onchange_check_attachment']
+String Constants: ['WaCarouselComponent', 'wa.carousel.component', 'Whatsapp carousel Template', 'ir.attachment', 'Attach Document', 'Body', 'wa.button.component', 'carousel_id', 'Buttons', 'components', 'variables', 'Variables', 'ir.model', 'component_id.model_id', 'attachment_ids', 'WaCarouselComponent.onchange_check_attachment']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\wa_template.cpython-310.pyc ---
+Class/Function Name: WATemplate
+Variables (Fields/Attributes): ['_name', '_inherit', '_description', 'init', 'api', 'model', 'default_get', '_get_current_user_provider', 'fields', 'Char', 'name', 'Many2one', 'provider_id', 'model_id', 'Html', 'body_html', 'Selection', 'state', 'namespace', 'category', 'lang', 'Languages', 'language', 'One2many', 'components_ids', 'graph_message_template_id', 'Boolean', 'show_graph_message_template_id', 'template_status', 'template_type', 'returns', 'copy', 'onchange', 'onchange_body_html', 'onchange_name', 'constrains', '_constrain_name', 'depends', '_compute_show_graph_message_template_id', '_compute_render_model', 'model_create_multi', 'create', '_get_send_button_params', '_get_carousel_button_params', '_get_carousel_params', 'add_whatsapp_template', 'remove_whatsapp_template', 'add_imported_whatsapp_template', 'get_whatsapp_template_status', 'send_pre_message_by_whatsapp']
+String Constants: ['WATemplate', 'wa.template', 'mail.render.mixin', 'Whatsapp Templates', 'WATemplate.init', 'WATemplate.default_get', 'WATemplate._get_current_user_provider', 'Name', 'provider', 'Provider', 'ir.model', 'Applies to', 'The type of document this template can be used with', 'cascade', 'Related Document Model', 'model_id.model', 'Body', 'qweb', 'State', 'draft', 'Namespace', 'Category', 'utility', 'res.lang', 'Language', 'en', 'components', 'wa_template_id', 'Components', 'Template UID', '_compute_show_graph_message_template_id', 'Template Status', 'Template Type', 'self', 'WATemplate.<lambda>', 'WATemplate.copy', 'components_ids', 'WATemplate.onchange_body_html', 'name', 'WATemplate.onchange_name', 'WATemplate._constrain_name', 'provider_id', 'WATemplate._compute_show_graph_message_template_id', 'model', 'WATemplate._compute_render_model', 'WATemplate.create', 'WATemplate._get_send_button_params', 'WATemplate._get_carousel_button_params', 'WATemplate._get_carousel_params', 'WATemplate.add_whatsapp_template', 'WATemplate.remove_whatsapp_template', 'WATemplate.add_imported_whatsapp_template', 'WATemplate.get_whatsapp_template_status', 'WATemplate.send_pre_message_by_whatsapp']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\models\__pycache__\whatsapp_history.cpython-310.pyc ---
+Class/Function Name: WhatsappHistory
+Variables (Fields/Attributes): ['_description', '_name', '_rec_name', 'fields', 'Many2one', 'provider_id', 'author_id', 'partner_id', 'Char', 'phone', 'message', 'Selection', 'type', 'Many2many', 'attachment_ids', 'message_id', 'mail_message_id', 'fail_reason', 'company_id', 'Datetime', 'now', 'date', 'model', 'Boolean', 'active', 'Integer', 'rec_id', 'api', 'onchange', '_onchange_partner', '_get_variable_params_dict', 'model_create_multi', 'create']
+String Constants: ['WhatsappHistory', 'Whatsapp History', 'whatsapp.history', 'phone', 'provider', 'Provider', 'res.partner', 'Author', 'Recipient', 'Whatsapp Number', 'Message', 'Type', 'in queue', 'ir.attachment', 'wa_history_attachment_rel', 'wa_message_id', 'wa_attachment_id', 'Attachments', 'Message ID', 'mail.message', 'Fail Reason', 'res.company', 'Company', 'WhatsappHistory.<lambda>', 'Date', 'Related Document Model', 'Active', 'Related Model ID', 'partner_id', 'WhatsappHistory._onchange_partner', 'WhatsappHistory._get_variable_params_dict', 'WhatsappHistory.create']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\tus_meta_whatsapp_base\wizard\__pycache__\wa_compose_message.cpython-310.pyc ---
+Class/Function Name: WAComposer
+Variables (Fields/Attributes): ['_name', '_description', 'api', 'model', 'default_get', 'fields', 'Html', 'body', 'Many2one', 'partner_id', 'template_id', 'Many2many', 'domain_template_ids', 'attachment_ids', 'Char', 'Integer', 'res_id', 'provider_id', 'company_id', 'allowed_provider_ids', 'depends', 'update_allowed_providers', 'onchange', 'onchange_company_provider', 'onchange_template_id_wrapper', 'send_whatsapp_message']
+String Constants: ['WAComposer', 'wa.compose.message', 'Whatsapp composition wizard', 'WAComposer.default_get', 'Contents', '', 'res.partner', 'wa.template', 'Use template', 'domain template ids', 'ir.attachment', 'wa_compose_message_ir_attachments_rel', 'wa_wizard_id', 'attachment_id', 'Attachments', 'Related Document Model', 'Related Document ID', 'provider', 'Provider', 'res.company', 'Company', 'WAComposer.<lambda>', 'update_allowed_providers', 'company_id', 'WAComposer.update_allowed_providers', 'provider_id', 'WAComposer.onchange_company_provider', 'template_id', 'WAComposer.onchange_template_id_wrapper', 'WAComposer.send_whatsapp_message']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\appointment.cpython-310.pyc ---
+Class/Function Name: Appointment
+Variables (Fields/Attributes): ['_name', '_inherit', '_order', '_description', 'api', 'model', 'get_appoint_pricelist_price', 'depends', '_amount_all', 'compute_appointment_address', 'compute_default_group', 'set_default_source', 'fields', 'Char', 'name', 'Many2one', 'customer', 'Date', 'context_today', 'appoint_date', 'appoint_group_id', 'appoint_person_id', 'Many2many', 'appoint_group_person_ids', 'time_slot', 'person_time_slot_ids', 'Selection', 'appoint_state', 'Float', 'time_from', 'time_to', 'time_slot_day', 'invoice_id', 'invoice_status', 'payment_state', 'company_id', 'pricelist_id', 'currency_id', 'user_id', 'source', 'Boolean', 'enable_notify_reminder', 'remind_in', 'Integer', 'remind_time', 'Text', 'description', 'Monetary', 'amount_untaxed', 'amount_tax', 'amount_total', 'is_mail_sent', 'One2many', 'appoint_lines', 'color', 'reject_reason', 'app_street1', 'app_street2', 'app_city', 'app_zip', 'app_state_id', 'app_country_id', 'app_phone', 'app_email', 'Datetime', 'app_dt_start', 'app_dt_stop', 'allday', 'wk_convert_timezone_utc', '_compute_app_dt', 'compute_timeslotday', 'onchange', 'onchange_customer', '_check_timeslot', 'compute_appdate', 'apply_pricelist', 'get_appoint_line_details', '_compute_appoint_line', 'compute_persons', '_compute_appoint_group_person', 'compute_timeslots', '_compute_appoint_person_timeslots', 'send_new_appoint_mail', 'send_approve_appoint_mail', 'button_approve_appoint', 'button_set_to_pending', 'button_done_appoint', '_prepare_invoice', 'action_view_invoice', 'button_create_invoice', 'button_reject_appoint_action', 'reject_appoint', 'check_time_values', '_check_appoint_multi_bookings', '_check_appoint_already_booked', 'model_create_multi', 'create', '_check_appoint_time', 'write', 'send_reminder_mail_to_customer', 'send_mail_for_reminder_scheduler_queue']
+String Constants: ['Appointment', 'wk.appointment', 'id desc, appoint_date desc', 'Appointment.get_appoint_pricelist_price', 'appoint_lines.price_total', 'Appointment._amount_all', 'appoint_person_id', 'Appointment.compute_appointment_address', 'Appointment.compute_default_group', 'Appointment.set_default_source', 'Number', 'New', 'res.partner', 'Patient Name', "[('company_id', '=', company_id), ('partner_type', '=', 'patient')]", 'Appointment Date', 'appointment.person.group', 'Appointment For', "Doctor's Name", "['|', ('company_id', '=', False),('company_id', '=', company_id),('available_for_appoint','=',True)]", '_compute_appoint_group_person', 'Appointment Group Persons', 'appointment.timeslot', 'Time Slot', '_compute_appoint_person_timeslots', 'Appointment Persons Timeslot', 'Appointment State', 'new', 'Time From', 'time_slot.start_time', 'Time To', 'time_slot.end_time', 'Day', 'compute_timeslotday', 'account.move', 'Invoice', 'Invoice Status', 'invoice_id.state', 'invoice_id.payment_state', 'Invoice Payment Status', 'res.company', 'Company', 'Appointment.<lambda>', 'product.pricelist', 'Pricelist', "['|', ('company_id', '=', False), ('company_id', '=', company_id)]", 'If you change the pricelist, only newly added lines will be affected.', 'res.currency', 'pricelist_id.currency_id', 'Currency', 'res.users', 'Salesperson', 'appointment.source', 'Source', 'Notify using Mail', 'Remind In', 'hours', 'Reminder Time', 'Description', 'Untaxed Amount', '_amount_all', 'Taxes', 'Total', 'Reminder Mail Send', 'appointment.lines', 'appoint_id', 'Appointment Lines', 'Color', 'Reject Reason', 'Street', 'compute_appointment_address', 'Street2', 'City', 'ZipCode', 'res.country.state', ' State ', 'res.country', 'Country', 'Mobile Number', 'Email Id', 'Start Datetime', '_compute_app_dt', 'Stop Datetime', 'All Day', 'Appointment.wk_convert_timezone_utc', 'appoint_date', 'time_from', 'time_to', 'time_slot', 'Appointment._compute_app_dt', 'Appointment.compute_timeslotday', 'customer', 'Appointment.onchange_customer', 'Appointment._check_timeslot', 'Appointment.compute_appdate', 'Appointment.apply_pricelist', 'Appointment.get_appoint_line_details', 'appoint_group_id', 'Appointment._compute_appoint_line', 'Appointment.compute_persons', 'Appointment._compute_appoint_group_person', 'Appointment.compute_timeslots', 'Appointment._compute_appoint_person_timeslots', 'Appointment.send_new_appoint_mail', 'Appointment.send_approve_appoint_mail', 'Appointment.button_approve_appoint', 'Appointment.button_set_to_pending', 'Appointment.button_done_appoint', 'Appointment._prepare_invoice', 'Appointment.action_view_invoice', 'Appointment.button_create_invoice', 'Appointment.button_reject_appoint_action', 'Appointment.reject_appoint', 'Appointment.check_time_values', 'Appointment._check_appoint_multi_bookings', 'Appointment._check_appoint_already_booked', 'Appointment.create', 'Appointment._check_appoint_time', 'Appointment.write', 'Appointment.send_reminder_mail_to_customer', 'Appointment.send_mail_for_reminder_scheduler_queue']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\appointment.cpython-310.pyc ---
+Class/Function Name: AppointmentLines
+Variables (Fields/Attributes): ['_name', '_description', 'api', 'depends', 'compute_line_total', 'fields', 'Many2one', 'appoint_id', 'Text', 'name', 'appoint_product_id', 'Float', 'product_qty', 'Many2many', 'tax_id', 'price_unit', 'price_subtotal', 'price_tax', 'price_total', 'company_id', 'onchange', 'product_id_change', 'prepare_appoint_invoice_line']
+String Constants: ['AppointmentLines', 'appointment.lines', 'Appointment Lines', 'product_qty', 'price_unit', 'tax_id', 'AppointmentLines.compute_line_total', 'wk.appointment', 'Appointment Reference', 'cascade', 'Description', 'product.product', 'Product', 'AppointmentLines.<lambda>', 'Quantity', 'Product Unit of Measure', 'account.tax', 'Taxes', 'Unit Price', 'Product Price', 'compute_line_total', 'Subtotal', 'Tax', 'Total', 'appoint_id.company_id', 'Company', 'appoint_product_id', 'AppointmentLines.product_id_change', 'AppointmentLines.prepare_appoint_invoice_line']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\appoint_dashboard.cpython-310.pyc ---
+Class/Function Name: AppointmentDashboard
+Variables (Fields/Attributes): ['_name', '_order', '_description', '_kanban_dashboard_graph', '_kanban_dashboard', 'is_user_apointee', 'fields', 'Text', 'kanban_dashboard', 'kanban_dashboard_graph', 'Integer', 'color', 'Char', 'name', 'sequence', 'Selection', 'state', 'count_new_appoint', 'count_pending_appoint', 'count_approved_appoint', 'count_rejected_appoint', 'count_done_appoint', '_get_new_appoint_count', '_get_pending_appoint_count', '_get_approved_appoint_count', '_get_rejected_appoint_count', '_get_done_appoint_count', 'open_action', 'action_create_new', '_get_bar_graph_select_query', 'get_state_color', 'get_appoint_dashboard_datas', 'get_additional_appoint_values']
+String Constants: ['AppointmentDashboard', 'appointment.dashboard', 'sequence ASC', 'Appointment Dashboard', 'AppointmentDashboard._kanban_dashboard_graph', 'AppointmentDashboard._kanban_dashboard', 'AppointmentDashboard.is_user_apointee', '_kanban_dashboard', '_kanban_dashboard_graph', 'Color Index', 'Name', 'Sequence', 'State', '_get_new_appoint_count', '_get_pending_appoint_count', '_get_approved_appoint_count', '_get_rejected_appoint_count', '_get_done_appoint_count', 'AppointmentDashboard._get_new_appoint_count', 'AppointmentDashboard._get_pending_appoint_count', 'AppointmentDashboard._get_approved_appoint_count', 'AppointmentDashboard._get_rejected_appoint_count', 'AppointmentDashboard._get_done_appoint_count', 'AppointmentDashboard.open_action', 'AppointmentDashboard.action_create_new', 'AppointmentDashboard._get_bar_graph_select_query', 'AppointmentDashboard.get_state_color', 'AppointmentDashboard.get_appoint_dashboard_datas', 'AppointmentDashboard.get_additional_appoint_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\appoint_group.cpython-310.pyc ---
+Class/Function Name: AppointmentGroup
+Variables (Fields/Attributes): ['_name', '_rec_name', '_description', 'fields', 'Binary', 'group_image', 'Char', 'group_name', 'Many2many', 'appoint_person_ids', 'Integer', 'color', 'appoint_members_count', 'Boolean', 'general', 'Many2one', 'currency_id', 'company_id', 'Float', 'group_charge', 'product_tmpl_id', 'active', 'count_appoint_persons', 'appoint_update_product_price', 'write', 'api', 'model_create_multi', 'create']
+String Constants: ['AppointmentGroup', 'appointment.person.group', 'group_name', 'Appointment Group', 'Group Image', 'Group', 'res.partner', 'appoint_partner_table', 'appoint_group_id', 'res_partner_id', 'Appointment Person', "['|', ('company_id', '=', False), ('company_id', '=', company_id)]", 'Color Index', ' Total Appointment Members', 'count_appoint_persons', 'General', 'res.currency', 'Currency', 'AppointmentGroup.<lambda>', 'res.company', 'Company', 'Appointment Charge', 'product.template', 'Group Product', 'This product will be used for applying appointment        charges while booking an appointment.', 'Active', 'If unchecked, it will allow you to hide this record without removing it.', 'AppointmentGroup.count_appoint_persons', 'AppointmentGroup.appoint_update_product_price', 'AppointmentGroup.write', 'AppointmentGroup.create']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\appoint_source.cpython-310.pyc ---
+Class/Function Name: AppointmentSource
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Char', 'name', 'Many2one', 'company_id']
+String Constants: ['AppointmentSource', 'appointment.source', 'Appointment Source', 'Source', 'res.company', 'Company', 'AppointmentSource.<lambda>']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\appoint_timeslot.cpython-310.pyc ---
+Class/Function Name: AppointTimeslot
+Variables (Fields/Attributes): ['_name', '_description', '_order', 'fields', 'Text', 'desc', 'Float', 'start_time', 'end_time', 'Char', 'name', 'Selection', 'day', 'timerange', 'Boolean', 'active', 'Many2one', 'company_id', '_', '_sql_constraints', 'get_day_shortname', 'api', 'depends', 'name_get', 'onchange', 'compute_rec_name', 'float_time_convert', 'check_time_values', 'model_create_multi', 'create', 'write', 'compute_timerange']
+String Constants: ['AppointTimeslot', 'appointment.timeslot', 'Appointment TimeSlot', 'start_time', 'Description', 'Start Time', 'End Time', 'Slot', 'compute_rec_name', 'Day', 'Active', 'If unchecked, it will allow you to hide this record without removing it.', 'res.company', 'Company', 'AppointTimeslot.<lambda>', 'timeslot_day_starttime_endtime_uniq', 'unique(day, start_time, end_time)', 'This slot for this day already exist.', 'AppointTimeslot.get_day_shortname', 'day', 'end_time', 'AppointTimeslot.name_get', 'AppointTimeslot.compute_rec_name', 'AppointTimeslot.float_time_convert', 'AppointTimeslot.check_time_values', 'AppointTimeslot.create', 'AppointTimeslot.write', 'AppointTimeslot.compute_timerange']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\ir_action.cpython-310.pyc ---
+Class/Function Name: IrActionWindow
+Variables (Fields/Attributes): ['_inherit', 'update_appoint_dynamic_domain', 'read']
+String Constants: ['IrActionWindow', 'ir.actions.act_window', 'IrActionWindow.update_appoint_dynamic_domain', '_classic_read', 'IrActionWindow.read']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\ir_ui_menu.cpython-310.pyc ---
+Class/Function Name: IrUiMenu
+Variables (Fields/Attributes): ['_inherit', 'update_wk_appoint_menus', 'read']
+String Constants: ['IrUiMenu', 'ir.ui.menu', 'IrUiMenu.update_wk_appoint_menus', '_classic_read', 'IrUiMenu.read']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\res_config.cpython-310.pyc ---
+Class/Function Name: ResConfigSettings
+Variables (Fields/Attributes): ['_inherit', '_description', 'api', 'model', '_default_journal', 'fields', 'Many2many', 'appoint_product_ids', 'Boolean', 'enable_notify_reminder', 'Many2one', 'notify_reminder_mail_template', 'enable_notify_customer_on_approve_appoint', 'notify_customer_on_approve_appoint', 'enable_notify_customer_on_reject_appoint', 'notify_customer_on_reject_appoint', 'enable_notify_customer_on_new_appoint', 'notify_customer_on_new_appoint', 'enable_notify_admin_on_new_appoint', 'notify_admin_on_new_appoint', 'allow_multi_appoints', 'apply_pricelist', 'set_values', 'get_values']
+String Constants: ['ResConfigSettings', 'res.config.settings', 'Config Settings', 'ResConfigSettings._default_journal', 'product.product', 'Product', 'Enable to send mail reminder before appointment', 'mail.template', 'Mail Notification Reminder', "[('model_id.model','=','wk.appointment')]", 'Enable to send mail on Appointment Confirmation', 'Appointment Confirmation Mail', 'Enable to send mail on Appointment Reject', 'Appointment Reject Mail', 'Enable to send mail to customer on New Appointment', 'New Appointment Mail to Customer', 'Enable to send mail to admin on New Appointment', 'New Appointment Mail to Admin', 'Allow Multiple Appointments', 'If it is enabled then Group Members can handle multiple appointments in a particular timeslot,         if not then group members can handle only a single appointment in a given time slot.This setting can also be managed         member wise for each member from thier profile.', 'Enable to manage pricelists for appointments', 'ResConfigSettings.set_values', 'ResConfigSettings.get_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\models\__pycache__\res_partner.cpython-310.pyc ---
+Class/Function Name: ResPartner
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'available_for_appoint', 'Many2many', 'time_slot_ids', 'appoint_group_ids', 'Float', 'appoint_person_charge', 'Char', 'work_exp', 'Text', 'about_person', 'specialist', 'One2many', 'booked_appointment_ids', 'allow_multi_appoints', 'use_addr_as_appoint', 'Many2one', 'appoint_product_id', 'appoint_update_product_price', 'write', 'api', 'model_create_multi', 'create']
+String Constants: ['ResPartner', 'res.partner', 'Can be Appointment Group Member', 'Check this box if this contact is available for Appointment.', 'appointment.timeslot', 'parter_id', 'time_slot_id', 'partner_slot_rel', 'Time Slots', 'appointment.person.group', 'appoint_partner_table', 'res_partner_id', 'appoint_group_id', 'Appointment Group', 'Appointment Charge', 'Working Experience', 'About', 'Specialist', 'wk.appointment', 'appoint_person_id', 'Appointments', 'Allow Multiple Appointments', 'ResPartner.<lambda>', 'If it is enabled then this member can handle multiple appointments in a particular timeslot.', 'Use Appointee Address', 'If it is enabled then the address of this member will be used as an appointment address.', 'product.template', 'Appointee Product', 'This product will be used for managing pricelist while        applying appointment charges.', 'ResPartner.appoint_update_product_price', 'ResPartner.write', 'ResPartner.create']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\report\__pycache__\appointment_report.cpython-310.pyc ---
+Class/Function Name: AppointmentReport
+Variables (Fields/Attributes): ['_name', '_description', '_auto', '_order', '_rec_name', 'fields', 'Date', 'date', 'appoint_date', 'Many2one', 'appoint_product_id', 'appoint_group_id', 'appoint_person_id', 'customer', 'Float', 'price_total', 'price_subtotal', 'Integer', 'nbr', 'Char', 'time_slot_day', 'source', 'company_id', 'Selection', 'appoint_state', '_depends', '_select', '_sub_select', '_from', '_group_by', 'init']
+String Constants: ['AppointmentReport', 'appointment.report', 'Appointment Statistics', 'date desc', 'date', 'Create Date', 'Appointment Date', 'product.product', 'Product', 'appointment.person.group', 'Appointment Group', 'res.partner', 'Group Member', 'Customer', 'Total With Tax', 'Total Without Tax', '# of Lines', 'Day', 'appointment.source', 'Source', 'res.company', 'Company', 'Appointment State', 'product_tmpl_id', 'categ_id', 'currency_id', 'name', 'country_id', 'AppointmentReport._select', 'AppointmentReport._sub_select', 'AppointmentReport._from', 'AppointmentReport._group_by', 'AppointmentReport.init']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_appointment\wizard\__pycache__\reject_reason_wizard.cpython-310.pyc ---
+Class/Function Name: AppointRejectReason
+Variables (Fields/Attributes): ['_name', '_description', 'fields', 'Text', 'add_reason', 'button_addreason']
+String Constants: ['AppointRejectReason', 'appoint.rejectreason.wizard', 'Appointment Reject Reason', 'Reason for Rejection', 'AppointRejectReason.button_addreason']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_website_appointment\models\__pycache__\inherit_appoint.cpython-310.pyc ---
+Class/Function Name: Appointment
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Selection', 'tz', 'Many2many', 'transaction_ids', 'authorized_transaction_ids', 'One2many', 'payment_tx_ids', 'Many2one', 'payment_tx_id', 'payment_acquirer_id', 'Integer', 'payment_tx_count', '_compute_payment_tx_count', 'action_view_transactions', '_create_payment_transaction', '_compute_portal_url', '_compute_access_url', 'api', 'depends', '_compute_authorized_transaction_ids', 'get_portal_last_transaction', 'payment_action_capture', 'payment_action_void', 'model', 'set_default_source', '_get_payment_type']
+String Constants: ['Appointment', 'wk.appointment', 'Timezone', 'appoint_person_id.tz', 'payment.transaction', 'appointment_transaction_rel', 'appoint_id', 'transaction_id', 'Transactions', '_compute_authorized_transaction_ids', 'Authorized Transactions', 'appointment_id', 'Payment Transactions', 'Last Transaction', 'payment.provider', 'Payment Acquirer', 'payment_tx_id.provider_id', 'Number of payment transactions', '_compute_payment_tx_count', 'Appointment._compute_payment_tx_count', 'Appointment.action_view_transactions', 'Appointment._create_payment_transaction', 'Appointment._compute_portal_url', 'Appointment._compute_access_url', 'transaction_ids', 'Appointment._compute_authorized_transaction_ids', 'Appointment.get_portal_last_transaction', 'Appointment.payment_action_capture', 'Appointment.payment_action_void', 'Appointment.set_default_source', 'Appointment._get_payment_type']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_website_appointment\models\__pycache__\inherit_appoint_config.cpython-310.pyc ---
+Class/Function Name: ResConfigSettings
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Boolean', 'show_cancel_booking', 'website_show_tz', 'Selection', 'website_appoint_payment_mode', 'set_values', 'api', 'model', 'get_values']
+String Constants: ['ResConfigSettings', 'res.config.settings', 'Show Cancel Booking', 'Customer can cancel        their booked appointments from website before their approval.', 'Show Timezone Details', 'Customer can check        the timezone of the appointee before booking appointments from website.', 'Appointment Payment Mode in Website', 'before_appoint', 'ResConfigSettings.set_values', 'ResConfigSettings.get_values']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_website_appointment\models\__pycache__\payment.cpython-310.pyc ---
+Class/Function Name: PaymentTransaction
+Variables (Fields/Attributes): ['_inherit', 'fields', 'Many2one', 'appointment_id', 'Selection', 'state', 'api', 'model', '_compute_reference_prefix']
+String Constants: ['PaymentTransaction', 'payment.transaction', 'wk.appointment', 'Appointment', 'PaymentTransaction._compute_reference_prefix']
+
+--- Found Model in p:\Odoo_dev\custom_addons\odoo16\clidram\wk_website_appointment\models\__pycache__\website.cpython-310.pyc ---
+Class/Function Name: Website
+Variables (Fields/Attributes): ['_inherit', '_check_appoint_already_booked', '_is_slot_available']
+String Constants: ['Website', 'website', 'Website._check_appoint_already_booked', 'Website._is_slot_available']

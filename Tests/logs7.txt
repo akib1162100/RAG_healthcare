@@ -1,0 +1,33 @@
+﻿rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  7.93it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  7.91it/s]
+rag-service-1  | 2026-02-22 08:25:54,979 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:54,979 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00, 20.43it/s]
+rag-service-1  | 2026-02-22 08:25:55,032 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:55,032 - app.etl.embedding_generator - INFO - Generating embeddings for 1 texts
+rag-service-1  | 
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.72it/s]
+Batches: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 1/1 [00:00<00:00,  9.69it/s]
+rag-service-1  | 2026-02-22 08:25:55,138 - app.etl.embedding_generator - INFO - Generated 1 embeddings
+rag-service-1  | 2026-02-22 08:25:55,138 - app.etl.vector_loader - INFO - Loading 5 vectors into medical_rag_index
+rag-service-1  | 2026-02-22 08:25:55,148 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.PostgresSyntaxError'>: syntax error at or near ":"
+rag-service-1  | [SQL: 
+rag-service-1  |         INSERT INTO medical_rag_index 
+rag-service-1  |             (odoo_model, odoo_res_id, chunk_index, content_text, metadata, embedding, created_at, updated_at)
+rag-service-1  |         VALUES 
+rag-service-1  |             ($1, $2, $3, $4, :metadata::jsonb, :embedding::vector, $5, $6)
+rag-service-1  |         ON CONFLICT (odoo_model, odoo_res_id, chunk_index)
+rag-service-1  |         DO UPDATE SET
+rag-service-1  |             content_text = EXCLUDED.content_text,
+rag-service-1  |             metadata = EXCLUDED.metadata,
+rag-service-1  |             embedding = EXCLUDED.embedding,
+rag-service-1  |             updated_at = EXCLUDED.updated_at
+rag-service-1  |         ]
+rag-service-1  | [parameters: ('prescription.order.knk', 72, 0, "Prescription PRE0031 Date: 2025-08-24 10:59:51 \nPatient: Ripon Hossain (ID: 20250700224002) , 32 years old , Male \nPhysician: Dr. Indrani Mukharjee ... (554 characters truncated) ... AD / Heart Attack \n- Sudden Cardiac Death \n- Hypertension \n- Diabetes \n\nSocial History: \n- Physical activity \n- Alcohol use \n- Smoking status", datetime.datetime(2026, 2, 22, 8, 25, 55, 138359), datetime.datetime(2026, 2, 22, 8, 25, 55, 138359))]
+rag-service-1  | (Background on this error at: https://sqlalche.me/e/20/f405)
+rag-service-1  | INFO:     172.21.0.1:36760 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error

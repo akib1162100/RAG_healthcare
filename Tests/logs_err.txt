@@ -1,0 +1,50 @@
+﻿rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 186, in __call__
+rag-service-1  |     raise exc
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 164, in __call__
+rag-service-1  |     await self.app(scope, receive, _send)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+rag-service-1  |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+rag-service-1  |     raise exc
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+rag-service-1  |     await app(scope, receive, sender)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+rag-service-1  |     await self.middleware_stack(scope, receive, send)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+rag-service-1  |     await route.handle(scope, receive, send)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+rag-service-1  |     await self.app(scope, receive, send)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+rag-service-1  |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+rag-service-1  |     raise exc
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+rag-service-1  |     await app(scope, receive, sender)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 77, in app
+rag-service-1  |     await response(scope, receive, send)
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/responses.py", line 161, in __call__
+rag-service-1  |     await self.background()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/background.py", line 45, in __call__
+rag-service-1  |     await task()
+rag-service-1  |   File "/usr/local/lib/python3.11/site-packages/starlette/background.py", line 28, in __call__
+rag-service-1  |     await self.func(*self.args, **self.kwargs)
+rag-service-1  |   File "/app/app/etl/pipeline.py", line 194, in run_full_indexing
+rag-service-1  |     results[model] = await self.run_appointment_indexing(limit, incremental)
+rag-service-1  |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+rag-service-1  |   File "/app/app/etl/pipeline.py", line 57, in run_appointment_indexing
+rag-service-1  |     appointments = await self.extractor.extract_appointments(
+rag-service-1  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+rag-service-1  |   File "/app/app/etl/data_extractor.py", line 80, in extract_appointments
+rag-service-1  |     result = await conn.execute(text(query), params)
+rag-service-1  |                                              ^^^^^^
+rag-service-1  | NameError: name 'params' is not defined
+rag-service-1  | 2026-02-22 11:10:53,450 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['wk.appointment', 'prescription.order.knk']
+rag-service-1  | 2026-02-22 11:10:53,450 - app.etl.pipeline - INFO - Starting appointment indexing...
+rag-service-1  | 2026-02-22 11:10:53,452 - app.etl.pipeline - INFO - Incremental update since: 2025-09-01 19:36:28.311873
+rag-service-1  | 2026-02-22 11:10:53,453 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: name 'params' is not defined
+rag-service-1  | INFO:     172.21.0.1:33730 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
+rag-service-1  | 2026-02-22 11:11:26,100 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['wk.appointment', 'prescription.order.knk']
+rag-service-1  | 2026-02-22 11:11:26,100 - app.etl.pipeline - INFO - Starting appointment indexing...
+rag-service-1  | 2026-02-22 11:11:26,102 - app.etl.pipeline - INFO - Incremental update since: 2025-09-01 19:36:28.311873
+rag-service-1  | 2026-02-22 11:11:26,103 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: name 'params' is not defined
+rag-service-1  | INFO:     172.21.0.1:43470 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error

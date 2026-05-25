@@ -1,0 +1,40 @@
+﻿rag-service-1  |         SELECT 
+rag-service-1  |             id,
+rag-service-1  |             content_text,
+rag-service-1  |             metadata,
+rag-service-1  |             odoo_model,
+rag-service-1  |             odoo_res_id,
+rag-service-1  |             1 - (embedding <=> CAST($1 AS vector)) as similarity
+rag-service-1  |         FROM medical_rag_index
+rag-service-1  |         
+rag-service-1  |         ORDER BY embedding <=> CAST($1 AS vector)
+rag-service-1  |         LIMIT $2
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:57:54,280 INFO sqlalchemy.engine.Engine [generated in 0.00015s] ('[0.48627936840057373,0.021126098930835724,-0.2144288271665573,0.05017123371362686,-0.17899788916110992,0.0027211345732212067,0.5385192632675171,-0.12 ... (15233 characters truncated) ... 2959595,0.05845483019948006,0.08084360510110855,0.32955777645111084,0.18612709641456604,0.14923997223377228,0.10221569240093231,-0.18834170699119568]', 5)
+rag-service-1  |         FROM medical_rag_index
+rag-service-1  |         
+rag-service-1  |         ORDER BY embedding <=> CAST($1 AS vector)
+rag-service-1  |         LIMIT $2
+rag-service-1  |         
+rag-service-1  | 2026-02-22 08:57:54,280 - sqlalchemy.engine.Engine - INFO - [generated in 0.00015s] ('[0.48627936840057373,0.021126098930835724,-0.2144288271665573,0.05017123371362686,-0.17899788916110992,0.0027211345732212067,0.5385192632675171,-0.12 ... (15233 characters truncated) ... 2959595,0.05845483019948006,0.08084360510110855,0.32955777645111084,0.18612709641456604,0.14923997223377228,0.10221569240093231,-0.18834170699119568]', 5)
+rag-service-1  | 2026-02-22 08:57:54,800 - app.services.llm_service - ERROR - Error generating answer: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+rag-service-1  | domain: "googleapis.com"
+rag-service-1  | metadata {
+rag-service-1  |   key: "service"
+rag-service-1  |   value: "generativelanguage.googleapis.com"
+rag-service-1  | }
+rag-service-1  | , locale: "en-US"
+rag-service-1  | message: "API key not valid. Please pass a valid API key."
+rag-service-1  | ]
+rag-service-1  | 2026-02-22 08:57:54,800 - app.api.v1.endpoints.rag - ERROR - Query error: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+rag-service-1  | domain: "googleapis.com"
+rag-service-1  | metadata {
+rag-service-1  |   key: "service"
+rag-service-1  |   value: "generativelanguage.googleapis.com"
+rag-service-1  | }
+rag-service-1  | , locale: "en-US"
+rag-service-1  | message: "API key not valid. Please pass a valid API key."
+rag-service-1  | ]
+rag-service-1  | 2026-02-22 08:57:54,801 INFO sqlalchemy.engine.Engine ROLLBACK
+rag-service-1  | 2026-02-22 08:57:54,801 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+rag-service-1  | INFO:     172.21.0.1:35546 - "POST /api/v1/rag/query HTTP/1.1" 500 Internal Server Error

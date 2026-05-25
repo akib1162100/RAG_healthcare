@@ -1,0 +1,30 @@
+﻿rag-service-1  |             odoo_model,
+rag-service-1  |             odoo_res_id,
+rag-service-1  |             metadata,
+rag-service-1  |             odoo_model,
+rag-service-1  |             odoo_res_id,
+rag-service-1  |             1 - (embedding <=> CAST($1 AS vector)) as similarity
+rag-service-1  |         FROM medical_rag_index
+rag-service-1  |         WHERE metadata->>'patient_id' = '20250700224002'
+rag-service-1  |         ORDER BY embedding <=> CAST($1 AS vector)
+rag-service-1  |         LIMIT $2
+rag-service-1  |         
+rag-service-1  |             1 - (embedding <=> CAST($1 AS vector)) as similarity
+rag-service-1  | 2026-02-22 09:46:44,959 - sqlalchemy.engine.Engine - INFO - [generated in 0.00026s] ('[0.08914261311292648,-0.23367303609848022,-0.2607937157154083,0.3327813446521759,0.1125798374414444,-0.21391303837299347,0.2796820402145386,-0.098529 ... (15219 characters truncated) ... 120087,-0.27049535512924194,0.37846314907073975,0.49360355734825134,0.24558179080486298,0.3960525393486023,-0.017697662115097046,-0.3108936846256256]', 5)
+rag-service-1  |         FROM medical_rag_index
+rag-service-1  |         WHERE metadata->>'patient_id' = '20250700224002'
+rag-service-1  |         ORDER BY embedding <=> CAST($1 AS vector)
+rag-service-1  |         LIMIT $2
+rag-service-1  |         
+rag-service-1  | 2026-02-22 09:46:44,959 INFO sqlalchemy.engine.Engine [generated in 0.00026s] ('[0.08914261311292648,-0.23367303609848022,-0.2607937157154083,0.3327813446521759,0.1125798374414444,-0.21391303837299347,0.2796820402145386,-0.098529 ... (15219 characters truncated) ... 120087,-0.27049535512924194,0.37846314907073975,0.49360355734825134,0.24558179080486298,0.3960525393486023,-0.017697662115097046,-0.3108936846256256]', 5)
+rag-service-1  | 2026-02-22 09:46:44,971 - app.etl.pipeline - INFO - Incremental update since: 2025-09-01 19:36:28.311873
+rag-service-1  | 2026-02-22 09:46:44,993 - app.services.rag_service - WARNING - LLM generation failed: LLM model not initialized. Call initialize() first.
+rag-service-1  | 2026-02-22 09:46:44,996 INFO sqlalchemy.engine.Engine ROLLBACK
+rag-service-1  | 2026-02-22 09:46:44,996 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+rag-service-1  | INFO:     172.21.0.1:36184 - "POST /api/v1/rag/query HTTP/1.1" 200 OK
+rag-service-1  | 2026-02-22 09:46:45,154 - app.etl.data_extractor - INFO - Extracted 0 appointments
+rag-service-1  | 2026-02-22 09:46:45,155 - app.etl.pipeline - INFO - No appointments to index
+rag-service-1  | 2026-02-22 09:46:45,155 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 09:46:45,156 - app.etl.pipeline - INFO - Incremental update since: 2025-08-26 18:40:10.767954
+rag-service-1  | 2026-02-22 09:46:45,161 - app.etl.data_extractor - INFO - Extracted 0 prescriptions
+rag-service-1  | 2026-02-22 09:46:45,162 - app.etl.pipeline - INFO - No prescriptions to index

@@ -1,0 +1,30 @@
+﻿rag-service-1  | 2026-02-22 08:05:14,943 - app.etl.embedding_generator - INFO - Loading embedding model: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:05:14,943 - app.etl.embedding_generator - INFO - Using device: cpu
+rag-service-1  | 2026-02-22 08:05:14,944 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: emilyalsentzer/Bio_ClinicalBERT
+rag-service-1  | 2026-02-22 08:05:15,225 - sentence_transformers.SentenceTransformer - WARNING - No sentence-transformers model found with name emilyalsentzer/Bio_ClinicalBERT. Creating a new one with MEAN pooling.
+rag-service-1  | 2026-02-22 08:05:17,933 - app.etl.embedding_generator - INFO - Embedding dimension: 768
+rag-service-1  | 2026-02-22 08:05:17,934 - app.main - INFO - RAG Healthcare Service ready
+rag-service-1  | INFO:     Application startup complete.
+rag-service-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+rag-service-1  | 2026-02-22 08:06:04,626 - app.api.v1.endpoints.etl - INFO - Starting medical data indexing: ['prescription.order.knk']
+rag-service-1  | 2026-02-22 08:06:04,626 - app.etl.pipeline - INFO - Starting prescription indexing...
+rag-service-1  | 2026-02-22 08:06:04,850 - app.api.v1.endpoints.etl - ERROR - Medical indexing error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedColumnError'>: column med.duration does not exist
+rag-service-1  | [SQL: 
+rag-service-1  |         SELECT 
+rag-service-1  |             med.id,
+rag-service-1  |             prod.name AS medication_name,
+rag-service-1  |             med.quantity,
+rag-service-1  |             med.duration,
+rag-service-1  |             med.dose,
+rag-service-1  |             med.frequency,
+rag-service-1  |             med.route,
+rag-service-1  |             med.when_to_take,
+rag-service-1  |             med.special_instruction
+rag-service-1  |         FROM prescription_order_line_knk_new med
+rag-service-1  |         LEFT JOIN product_product pp ON med.product_id = pp.id
+rag-service-1  |         LEFT JOIN product_template prod ON pp.product_tmpl_id = prod.id
+rag-service-1  |         WHERE med.prescription_id = $1
+rag-service-1  |         ]
+rag-service-1  | [parameters: (24,)]
+rag-service-1  | (Background on this error at: https://sqlalche.me/e/20/f405)
+rag-service-1  | INFO:     172.21.0.1:47136 - "POST /api/v1/etl/index-medical HTTP/1.1" 500 Internal Server Error
